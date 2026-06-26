@@ -3,6 +3,7 @@ import Image from "next/image";
 import Navbar from "./navbar";
 import HeroImage from "./heroImage";
 import Button from "../button";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -32,8 +33,12 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-row items-center justify-center lg:justify-start gap-5 pt-2">
-            <Button variant="primary">Shop Groceries</Button>
-            <Button variant="secondary">Explore Now</Button>
+            <Link href="/categories">
+              <Button variant="primary">Shop Groceries</Button>
+            </Link>
+            <Link href="/contact">
+              <Button variant="secondary">Contact Us</Button>
+            </Link>
           </div>
         </div>
         {/* Right Column Layout Showcase */}

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import StarRating from "../StarRating";
 import Button from "../button";
-import { FaMinus, FaPlus } from "react-icons/fa6"; // Installed icons for the selector
 import Quantity from "../quantitiy";
+import Link from "next/link";
 
 interface ColorSwatch {
   id: string;
@@ -13,18 +13,11 @@ interface ColorSwatch {
 }
 
 export default function ProductInformation() {
-  const [selectedColor, setSelectedColor] = useState<string>("blue");
 
   const [activeAccordion, setActiveAccordion] = useState<string | null>(
     "descriptions",
   );
-
-  const colors: ColorSwatch[] = [
-    { id: "light-gray", className: "bg-[#D9D9D9]", label: "Light Gray" },
-    { id: "brown", className: "bg-[#C4A484]", label: "Brown" },
-    { id: "black", className: "bg-[#1A1A1A]", label: "Black" },
-    { id: "dark-gray", className: "bg-[#555555]", label: "Dark Gray" },
-  ];
+  
 
   const toggleAccordion = (section: string) => {
     setActiveAccordion(activeAccordion === section ? null : section);
@@ -51,8 +44,10 @@ export default function ProductInformation() {
         </div>
         {/* --- NEW QUANTITY SELECTOR BLOCK --- */}
         <div>
-          <span className="text-xs font-bold text-[#111111] block pb-4">Quantity</span>
-          <Quantity/>
+          <span className="text-xs font-bold text-[#111111] block pb-4">
+            Quantity
+          </span>
+          <Quantity />
         </div>
 
         {/* Social Proof metrics row */}
@@ -171,11 +166,14 @@ export default function ProductInformation() {
         {/* TRANSACTION FOOTER BUTTON TRACK */}
         <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 w-full">
           <Button variant="secondary" className="w-full">
-            Add To Cart {/* Fixed spelling 'Chart' to 'Cart' */}
+            Add To Cart
           </Button>
-          <Button variant="primary" className="w-full">
-            Checkout Now
-          </Button>
+
+          <Link href="/checkout" className="w-full">
+            <Button variant="primary" className="w-full">
+              Checkout Now
+            </Button>
+          </Link>
         </div>
       </div>
     </>

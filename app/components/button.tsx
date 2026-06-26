@@ -10,8 +10,8 @@ function cn(...inputs: ClassValue[]) {
 type ButtonProps = {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "tertiary";
-  className?: string; // Added to pass custom styles from other components
-} & React.ButtonHTMLAttributes<HTMLButtonElement>; // Allows all native button props (onClick, type, etc.)
+  className?: string; 
+} & React.ButtonHTMLAttributes<HTMLButtonElement>; 
 
 const Button = ({
   children,

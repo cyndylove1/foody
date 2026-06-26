@@ -6,6 +6,7 @@ import { ChevronRight, HelpCircle, Tag } from "lucide-react";
 import Button from "../components/button";
 import Navbar from "../components/ui/navbar";
 import Footer from "../components/ui/footer";
+import BreadCrumbs from "../components/breadCrumbs";
 
 export default function Checkout() {
   // Form States
@@ -34,32 +35,23 @@ export default function Checkout() {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, id: value }));
   };
+  const productLinks = [
+    // { label: "Home", href: "/" },
+    { label: "Cart", href: "/cart" },
+    { label: "Spices", href: "/categories/spices" },
+    { label: "Checkout" },
+  ];
 
   return (
     <>
       <div className="bg-[#fff1e1]/60">
         <Navbar />
+        {/* Breadcrumb Navigation */}
+        <BreadCrumbs items={productLinks} />
         <div className="text-[#1a1a1a] antialiased w-full min-h-screen">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-screen">
             {/* LEFT COLUMN: BREADCRUMBS, SHIPPING ADDRESS & METHOD (7 Columns wide) */}
-            <div className="lg:col-span-7 p-6 sm:p-10 lg:p-14  border-r border-gray-300">
-              {/* Breadcrumb Navigation */}
-              <nav className="flex items-center gap-2 text-xs font-medium mb-8">
-                <span className="text-cyan-600 cursor-pointer hover:underline">
-                  Cart
-                </span>
-                <ChevronRight size={12} className="text-gray-400" />
-                <span className="text-gray-900 font-semibold flex items-center gap-1">
-                  <ChevronRight
-                    size={12}
-                    className="text-gray-400 -ml-1 mr-1 hidden"
-                  />{" "}
-                  Shipping
-                </span>
-                <ChevronRight size={12} className="text-gray-400" />
-                <span className="text-gray-400">Payment</span>
-              </nav>
-
+            <div className="lg:col-span-7 p-4 md:p-10 lg:p-14">
               {/* Form Header */}
               <h2 className="text-2xl font-bold text-gray-900 tracking-tight mb-6">
                 Shipping Address
@@ -270,7 +262,7 @@ export default function Checkout() {
             </div>
 
             {/* RIGHT COLUMN: STICKY ORDER SUMMARY PANEL (5 Columns wide) */}
-            <div className="lg:col-span-5 p-6 sm:p-10 lg:p-14">
+            <div className="lg:col-span-5 p-6 sm:p-10 lg:p-14 bg-gray-50">
               <div className="max-w-md mx-auto lg:max-w-none">
                 <h2 className="text-2xl font-bold text-gray-900 tracking-tight mb-6">
                   Your Cart

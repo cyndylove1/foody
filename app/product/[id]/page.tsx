@@ -11,6 +11,7 @@ import ShopNavbar from "@/app/components/ui/shopNavbar";
 import ProductInformation from "@/app/components/ui/productInformation";
 import Footer from "@/app/components/ui/footer";
 import CustomerFeedback from "@/app/components/ui/customerFeedback";
+import BreadCrumbs from "@/app/components/breadCrumbs";
 
 const images = [maggi, maggi1, maggi2, maggi3, maggi4];
 
@@ -19,15 +20,24 @@ interface PageProps {
 }
 
 export default function ProductDetails({ params }: PageProps) {
-  // Safe asynchronous unpacking matching Next.js 15+ routing specifications
+
+  const productLinks = [
+    { label: "Home", href: "/" },
+    { label: "Cart", href: "/cart" },
+    { label: "Spices", href: "/categories/spices" },
+    { label: "Scotch Bonnet Pepper" },
+  ];
+  
   const { id } = use(params);
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
   return (
     <>
       <ShopNavbar />
-      <div className="w-full">
-        <div className="bg-[#fff1e1]/60 md:p-8 p-4 rounded-[16px] w-full border-t border-b border-gray-300">
+
+      <div className=" bg-[#fff1e1]/60">
+        <BreadCrumbs items={productLinks} />
+        <div className="w-full md:p-8 p-4 rounded-[16px] w-full border-t border-b border-gray-300">
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-start mb-20">
             {/* LEFT: Images */}
             <div className="">
