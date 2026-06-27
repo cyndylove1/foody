@@ -1,5 +1,3 @@
-
-
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -10,8 +8,8 @@ function cn(...inputs: ClassValue[]) {
 type ButtonProps = {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "tertiary";
-  className?: string; 
-} & React.ButtonHTMLAttributes<HTMLButtonElement>; 
+  className?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
   children,

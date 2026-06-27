@@ -1,48 +1,10 @@
 import MenuList from "@/app/components/ui/menuList";
 import ProductCard from "@/app/components/ui/productCard";
 import { LayoutGrid, List } from "lucide-react";
+import { productsMock } from "../constant";
 import Footer from "../components/ui/footer";
 import ShopNavbar from "../components/ui/shopNavbar";
 import Link from "next/link";
-
-const productsMock = [
-  {
-    id: "1",
-    name: "Scotch Bonnet Pepper",
-    imageSrc: "/assets/bonnet.jpg",
-    originalPrice: 7.99,
-    currentPrice: 5.99,
-    colors: [
-      { hex: "#dc2626", name: "Red" },
-      { hex: "#ea580c", name: "Orange" },
-      { hex: "#ca8a04", name: "Yellow" },
-    ],
-  },
-  {
-    id: "2",
-    name: "Maggi",
-    imageSrc: "/assets/maggi.jpg",
-    originalPrice: 10.5,
-    currentPrice: 8.99,
-    colors: [{ hex: "#ca8a04", name: "Gold" }],
-  },
-  {
-    id: "3",
-    name: "Poundo Yam Flour",
-    imageSrc: "/assets/poundo.jpg",
-    originalPrice: 55.0,
-    currentPrice: 51.0,
-    colors: [{ hex: "#fef08a", name: "Off-White" }],
-  },
-  {
-    id: "4",
-    name: "Pap (Ogi)",
-    imageSrc: "/assets/pap.jpg",
-    originalPrice: 2.5,
-    currentPrice: 1.99,
-    colors: [{ hex: "#78350f", name: "Brown" }],
-  },
-];
 
 export default function Category() {
   return (
@@ -74,7 +36,6 @@ export default function Category() {
           <div className="">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {productsMock.map((prod) => (
-                // 2. Wrap item with a clear unique href matching your folder structure
                 <Link
                   href={`/product/${prod.id}`}
                   key={prod.id}

@@ -34,9 +34,8 @@ export default function ProductDetails({ params }: PageProps) {
   return (
     <>
       <ShopNavbar />
-
       <div className=" bg-[#fff1e1]/60">
-        <BreadCrumbs items={productLinks} />
+        <BreadCrumbs items={productLinks} className="mx-4 md:mx-12" />
         <div className="w-full md:p-8 p-4 rounded-[16px] w-full border-t border-b border-gray-300">
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-start mb-20">
             {/* LEFT: Images */}

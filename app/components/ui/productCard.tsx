@@ -23,13 +23,10 @@ export default function ProductCard({
   id,
   name,
   imageSrc,
-  originalPrice,
   currentPrice,
-  colors,
 }: BagCardProps) {
   return (
     <div className="flex flex-col w-full group bg-gray-50 p-4 overflow-hidden">
-      {/* 1. White Rounded Image Box Wrapper */}
       <Link
         href={`/product/${id}`}
         className="relative w-full aspect-square rounded-2xl flex items-center justify-center cursor-pointer transition-shadow duration-300 hover:shadow-md overflow-hidden"
@@ -46,21 +43,19 @@ export default function ProductCard({
         </div>
       </Link>
 
-      {/* 2. Text Details Area (Left-Aligned) */}
+      {/*Text Details */}
       <div className="pt-4 px-1 flex flex-col text-left">
-        {/* Title text matching the dark organic tint */}
         <Link href={`/product/${id}`}>
           <h3 className="text-base font-medium text-[#1c2e24] hover:text-[#335341] transition-colors line-clamp-1 cursor-pointer">
             {name}
           </h3>
         </Link>
-
-        {/* Pricing Matrix Layout */}
+        {/* Pricing  */}
         <div className="flex items-center justify-between gap-4 mt-2">
           <span className="text-sm font-bold text-gray-900">
             ${currentPrice}
           </span>
-          <Quantity/>
+          <Quantity />
         </div>
       </div>
       <Button variant="primary" className="my-4">

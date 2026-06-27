@@ -13,7 +13,6 @@ export default function ShopNavbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close profile dropdown if clicked outside of it
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -30,9 +29,8 @@ export default function ShopNavbar() {
   return (
     <>
       <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 md:px-12 flex items-center justify-between relative z-40">
-        {/* Left: Menu Trigger Icon and Brand Identity Logo */}
         <div className="flex items-center gap-3 select-none shrink-0">
-          {/* Left-Side Categories Drawer Trigger */}
+          {/* Drawer Trigger icon*/}
           <button
             type="button"
             onClick={() => setIsSidebarOpen(true)}
@@ -42,13 +40,13 @@ export default function ShopNavbar() {
             <IoIosList className="w-6 h-6 stroke-[1.75]" />
           </button>
 
-          {/* Logo Container */}
+          {/* Logo */}
           <div className="flex items-center">
             <Logo />
           </div>
         </div>
 
-        {/* Middle: Fully Rounded Input Search Bar */}
+        {/*Input Search Bar */}
         <div className="flex-1 max-w-2xl mx-8 hidden md:block">
           <div className="relative w-full flex items-center">
             <Search className="absolute left-5 w-5 h-5 text-stone-400 pointer-events-none" />
@@ -60,9 +58,8 @@ export default function ShopNavbar() {
           </div>
         </div>
 
-        {/* Right: Functional Control Stack */}
         <div className="flex items-center space-x-4 md:space-x-5 shrink-0 relative">
-          {/* Action Button: Favorites */}
+          {/* Favorites icon*/}
           <button
             type="button"
             aria-label="View favorites"
@@ -83,7 +80,7 @@ export default function ShopNavbar() {
             <Search size={20} strokeWidth={2.5} />
           </button>
 
-          {/* Action Button: Cart Bag Indicator */}
+          {/* Cart icon */}
           <Link href="/cart">
             <button
               aria-label="Cart"
@@ -96,7 +93,7 @@ export default function ShopNavbar() {
             </button>
           </Link>
 
-          {/* Action Button: Side Menu Trigger / Dropdown Wrapper */}
+          {/* Side Menu */}
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
@@ -113,7 +110,7 @@ export default function ShopNavbar() {
               )}
             </button>
 
-            {/* Profile Dropdown Menu */}
+            {/* Dropdown Menu */}
             {isOpen && (
               <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl border border-stone-100/80 shadow-[0_10px_30px_rgba(0,0,0,0.08)] py-5 px-6 flex flex-col z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 <Link
@@ -176,16 +173,16 @@ export default function ShopNavbar() {
         )}
       </header>
 
-      {/* Left-Sliding Category Sidebar Sheet Overlay */}
+      {/* Category Sidebar*/}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex">
-          {/* Smooth Dark Backdrop */}
+          {/* Dark Backdrop */}
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setIsSidebarOpen(false)}
           />
 
-          {/* Left Sheet Drawer Content Panel */}
+          {/* Sidebar Drawer */}
           <div className="relative flex flex-col w-full max-w-xs h-full bg-white shadow-2xl overflow-y-auto transform transition-transform duration-300 ease-out animate-in slide-in-from-left">
             <div className="flex items-center justify-between px-4">
               <Logo />
@@ -200,8 +197,7 @@ export default function ShopNavbar() {
                 </button>
               </div>
             </div>
-
-            {/* Nested Filter/Category Menu Content Wrapper */}
+            {/* Category Menu */}
             <div className="flex-1">
               <MenuList />
             </div>

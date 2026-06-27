@@ -4,41 +4,8 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import Navbar from "../components/ui/navbar";
 import Footer from "../components/ui/footer";
-
-interface FaqItem {
-  id: number;
-  question: string;
-  answer: string;
-}
-
-const faqData: FaqItem[] = [
-  {
-    id: 1,
-    question: "What types of items can I find on Foody?",
-    answer:
-      "Foody is your one-stop online destination for premium authentic seasonings, traditional soup ingredients (like authentic soup bases and thickeners), everyday grocery essentials, and natural beauty products sourced to keep you feeling vibrant inside and out.",
-  },
-  {
-    id: 2,
-    question:
-      "Are your seasoning blends and soup ingredients completely authentic?",
-    answer:
-      "Yes, absolutely! We take pride in sourcing our seasonings, flours, and soup ingredients directly from local producers and trusted suppliers to guarantee the traditional flavors and premium quality your kitchen deserves.",
-  },
-  {
-    id: 3,
-    question: "How should I store my Foody grocery purchases?",
-    answer:
-      "We recommend keeping dry goods, ground seasonings, and flour blends in a cool, dry place away from direct sunlight, ideally inside airtight containers. Fresh ingredients or specialized pastes should be refrigerated immediately upon arrival.",
-  },
-  {
-    id: 4,
-    question:
-      "Can I bundle grocery items and beauty products in a single delivery?",
-    answer:
-      "You sure can! You can seamlessly checkout with your favorite kitchen ingredients and personal care beauty essentials in one cart. Everything is carefully packaged together so your groceries and beauty products arrive safely at your doorstep.",
-  },
-];
+import { faqData } from "../constant";
+import Title from "../components/title";
 
 export default function Help() {
   const [openId, setOpenId] = useState<number | null>(null);
@@ -51,12 +18,7 @@ export default function Help() {
     <>
       <div className=" bg-[#fff1e1]/60">
         <Navbar />
-        <div className="space-y-2 flex flex-col items-center pt-20 pb-10">
-          <h2 className="text-2xl md:text-3xl font-semibold  text-gray-900 tracking-tight text-center">
-            Help and FAQ
-          </h2>
-          <div className="w-16 h-[3px] bg-(--main) rounded-full" />
-        </div>
+        <Title text=" Help and FAQ"  className="items-center pt-20 pb-10"/>
         <div className="py-12 px-4 flex justify-center items-center">
           <div className="w-full w-full max-w-5xl rounded-[24px] p-4 sm:p-12 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]">
             {/* Removed standard divide-y to manage individual item borders dynamically */}

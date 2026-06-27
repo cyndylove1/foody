@@ -1,41 +1,13 @@
 "use client";
 import Link from "next/link";
-import {
-  FaFacebookF,
-  FaLinkedinIn,
-  FaTwitter,
-  FaInstagram,
-} from "react-icons/fa";
 import { Mail } from "lucide-react";
 import Logo from "../logo";
-
-// Defined structured navigation dataset for social layout
-const socialLinks = [
-  {
-    id: "twitter",
-    icon: <FaTwitter className="w-4 h-4" />,
-    href: "#",
-    label: "Twitter",
-  },
-  {
-    id: "facebook",
-    icon: <FaFacebookF className="w-4 h-4" />,
-    href: "#",
-    label: "Facebook",
-  },
-  {
-    id: "instagram",
-    icon: <FaInstagram className="w-4 h-4" />,
-    href: "#",
-    label: "Instagram",
-  },
-  {
-    id: "linkedin",
-    icon: <FaLinkedinIn className="w-4 h-4" />,
-    href: "#",
-    label: "LinkedIn",
-  },
-];
+import {
+  categoryLinks,
+  helpLinks,
+  legalLinks,
+  socialLinks,
+} from "@/app/constant";
 
 export default function Footer() {
   return (
@@ -62,12 +34,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Main Footer Layout Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16">
-          {/* Left Column: Brand Info & Newsletter */}
           <div className="lg:col-span-5 flex flex-col space-y-6">
             {/* Logo */}
             <Logo />
-
-            {/* Brand Mission Description */}
             <p className="text-[14px] leading-relaxed max-w-sm text-gray-900">
               We specialize in sourcing and providing high-quality, authentic
               African ingredients, pantry staples, and spices that bring the
@@ -102,7 +71,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Right Column: Navigation link categories */}
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
             {/* Categories Links */}
             <div className="space-y-4">
@@ -110,20 +78,13 @@ export default function Footer() {
                 Categories
               </h4>
               <ul className="space-y-2.5 text-[14px] text-gray-900">
-                {[
-                  "Seasoning",
-                  "Spices",
-                  "Food Items",
-                  "Grocery",
-                  "Beauty",
-                  "Frozen Foods",
-                ].map((item) => (
-                  <li key={item}>
+                {categoryLinks.map((item) => (
+                  <li key={item.name}>
                     <Link
-                      href="#"
+                      href={item.href}
                       className="hover:text-(--main) transition-colors duration-200"
                     >
-                      {item}
+                      {item.name}
                     </Link>
                   </li>
                 ))}
@@ -136,18 +97,16 @@ export default function Footer() {
                 Legal
               </h4>
               <ul className="space-y-2.5 text-[14px] text-gray-900">
-                {["Privacy Policy", "Term and Condition", "Refund Policy"].map(
-                  (item) => (
-                    <li key={item}>
-                      <Link
-                        href="#"
-                        className="hover:text-(--main) transition-colors duration-200"
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  ),
-                )}
+                {legalLinks.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="hover:text-(--main) transition-colors duration-200"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -157,20 +116,13 @@ export default function Footer() {
                 Help
               </h4>
               <ul className="space-y-2.5 text-[14px] text-gray-900">
-                {/* Added missing wrapping evaluation braces here */}
-                {[
-                  "How To Order",
-                  "Track Order",
-                  "Return & Exchanges",
-                  "FAQ",
-                  "Contact Us",
-                ].map((item) => (
-                  <li key={item}>
+                {helpLinks.map((item) => (
+                  <li key={item.name}>
                     <Link
-                      href="#"
+                      href={item.href}
                       className="hover:text-(--main) transition-colors duration-200"
                     >
-                      {item}
+                      {item.name}
                     </Link>
                   </li>
                 ))}
@@ -185,18 +137,22 @@ export default function Footer() {
             © 2026 Copyright by Foody. All Right Reserved
           </p>
 
-          {/* Social Pill Links containing React Icons */}
+          {/* Social Icons */}
           <div className="flex flex-wrap items-center justify-center gap-3 order-1 sm:order-2">
-            {socialLinks.map((social) => (
-              <Link
-                key={social.id}
-                href={social.href}
-                aria-label={social.label}
-                className="hover:bg-(--main) bg-[#362719] border border-[#332518] text-white p-2 rounded-full transition-all duration-200 flex items-center justify-center"
-              >
-                {social.icon}
-              </Link>
-            ))}
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+
+              return (
+                <Link
+                  key={social.id}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="hover:bg-(--main) bg-[#362719] border border-[#332518] text-white p-2 rounded-full transition-all duration-200 flex items-center justify-center"
+                >
+                  <Icon className="w-4 h-4" />
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>

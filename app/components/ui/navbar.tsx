@@ -1,8 +1,7 @@
 "use client";
-
 import { useState } from "react";
-import { usePathname } from "next/navigation"; // Added for routing inspection
-import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import Logo from "../logo";
 import Link from "next/link";
 import Button from "../button";
@@ -10,18 +9,15 @@ import Button from "../button";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const pathname = usePathname(); // Holds current active path value (e.g., "/categories")
+  const pathname = usePathname();
 
-  // Helper check function to find out which route layout is active
   const isActive = (path: string) => pathname === path;
 
   return (
     <header className="relative bg-transparent z-50">
-      {/* Main Header Row */}
       <div className="px-4 md:px-12 py-5 flex items-center justify-between">
         {/* Logo */}
         <Logo />
-
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-6 font-medium text-[#4A4A4A] text-sm absolute left-1/2 -translate-x-1/2 h-full">
           <Link

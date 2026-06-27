@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 
-// Define the blueprint structure for each breadcrumb segment
 interface BreadcrumbItem {
   label: string;
-  href?: string; // Optional: if provided, it becomes a clickable Link
+  href?: string;
+  
 }
 
 interface BreadCrumbsProps {
   items: BreadcrumbItem[];
+  className?: string;
 }
 
-export default function BreadCrumbs({ items }: BreadCrumbsProps) {
+export default function BreadCrumbs({ items, className }: BreadCrumbsProps) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="breadcrumbs text-[12px] font-[400] leading-[120%] text-(--gray-600) mx-4 md:mx-12 pt-4 jakarta"
+      className={`breadcrumbs text-[12px] font-[400] py-4 leading-[120%] text-(--gray-600) pt-4 jakarta ${className}`}
     >
       <ul className="flex items-center gap-2 flex-wrap">
         {items.map((item, index) => {
@@ -27,7 +28,6 @@ export default function BreadCrumbs({ items }: BreadCrumbsProps) {
               key={index}
               className={`flex items-center gap-2 ${isLast ? "text-(--main)" : ""}`}
             >
-              {/* If it's not the last item and has an href, render a Link wrapper */}
               {!isLast && item.href ? (
                 <Link
                   href={item.href}
