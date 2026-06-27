@@ -42,7 +42,7 @@ export default function SummaryTotals({ cartItems }: SummaryTotalsProps) {
             onChange={(e) => setCoupon(e.target.value)}
             className="flex-1 border border-stone-300 px-3 py-2 text-sm text-stone-800 focus:outline-none placeholder-stone-300"
           />
-          <Button variant="secondary" className="whitespace-nowrap">
+          <Button variant="secondary" className="">
             Apply Coupon
           </Button>
         </div>
