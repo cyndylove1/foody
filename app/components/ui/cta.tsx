@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Cta() {
   return (
-    <div className="relative w-full overflow-hidden my-20 h-[380px] sm:h-[450px] md:h-[300px] flex items-center justify-center">
+    <div className="relative w-full overflow-hidden bg-white my-20 h-[380px] sm:h-[450px] md:h-[300px] flex items-center justify-center">
       <div className="absolute inset-0 z-0 mx-4 rounded-xl overflow-hidden">
         <Image
           src={"/assets/basket2.png"}

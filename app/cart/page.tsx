@@ -23,7 +23,7 @@ export default function Cart() {
     {
       id: "1",
       imageSrc: "/assets/bonnet.jpg",
-      name: "Natural African Bathing Sponge",
+      name: "Scotch bonnet pepper",
       quantity: 1,
       price: 4.99,
     },
@@ -36,7 +36,7 @@ export default function Cart() {
   return (
     <>
       <ShopNavbar />
-      <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-[#fff1e1]/60 text-stone-800">
+      <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-[#fff1e1]/60  text-stone-800">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Product Table */}
           <div className="lg:col-span-8 overflow-x-auto">
@@ -78,7 +78,7 @@ export default function Cart() {
 
                       {/* Product Name */}
                       <td className="p-6 border-r border-stone-200 text-left">
-                        <span className="text-stone-400 font-normal text-[15px]">
+                        <span className="text-stone-600 font-normal text-[15px]">
                           {item.name}
                         </span>
                       </td>
