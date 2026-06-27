@@ -56,6 +56,7 @@ export default function Checkout() {
             {/* LEFT COLUMN */}
             <div className="lg:col-span-7 p-4 md:p-10 lg:p-14 border-r border-gray-300">
               <div className="py-6">
+              
                 <Logo />
               </div>
 

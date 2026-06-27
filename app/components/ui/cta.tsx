@@ -22,8 +22,8 @@ export default function Cta() {
           Essentials.
         </h2>
         {/* CTA Button */}
-        <Link href="/categories" className="mt-10">
-          <Button variant="primary">Shop Essentials</Button>
+        <Link href="/categories">
+          <Button variant="primary" className="mt-6">Shop Essentials</Button>
         </Link>
       </div>
     </div>
