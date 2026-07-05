@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Logo from "../../components/logo";
 import Button from "../../components/button";
 import CustomInput from "@/app/components/customInput";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/hooks/useAuth";
+
+
 
 export default function ForgotPassword() {
+  const router = useRouter();
+  const { forgotPassword, isRequestingReset } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -15,10 +21,17 @@ export default function ForgotPassword() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log("Form submitted:", formData);
+    try {
+      await forgotPassword(formData);
+      // Route over to your reset password screen following successful token/OTP delivery
+      router.push(
+        `/reset-password?email=${encodeURIComponent(formData.email)}`,
+      );
+    } catch (error) {
+      console.error("Forgot password request failed:", error);
+    }
   };
 
   return (
@@ -30,21 +43,28 @@ export default function ForgotPassword() {
         </h1>
       </div>
       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-5">
-        {/*  Email Address */}
+        {/* Email Address */}
         <div>
           <CustomInput
             label="Email"
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
             placeholder="Enter your Email"
             required={true}
+            disabled={isRequestingReset}
           />
         </div>
         {/* Submit Button */}
         <div className="pt-2">
-          <Button variant="primary" className="w-full">
-            Proceed
+          <Button
+            variant="primary"
+            className="w-full"
+            type="submit"
+            disabled={isRequestingReset}
+          >
+            {isRequestingReset ? "Processing..." : "Proceed"}
           </Button>
         </div>
       </form>

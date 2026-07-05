@@ -41,7 +41,7 @@ export default function ProductInformation() {
           <span className="text-xs font-bold text-[#111111] block pb-4">
             Quantity
           </span>
-          <Quantity />
+          <Quantity/>
         </div>
 
         {/* Social Rating */}

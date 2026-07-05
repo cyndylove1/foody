@@ -1,10 +1,10 @@
+import Link from "next/link";
 import MenuList from "@/app/components/ui/menuList";
 import ProductCard from "@/app/components/ui/productCard";
 import { LayoutGrid, List } from "lucide-react";
 import { productsMock } from "../constant";
 import Footer from "../components/ui/footer";
 import ShopNavbar from "../components/ui/shopNavbar";
-import Link from "next/link";
 
 export default function Category() {
   return (

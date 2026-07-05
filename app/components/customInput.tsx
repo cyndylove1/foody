@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 interface CustomInputProps {
   label: string;
@@ -13,6 +16,7 @@ interface CustomInputProps {
   name?: string;
   value?: string;
   height?: string | number;
+  disabled?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -25,9 +29,28 @@ const CustomInput: React.FC<CustomInputProps> = ({
   name,
   value,
   height = "46px",
+  disabled = false,
   onChange,
 }) => {
   const jakartaFont = "'Plus Jakarta Sans', sans-serif";
+
+  // Local state to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((prev) => !prev);
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
+
+  // Determine the actual type of the HTML input dynamically
+  const isPasswordType = type === "password";
+  const inputType = isPasswordType
+    ? showPassword
+      ? "text"
+      : "password"
+    : type;
 
   return (
     <Box sx={{ width: "100%", mb: 2 }}>
@@ -38,7 +61,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
         label={label}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        type={type}
+        disabled={disabled}
+        type={inputType} // Dynamically derived input type
         onChange={onChange}
         fullWidth
         variant="outlined"
@@ -46,16 +70,37 @@ const CustomInput: React.FC<CustomInputProps> = ({
           inputLabel: {
             shrink: type === "date" ? true : undefined,
           },
+          // Inject the end adornment (eye icon) inside slotProps for newer MUI versions
+          input: {
+            endAdornment: isPasswordType ? (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                  disabled={disabled}
+                  sx={{ color: "#6b7280", mr: 0.5 }}
+                >
+                  {showPassword ? (
+                    <FiEyeOff  size={17} />
+                  ) : (
+                    <FiEye size={17}/>
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ) : undefined,
+          },
         }}
         sx={{
           "& .MuiInputBase-root": {
             height: height,
             borderRadius: "8px",
             fontFamily: jakartaFont,
-            backgroundColor: "#fff",
+            backgroundColor: disabled ? "#f3f4f6" : "#fff",
           },
           "& .MuiInputBase-input": {
-            color: "#111827",
+            color: disabled ? "#9ca3af" : "#111827",
             fontSize: "0.875rem",
             fontFamily: jakartaFont,
             "&::placeholder": {
@@ -68,7 +113,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           "& .MuiInputLabel-root": {
             fontFamily: jakartaFont,
             fontSize: "0.85rem",
-            color: "#6b7280",
+            color: disabled ? "#9ca3af" : "#6b7280",
             "&.Mui-focused, &.MuiFormLabel-filled": {
               color: "#000",
               fontSize: "0.89rem",
@@ -79,7 +124,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
               borderColor: "#d8dadc",
             },
             "&:hover fieldset": {
-              borderColor: "#c02b29",
+              borderColor: disabled ? "#d8dadc" : "#c02b29",
             },
             "&.Mui-focused fieldset": {
               borderColor: "#c02b29",

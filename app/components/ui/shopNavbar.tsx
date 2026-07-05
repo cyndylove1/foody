@@ -6,14 +6,25 @@ import { IoIosList } from "react-icons/io";
 import { Search, Heart, Menu as MenuIcon, ShoppingCart, X } from "lucide-react";
 import Logo from "../logo";
 import MenuList from "./menuList";
+import LoggedInButton from "../LoggedInButton";
+import { useAuth } from "@/app/hooks/useAuth";
+import { useCart } from "@/app/hooks/useCart";
+import { useProfile } from "@/app/hooks/useProfile";
 
 export default function ShopNavbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+   const { totalItems } = useCart();
+
+  const { logout } = useAuth();
+  const { data: user } = useProfile();
 
   useEffect(() => {
+    setMounted(true);
+
     function handleClickOutside(event: MouseEvent) {
       if (
         dropdownRef.current &&
@@ -87,9 +98,12 @@ export default function ShopNavbar() {
               className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2} />
-              <span className="absolute top-2 right-2 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                2
-              </span>
+              {mounted && totalItems > 0 && (
+                <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+             
             </button>
           </Link>
 
@@ -113,44 +127,80 @@ export default function ShopNavbar() {
             {/* Dropdown Menu */}
             {isOpen && (
               <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl border border-stone-100/80 shadow-[0_10px_30px_rgba(0,0,0,0.08)] py-5 px-6 flex flex-col z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                {mounted && user ? (
+                  <>
+                    <div className="flex items-center gap-3 py-1.5">
+                      {/* Disabled dropdown functionality here safely */}
+                      <LoggedInButton disableDropdown={true} />
+                      <span className="text-[15px] font-semibold text-stone-800 truncate">
+                        Hi, {user.first_name || "User"}
+                      </span>
+                    </div>
+                    <hr className="border-t border-gray-200 my-2" />
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/sign-up"
+                      className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Sign up
+                    </Link>
+                    <Link
+                      href="/login"
+                      className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Log in
+                    </Link>
+                    <hr className="border-t border-stone-100 my-2" />
+                  </>
+                )}
+
                 <Link
-                  href="/sign-up"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  href="/profile"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
-                  Sign up
+                  Profile
                 </Link>
-                <Link
-                  href="/login"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Log in
-                </Link>
-
-                <hr className="border-t border-stone-100 my-2" />
-
                 <Link
                   href="/categories"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Shop
                 </Link>
                 <Link
                   href="/contact"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Contact us
                 </Link>
                 <Link
                   href="/help"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Help
                 </Link>
+
+                {mounted && user && (
+                  <>
+                    <hr className="border-t border-gray-200 my-2" />
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                        logout();
+                      }}
+                      className="text-[17px] font-medium text-red-500 text-left py-2 hover:font-semibold transition-all"
+                    >
+                      Log out
+                    </button>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -176,13 +226,11 @@ export default function ShopNavbar() {
       {/* Category Sidebar*/}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex">
-          {/* Dark Backdrop */}
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setIsSidebarOpen(false)}
           />
 
-          {/* Sidebar Drawer */}
           <div className="relative flex flex-col w-full max-w-xs h-full bg-white shadow-2xl overflow-y-auto transform transition-transform duration-300 ease-out animate-in slide-in-from-left">
             <div className="flex items-center justify-between px-4">
               <Logo />
@@ -197,7 +245,6 @@ export default function ShopNavbar() {
                 </button>
               </div>
             </div>
-            {/* Category Menu */}
             <div className="flex-1">
               <MenuList />
             </div>

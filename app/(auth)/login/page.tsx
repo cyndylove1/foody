@@ -5,8 +5,11 @@ import Link from "next/link";
 import Logo from "../../components/logo";
 import Button from "../../components/button";
 import CustomInput from "@/app/components/customInput";
+import { useAuth } from "@/app/hooks/useAuth"; 
 
 export default function Login() {
+  // const { login, isLoading } = useAuth(); 
+  const { login, isLoggingIn: isLoading } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,9 +20,15 @@ export default function Login() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
+    try {
+      await login(formData);
+      setFormData({ email: "", password: "" });
+    } catch (error) {
+      console.error("Login dispatch error:", error);
+    }
   };
 
   return (
@@ -40,6 +49,7 @@ export default function Login() {
             onChange={handleChange}
             placeholder="Enter your Email"
             required={true}
+            disabled={isLoading} 
           />
         </div>
         {/* Password */}
@@ -47,21 +57,28 @@ export default function Login() {
           <CustomInput
             label="Password"
             name="password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
             placeholder="Enter your Password"
             required={true}
+            disabled={isLoading}
           />
         </div>
 
         {/* Submit Button*/}
         <div className="pt-2">
-          <Button variant="primary" className="w-full">
-            Log in
+          <Button
+            variant="primary"
+            className="w-full"
+            type="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging in..." : "Log in"}
           </Button>
         </div>
 
-        {/* Bottom  Route */}
+        {/* Bottom Route */}
         <div className="flex items-center justify-between text-sm pt-1">
           <p className="text-stone-600 font-medium">
             Don't have an account?{" "}

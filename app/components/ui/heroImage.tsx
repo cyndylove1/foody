@@ -9,6 +9,7 @@ export default function HeroImage() {
             src="/assets/basket2.png"
             alt="hero-image"
             fill
+            sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 460px"
             className="object-cover transform scale-105 hover:rotate-6 transition-transform duration-700 ease-out"
           />
           {/* 20% Off Floating Badge */}
