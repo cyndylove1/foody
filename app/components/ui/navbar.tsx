@@ -18,7 +18,6 @@ export default function Navbar() {
   const pathname = usePathname();
   const { logout } = useAuth();
   const { totalItems } = useCart();
-
   const { data: user } = useProfile();
 
   useEffect(() => {

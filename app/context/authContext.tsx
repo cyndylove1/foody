@@ -34,6 +34,7 @@ interface ResetPasswordData {
 interface AuthContextType {
   token: string | null;
   isLoading: boolean;
+  isRegistering: boolean;
   isLoggingIn: boolean;
   isLoggingOut: boolean;
   isRequestingReset: boolean;
@@ -56,10 +57,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const queryClient = useQueryClient();
   const [token, setToken] = useState<string | null>(null);
 
+  // 1. ADDED: An explicit loading state for the initial localStorage read
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
   // Sync token on mount
   useEffect(() => {
     const storedToken = localStorage.getItem("auth_token");
-    setToken(storedToken);
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    // 2. FIXED: Signal that we are done checking localStorage
+    setIsInitialLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("auth_token");
+
+    console.log("Stored Token:", storedToken);
+
+    if (storedToken) {
+      setToken(storedToken);
+    }
+
+    setIsInitialLoading(false);
   }, []);
 
   const registerMutation = useMutation({
@@ -124,19 +144,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (data: LoginData) => {
     const result = await loginMutation.mutateAsync(data);
+    // console.log("LOGIN RESPONSE:", result);
     const payload = result?.data || result;
+    //  console.log("PAYLOAD:", payload);
     const receivedToken = payload?.token;
-
+    // console.log("TOKEN:", receivedToken);
     if (receivedToken) {
       localStorage.setItem("auth_token", receivedToken);
+      localStorage.setItem("user", JSON.stringify(payload.user));
+
       setToken(receivedToken);
 
-      // Seed the query cache directly if the login response contains the user record
-      if (payload?.user) {
-        queryClient.setQueryData(["user-profile"], payload.user);
-      } else {
-        queryClient.invalidateQueries({ queryKey: ["user-profile"] });
-      }
+      queryClient.setQueryData(["user-profile"], payload.user);
 
       router.push("/");
     }
@@ -152,8 +171,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       console.error(error);
     } finally {
       localStorage.removeItem("auth_token");
+      localStorage.removeItem("user");
       setToken(null);
-      queryClient.clear(); 
+      queryClient.clear();
       router.replace("/login");
     }
   };
@@ -170,7 +190,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         token,
-        isLoading: registerMutation.isPending,
+        // 3. FIXED: isLoading now properly covers the application startup period
+        isLoading: isInitialLoading,
+        isRegistering: registerMutation.isPending,
         isLoggingIn: loginMutation.isPending,
         isLoggingOut: logoutMutation.isPending,
         isRequestingReset: forgotPasswordMutation.isPending,

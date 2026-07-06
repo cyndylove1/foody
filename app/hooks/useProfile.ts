@@ -13,30 +13,37 @@ export interface UserProfile {
 }
 
 const fetchProfile = async (): Promise<UserProfile> => {
-  const token = localStorage.getItem("auth_token");
-
-  console.log("Token:", token);
-
-  const response = await apiClient.get("/auth/me", {
-    headers: {
-      Authorization: token ? `Bearer ${token}` : "",
-    },
-  });
-
-  console.log("Profile Response:", response);
-  console.log("Profile Response Data:", response.data);
-  console.log("User Details:", response.data.data);
+  const response = await apiClient.get("/auth/me");
 
   return response.data.data || response.data;
 };
 
 export const useProfile = () => {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+
+  const cachedUser =
+    typeof window !== "undefined" ? localStorage.getItem("user") : null;
+
   return useQuery({
     queryKey: ["user-profile"],
-    queryFn: fetchProfile,
-    enabled:
-      typeof window !== "undefined" && !!localStorage.getItem("auth_token"),
-    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      const user = await fetchProfile();
+
+      // Keep localStorage in sync with the latest profile
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
+      return user;
+    },
+    enabled: !!token,
+    initialData: cachedUser ? JSON.parse(cachedUser) : undefined,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
     retry: 1,
+    refetchOnMount: true,
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: false,
   });
 };

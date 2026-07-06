@@ -7,8 +7,6 @@ import { AuthProvider } from "./context/authContext";
 import { CartProvider } from "./context/CartContext";
 import "react-toastify/dist/ReactToastify.css";
 
-
-
 const jakarta = Plus_Jakarta_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   subsets: ["latin"],

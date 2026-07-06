@@ -23,7 +23,7 @@ const Button = ({
   const variantStyles = {
     primary: "bg-[var(--main)] cursor-pointer text-white hover:bg-[#d63f26]",
     secondary:
-      "hover:bg-transparent hover:text-black text-white cursor-pointer border border-gray-300 bg-gray-900",
+      "hover:bg-transparent hover:text-black text-white cursor-pointer border border-gray-300 bg-black",
     tertiary:
       "bg-white/10 text-white hover:text-black cursor-pointer border border-gray-200 shadow-lg shadow-black/30 hover:bg-white",
   };
