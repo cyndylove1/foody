@@ -22,7 +22,8 @@ export default function Collection() {
 
   const { addToCart } = useCart();
 
-  const products = data?.pages.flatMap((page: any) => page.data) || [];
+  const products =
+    data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 bg-white lg:px-12 md:px-6">
@@ -65,9 +66,7 @@ export default function Collection() {
                 >
                   <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
                     <Image
-                      src={
-                        item.thumbnail || item.images?.[0] || "/poundo.jpg"
-                      }
+                      src={item.thumbnail || item.images?.[0] || "/poundo.jpg"}
                       alt={item.name}
                       fill
                       className="object-cover"
@@ -82,7 +81,7 @@ export default function Collection() {
                 <div className="flex flex-col flex-1">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-2xl font-extrabold tracking-tight text-stone-900">
-                      ${Number(item.effective_price).toFixed(2)}
+                      ${Number(item.effective_price || 0).toFixed(2)}
                     </span>
 
                     <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
