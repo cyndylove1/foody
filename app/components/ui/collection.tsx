@@ -66,7 +66,7 @@ export default function Collection() {
                   <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
                     <Image
                       src={
-                        item.thumbnail || item.images?.[0] || "/placeholder.jpg"
+                        item.thumbnail || item.images?.[0] || "/poundo.jpg"
                       }
                       alt={item.name}
                       fill

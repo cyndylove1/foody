@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const fetchProducts = async ({ pageParam = 1 }) => {
   const response = await axios.get(`${BASE_URL}/products?page=${pageParam}`);
-  console.log("Products API:", response.data);
+  // console.log("Products API:", response.data);
   return response.data;
 };
 

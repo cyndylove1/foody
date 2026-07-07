@@ -34,7 +34,7 @@ export default function FeaturedProduct() {
                 <div className="p-4">
                   <div className="relative w-full h-[260px]">
                     <Image
-                      src={product.image}
+                      src={product.image || "/bonnet.jpg"}
                       alt={product.name}
                       fill
                       className="object-contain p-4"
