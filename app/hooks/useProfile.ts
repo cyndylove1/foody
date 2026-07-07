@@ -39,8 +39,8 @@ export const useProfile = () => {
     },
     enabled: !!token,
     initialData: cachedUser ? JSON.parse(cachedUser) : undefined,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-    gcTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: 1000 * 60 * 5, 
+    gcTime: 1000 * 60 * 10, 
     retry: 1,
     refetchOnMount: true,
     refetchOnReconnect: true,
