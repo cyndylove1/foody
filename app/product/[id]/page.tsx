@@ -1,73 +1,104 @@
 "use client";
 
-import { useState, use } from "react"; // Imported 'use' from react
+import { useState, use } from "react";
 import Image from "next/image";
-import maggi from "@/public/assets/bonnet.jpg";
-import maggi1 from "@/public/assets/maggi.jpg";
-import maggi2 from "@/public/assets/maggi.jpg";
-import maggi3 from "@/public/assets/maggi.jpg";
-import maggi4 from "@/public/assets/maggi.jpg";
+
 import ShopNavbar from "@/app/components/ui/shopNavbar";
 import ProductInformation from "@/app/components/ui/productInformation";
 import Footer from "@/app/components/ui/footer";
 import CustomerFeedback from "@/app/components/ui/customerFeedback";
-
-const images = [maggi, maggi1, maggi2, maggi3, maggi4];
+import BreadCrumbs from "@/app/components/breadCrumbs";
+import { useSingleProduct } from "@/app/hooks/useSingleProuduct";
 
 interface PageProps {
   params: Promise<{ id: string }>;
 }
 
 export default function ProductDetails({ params }: PageProps) {
-  // Safe asynchronous unpacking matching Next.js 15+ routing specifications
   const { id } = use(params);
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+
+  const { data, isLoading, isError, error } = useSingleProduct(id);
+
+  const product = data?.data;
+
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const images = [product?.thumbnail, ...(product?.images || [])].filter(
+    Boolean,
+  );
+
+  const productLinks = [
+    { label: "Home", href: "/" },
+    { label: "Products", href: "/shop" },
+    { label: product?.name || "Loading..." },
+  ];
 
   return (
     <>
       <ShopNavbar />
-      <div className="w-full">
-        <div className="bg-[#fff1e1]/60 md:p-8 p-4 rounded-[16px] w-full border-t border-b border-gray-300">
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 items-start mb-20">
-            {/* LEFT: Images */}
-            <div className="">
-              <div className="flex flex-col items-center">
-                <div className="w-full h-full rounded-xl overflow-hidden border border-gray-200">
-                  <Image
-                    src={selectedImage}
-                    alt="product-image"
-                    width={313}
-                    height={300}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
 
-                {/* Thumbnail images */}
-                <div className="flex items-center gap-4 mt-4">
-                  {images.map((img, index) => (
-                    <div
-                      key={index}
-                      onClick={() => setSelectedImage(img)}
-                      className={`w-full h-[60px] rounded-md overflow-hidden cursor-pointer border-2 transition-all duration-200 ${
-                        selectedImage === img
-                          ? "border-gray-400 "
-                          : "border-transparent hover:border-gray-300"
-                      }`}
-                    >
-                      <Image
-                        src={img}
-                        alt="Thumbnail"
-                        width={60}
-                        height={60}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
+      <div className="bg-[#fff1e1]/60">
+        <BreadCrumbs items={productLinks} className="mx-4 md:mx-12" />
+
+        <div className="p-4 md:p-8 border-y border-gray-300">
+          <div className="grid lg:grid-cols-2 gap-8 items-start">
+            {/* LEFT: Images */}
+            <div>
+              {isLoading ? (
+                <div className="flex items-center justify-center h-[500px] rounded-xl border border-gray-200 bg-white">
+                  <p className="text-gray-500 text-lg">Loading image...</p>
                 </div>
-              </div>
+              ) : isError ? (
+                <div className="flex items-center justify-center h-[500px] rounded-xl border border-gray-200 bg-white">
+                  <p className="text-red-500">{(error as Error).message}</p>
+                </div>
+              ) : (
+                <>
+                  {/* Main Image */}
+                  <div className="rounded-xl overflow-hidden border border-gray-200">
+                    <Image
+                      src={
+                        selectedImage ||
+                        product?.thumbnail ||
+                        "/placeholder.jpg"
+                      }
+                      alt={product?.name || "Product"}
+                      width={600}
+                      height={600}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  {/* Thumbnail Images */}
+                  {images.length > 0 && (
+                    <div className="flex flex-wrap gap-4 mt-4">
+                      {images.map((img: string, index: number) => (
+                        <div
+                          key={index}
+                          onClick={() => setSelectedImage(img)}
+                          className={`w-20 h-20 rounded-md overflow-hidden cursor-pointer border-2 transition-all ${
+                            (selectedImage || product?.thumbnail) === img
+                              ? "border-orange-500"
+                              : "border-gray-200 hover:border-gray-400"
+                          }`}
+                        >
+                          <Image
+                            src={img}
+                            alt={`Thumbnail ${index + 1}`}
+                            width={80}
+                            height={80}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            <div className="flex-grow">
-              <ProductInformation />
+            {/* Product Information */}
+            <div>
+              <ProductInformation product={product} isLoading={isLoading} />
             </div>
           </div>
         </div>

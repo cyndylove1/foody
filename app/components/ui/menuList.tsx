@@ -1,64 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
-
-interface SubCategory {
-  name: string;
-  slug: string;
-}
-
-interface Category {
-  name: string;
-  subCategories?: SubCategory[];
-}
-
-const categoriesData: Category[] = [
-  {
-    name: "Soups",
-    subCategories: [
-      { name: "Seasonings", slug: "seasonings" },
-      { name: "Spices", slug: "spices" },
-      { name: "Dry Food", slug: "dry-food" },
-      { name: "Utensils", slug: "utensils" },
-    ],
-  },
-  {
-    name: "Drinks & Snacks",
-    subCategories: [
-      { name: "Drinks", slug: "drinks" },
-      { name: "Snack", slug: "snack" },
-      { name: "Candy", slug: "candy" },
-    ],
-  },
-  {
-    name: "Frozen Foods",
-    subCategories: [
-      { name: "Meat & Poultry", slug: "meat & poultry " },
-      { name: "Fish", slug: "fish" },
-      { name: "Vegetables", slug: "vegetables" },
-    ],
-  },
-  {
-    name: "Grocery",
-    subCategories: [
-      { name: "Grain", slug: "grain " },
-      { name: "Flours", slug: "flours" },
-      { name: "Cooking Oils", slug: "cooking-oil" },
-      { name: "Fresh Produce", slug: "fresh-produce" },
-      { name: "Beverages & Cereals", slug: "beverages & cereals" },
-      { name: "Baked Foods", slug: "baked-foods" },
-    ],
-  },
-  {
-    name: "Beauty & Health",
-    subCategories: [
-      { name: "Personal Care", slug: "personal-care " },
-      { name: "Hair", slug: "hair" },
-      { name: "Apparel", slug: "apparel" },
-    ],
-  },
-];
+import { categoriesData } from "@/app/constant";
 
 export default function MenuList() {
   const [openCategory, setOpenCategory] = useState<string | null>("Soups"); // Defaulting to Soups open like image 2
@@ -67,10 +10,8 @@ export default function MenuList() {
   const toggleCategory = (name: string) => {
     setOpenCategory(openCategory === name ? null : name);
   };
-
   return (
     <aside className="w-full h-full  md:w-64 md:flex flex-col p-6 rounded-md bg-white">
-      {/* Categories Accordion Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-black border-b border-gray-300 pb-3 mb-4">
           Categories
@@ -101,7 +42,7 @@ export default function MenuList() {
                   )}
                 </button>
 
-                {/* Subcategories Dropdown (as seen in category1.PNG) */}
+                {/* Subcategories Dropdown*/}
                 {hasSubs && isOpen && (
                   <div className="mt-3 ml-6 space-y-3 pl-2 border-l border-gray-100">
                     {category.subCategories?.map((sub) => (
@@ -120,12 +61,10 @@ export default function MenuList() {
           })}
         </div>
       </div>
-
-      {/* Filter Section from category.jpg */}
+      {/* Filter Section*/}
       <div>
         <h2 className="text-2xl font-bold text-black mb-4">Filter</h2>
-
-        {/* Size Filter Card Grid */}
+        {/* Size Filter */}
         <div className="space-y-3">
           <span className="text-sm font-semibold text-gray-400 block mb-2">
             Size
@@ -146,12 +85,10 @@ export default function MenuList() {
             </label>
           ))}
         </div>
-
         <div className="mt-6">
           <span className="text-sm font-semibold text-gray-400 block mb-2">
             Brands
           </span>
-          {/* Placeholder ready for additional criteria mapping */}
         </div>
       </div>
     </aside>

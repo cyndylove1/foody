@@ -1,45 +1,10 @@
-import { FaStar } from 'react-icons/fa6';
-import { GoChevronRight } from 'react-icons/go';
+import { comments, ratings } from "@/app/constant";
+import { FaStar } from "react-icons/fa6";
+import { GoChevronRight } from "react-icons/go";
 
 export default function CustomerFeedback() {
-  const ratings = [
-    { stars: 5, count: 11 },
-    { stars: 4, count: 8 },
-    { stars: 3, count: 5 },
-    { stars: 2, count: 3 },
-    { stars: 1, count: 1 },
-  ];
-
-  const comments = [
-    {
-      rating: 4,
-      title: 'It was okay',
-      text: 'I liked the texture',
-      date: '12-01-2025',
-    },
-    {
-      rating: 2,
-      title: 'Too light',
-      text: 'The material looks too light. Can be worn for big occasions',
-      date: '10-08-2025',
-    },
-    {
-      rating: 3,
-      title: 'It was okay',
-      text: 'I liked the texture',
-      date: '12-01-2025',
-    },
-    {
-      rating: 3,
-      title: 'It was okay',
-      text: 'I liked the texture',
-      date: '12-01-2025',
-    },
-  ];
-
   const average = 4.3;
   const totalRatings = 26;
-
   return (
     <div className="border-t border-gray-200 rounded-md bg-[#fff1e1]/60 w-full jakarta leading-[120%]">
       <div className="flex justify-between items-center border-b border-gray-200 p-4">

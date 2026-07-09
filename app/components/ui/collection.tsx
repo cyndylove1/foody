@@ -1,21 +1,38 @@
-import React from "react";
+"use client";
+
 import Image from "next/image";
-import Link from "next/link"; 
-import Button from "../button";
+import Link from "next/link";
 import { Heart } from "lucide-react";
-import { premiumCollectionData } from "@/app/product";
+
+import Button from "../button";
+import Title from "../title";
+import { useProducts } from "@/app/hooks/useCollection";
+import { useCart } from "@/app/hooks/useCart"; // Adjust path as needed
 
 export default function Collection() {
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useProducts();
+
+  const { addToCart } = useCart();
+
+  const products =
+    data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 bg-white lg:px-12 md:px-6">
-      {/* Header Section */}
+      {/* Header */}
       <div>
-        <div className="space-y-2 flex flex-col items-center">
-          <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight text-center">
-            Authentic African Kitchen Staples
-          </h2>
-          <div className="w-16 h-[3px] bg-(--main) rounded-full" />
-        </div>
+        <Title
+          text="Authentic African Kitchen Staples"
+          className="items-center"
+        />
 
         <p className="pt-6 pb-10 max-w-xl mx-auto text-base md:text-lg text-center text-gray-600 leading-relaxed">
           Bring the genuine taste of home to your kitchen. Explore our
@@ -24,76 +41,98 @@ export default function Collection() {
         </p>
       </div>
 
-      {/* Grid Container */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {premiumCollectionData.map((item) => (
-          <div
-            key={item.id}
-            className="flex flex-col border border-gray-100 overflow-hidden p-4 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
-          >
-            {/* 2. Wrap Image Container with Link referencing the product id */}
-            <Link
-              href={`/product/${item.id}`}
-              className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group cursor-pointer"
-            >
-              <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
-                <Image
-                  src={item.imageSrc}
-                  alt={item.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider text-stone-700 bg-white/90 backdrop-blur-xs px-2.5 py-1 rounded-md shadow-xs z-10">
-                {item.category}
-              </span>
-            </Link>
-
-            {/* Price and Heart Icon Row */}
-            <div className="flex flex-col flex-1">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-2xl font-extrabold tracking-tight text-stone-900">
-                  ${item.price.toFixed(2)}
-                </span>
-
-                <button
-                  type="button"
-                  className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50 transition-colors duration-200"
-                  aria-label={`Add ${item.name} to favorites`}
+      {/* Loading */}
+      {isLoading ? (
+        <div className="flex justify-center items-center py-20">
+          <p className="text-lg text-gray-500">Loading products...</p>
+        </div>
+      ) : isError ? (
+        /* Error */
+        <div className="flex justify-center items-center py-20">
+          <p className="text-red-500">{(error as Error).message}</p>
+        </div>
+      ) : (
+        <>
+          {/* Products */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((item: any) => (
+              <div
+                key={item.id}
+                className="flex flex-col border border-gray-100 overflow-hidden p-4 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+              >
+                <Link
+                  href={`/product/${item.slug}`}
+                  className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group"
                 >
-                  <Heart className="w-5 h-5" />
-                </button>
-              </div>
+                  <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
+                    <Image
+                      src={item.thumbnail || item.images?.[0] || "/poundo.jpg"}
+                      alt={item.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-              {/* Optional: You can also wrap the Title inside a Link! */}
-              <Link href={`/product/${item.id}`}>
-                <h3 className="text-xl font-bold text-stone-900 mb-2 tracking-tight line-clamp-1 hover:text-orange-600 transition-colors cursor-pointer">
-                  {item.name}
-                </h3>
-              </Link>
-
-              <p className="text-[13px] leading-relaxed text-stone-600 min-h-[56px] mb-6 line-clamp-3">
-                {item.description}
-              </p>
-
-              <div className="grid grid-cols-2 gap-3 mt-auto">
-                <Button variant="secondary">Add to Cart</Button>
-                {/* 3. Link the Buy Now button directly to the details page as well */}
-                <Link href={`/product/${item.id}`} className="w-full">
-                  <Button variant="primary" className="w-full">
-                    Buy Now
-                  </Button>
+                  <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider text-stone-700 bg-white/90 px-2.5 py-1 rounded-md">
+                    {item.category?.name}
+                  </span>
                 </Link>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
 
-      <div className="flex justify-center mt-14">
-        <Button variant="secondary">See More Collections</Button>
-      </div>
+                <div className="flex flex-col flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-2xl font-extrabold tracking-tight text-stone-900">
+                      ${Number(item.effective_price || 0).toFixed(2)}
+                    </span>
+
+                    <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
+                      <Heart className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <Link href={`/product/${item.slug}`}>
+                    <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600">
+                      {item.name}
+                    </h3>
+                  </Link>
+
+                  <p className="text-[13px] leading-relaxed text-stone-600 min-h-[56px] mb-6 line-clamp-3">
+                    {item.short_description}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3 mt-auto">
+                    <Button variant="secondary" onClick={() => addToCart(item)}>
+                      Add to Cart
+                    </Button>
+
+                    <Link href={`/product/${item.slug}`} className="w-full">
+                      <Button variant="primary" className="w-full">
+                        Buy Now
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Load More */}
+          <div className="flex justify-center mt-14">
+            {hasNextPage ? (
+              <Button
+                variant="secondary"
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
+              >
+                {isFetchingNextPage ? "Loading..." : "See More Collections"}
+              </Button>
+            ) : (
+              <Button variant="secondary" disabled>
+                No More Products
+              </Button>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

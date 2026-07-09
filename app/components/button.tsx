@@ -1,5 +1,3 @@
-
-
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -10,8 +8,8 @@ function cn(...inputs: ClassValue[]) {
 type ButtonProps = {
   children: React.ReactNode;
   variant?: "primary" | "secondary" | "tertiary";
-  className?: string; // Added to pass custom styles from other components
-} & React.ButtonHTMLAttributes<HTMLButtonElement>; // Allows all native button props (onClick, type, etc.)
+  className?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button = ({
   children,
@@ -25,7 +23,7 @@ const Button = ({
   const variantStyles = {
     primary: "bg-[var(--main)] cursor-pointer text-white hover:bg-[#d63f26]",
     secondary:
-      "bg-transparent text-black hover:text-white cursor-pointer border border-gray-300 hover:bg-gray-900",
+      "hover:bg-transparent hover:text-black text-white cursor-pointer border border-gray-300 bg-black",
     tertiary:
       "bg-white/10 text-white hover:text-black cursor-pointer border border-gray-200 shadow-lg shadow-black/30 hover:bg-white",
   };

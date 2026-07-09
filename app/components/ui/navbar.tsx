@@ -1,25 +1,34 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname } from "next/navigation"; // Added for routing inspection
-import { Search, ShoppingCart, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import Logo from "../logo";
 import Link from "next/link";
 import Button from "../button";
+import LoggedInButton from "../LoggedInButton";
+import { useAuth } from "@/app/hooks/useAuth";
+import { useCart } from "@/app/hooks/useCart";
+import { useProfile } from "@/app/hooks/useProfile"; // Imported custom profile hook
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const pathname = usePathname(); // Holds current active path value (e.g., "/categories")
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
+  const { logout } = useAuth();
+  const { totalItems } = useCart();
+  const { data: user } = useProfile();
 
-  // Helper check function to find out which route layout is active
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const isActive = (path: string) => pathname === path;
 
   return (
     <header className="relative bg-transparent z-50">
-      {/* Main Header Row */}
       <div className="px-4 md:px-12 py-5 flex items-center justify-between">
-        {/* Logo */}
         <Logo />
 
         {/* Desktop Navigation Links */}
@@ -75,7 +84,6 @@ export default function Navbar() {
 
         {/* Action Items */}
         <div className="flex items-center gap-2 md:gap-6">
-          {/* Search Toggle Button */}
           <button
             aria-label="Search"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -87,31 +95,39 @@ export default function Navbar() {
           >
             <Search size={20} strokeWidth={2.5} />
           </button>
-
-          {/* Cart Icon */}
           <Link href="/cart">
             <button
               aria-label="Cart"
-              className="p-2 text-[#2C2C2C] hover:text-[#EA4D32] transition-colors relative"
+              className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2.5} />
-              <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                2
-              </span>
+              {mounted && totalItems > 0 && (
+                <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
             </button>
           </Link>
 
-          {/* Desktop Auth Buttons */}
+          {/* Desktop Auth Section */}
           <div className="hidden lg:flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="primary">Sign in</Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button variant="secondary">Sign up</Button>
-            </Link>
+            {mounted && user ? (
+              <LoggedInButton />
+            ) : mounted && !user ? (
+              <>
+                <Link href="/login">
+                  <Button variant="primary">Sign in</Button>
+                </Link>
+                <Link href="/sign-up">
+                  <Button variant="secondary">Sign up</Button>
+                </Link>
+              </>
+            ) : (
+              <div className="w-20 h-9" />
+            )}
           </div>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden p-2 rounded-full bg-white hover:bg-gray-200 text-black transition-colors"
@@ -126,7 +142,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Dynamic Search Input Row */}
+      {/* Search Input Row */}
       {isSearchOpen && (
         <div className="absolute top-full left-0 w-full bg-white border-b border-gray-100 px-6 py-3 shadow-md animate-in slide-in-from-top-2 duration-200">
           <div className="relative max-w-3xl">
@@ -146,24 +162,48 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Menu Card */}
       {isMenuOpen && (
-        <div className="absolute right-6 top-[75px] w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-5 flex flex-col gap-4 text-left z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className="absolute right-6 top-[75px] w-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-5 flex flex-col gap-4 text-left z-50 animate-in fade-in zoom-in-95 duration-150 lg:hidden">
+          {mounted && user ? (
+            <>
+              <div className="flex items-center gap-3 px-1 py-1">
+                <LoggedInButton disableDropdown />
+                <span className="text-[15px] font-semibold text-stone-800 truncate">
+                  Hi, {user.first_name || "User"}
+                </span>
+              </div>
+              <hr className="border-gray-100 my-1" />
+            </>
+          ) : (
+            <>
+              <Link
+                href="/sign-up"
+                className="text-[15px] font-medium text-[#2C2C2C] hover:text-(--main)"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Sign up
+              </Link>
+              <Link
+                href="/login"
+                className="text-[15px] font-medium text-[#2C2C2C] hover:text-(--main)"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Log in
+              </Link>
+              <hr className="border-gray-100 my-1" />
+            </>
+          )}
+
           <Link
-            href="/sign-up"
-            className="text-[15px] font-medium text-[#2C2C2C] hover:text-(--main)"
+            href="/profile"
+            className={`text-[15px] font-medium hover:text-(--main) ${
+              isActive("/profile")
+                ? "text-(--main) font-semibold"
+                : "text-[#2C2C2C]"
+            }`}
             onClick={() => setIsMenuOpen(false)}
           >
-            Sign up
+            Profile
           </Link>
-          <Link
-            href="/login"
-            className="text-[15px] font-medium text-[#2C2C2C] hover:text-(--main)"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Log in
-          </Link>
-
-          <hr className="border-gray-100 my-1" />
-
           <Link
             href="/categories"
             className={`text-[15px] font-medium hover:text-(--main) ${
@@ -197,6 +237,21 @@ export default function Navbar() {
           >
             Help
           </Link>
+
+          {mounted && user && (
+            <>
+              <hr className="border-gray-100 my-1" />
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  logout();
+                }}
+                className="text-[15px] font-medium text-red-500 text-left hover:font-semibold transition-all"
+              >
+                Log out
+              </button>
+            </>
+          )}
         </div>
       )}
     </header>

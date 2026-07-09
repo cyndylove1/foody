@@ -6,15 +6,25 @@ import { IoIosList } from "react-icons/io";
 import { Search, Heart, Menu as MenuIcon, ShoppingCart, X } from "lucide-react";
 import Logo from "../logo";
 import MenuList from "./menuList";
+import LoggedInButton from "../LoggedInButton";
+import { useAuth } from "@/app/hooks/useAuth";
+import { useCart } from "@/app/hooks/useCart";
+import { useProfile } from "@/app/hooks/useProfile";
 
 export default function ShopNavbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+   const { totalItems } = useCart();
 
-  // Close profile dropdown if clicked outside of it
+  const { logout } = useAuth();
+  const { data: user } = useProfile();
+
   useEffect(() => {
+    setMounted(true);
+
     function handleClickOutside(event: MouseEvent) {
       if (
         dropdownRef.current &&
@@ -30,9 +40,8 @@ export default function ShopNavbar() {
   return (
     <>
       <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 md:px-12 flex items-center justify-between relative z-40">
-        {/* Left: Menu Trigger Icon and Brand Identity Logo */}
         <div className="flex items-center gap-3 select-none shrink-0">
-          {/* Left-Side Categories Drawer Trigger */}
+          {/* Drawer Trigger icon*/}
           <button
             type="button"
             onClick={() => setIsSidebarOpen(true)}
@@ -42,13 +51,13 @@ export default function ShopNavbar() {
             <IoIosList className="w-6 h-6 stroke-[1.75]" />
           </button>
 
-          {/* Logo Container */}
+          {/* Logo */}
           <div className="flex items-center">
             <Logo />
           </div>
         </div>
 
-        {/* Middle: Fully Rounded Input Search Bar */}
+        {/*Input Search Bar */}
         <div className="flex-1 max-w-2xl mx-8 hidden md:block">
           <div className="relative w-full flex items-center">
             <Search className="absolute left-5 w-5 h-5 text-stone-400 pointer-events-none" />
@@ -60,9 +69,8 @@ export default function ShopNavbar() {
           </div>
         </div>
 
-        {/* Right: Functional Control Stack */}
         <div className="flex items-center space-x-4 md:space-x-5 shrink-0 relative">
-          {/* Action Button: Favorites */}
+          {/* Favorites icon*/}
           <button
             type="button"
             aria-label="View favorites"
@@ -83,20 +91,23 @@ export default function ShopNavbar() {
             <Search size={20} strokeWidth={2.5} />
           </button>
 
-          {/* Action Button: Cart Bag Indicator */}
+          {/* Cart icon */}
           <Link href="/cart">
             <button
               aria-label="Cart"
               className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
-              <ShoppingCart size={20} strokeWidth={2} />
-              <span className="absolute top-2 right-2 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                2
-              </span>
+              <ShoppingCart size={20} strokeWidth={2.5} />
+              {mounted && totalItems > 0 && (
+                <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+             
             </button>
           </Link>
 
-          {/* Action Button: Side Menu Trigger / Dropdown Wrapper */}
+          {/* Side Menu */}
           <div className="relative" ref={dropdownRef}>
             <button
               type="button"
@@ -113,47 +124,83 @@ export default function ShopNavbar() {
               )}
             </button>
 
-            {/* Profile Dropdown Menu */}
+            {/* Dropdown Menu */}
             {isOpen && (
               <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl border border-stone-100/80 shadow-[0_10px_30px_rgba(0,0,0,0.08)] py-5 px-6 flex flex-col z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                {mounted && user ? (
+                  <>
+                    <div className="flex items-center gap-3 py-1.5">
+                      {/* Disabled dropdown functionality here safely */}
+                      <LoggedInButton disableDropdown={true} />
+                      <span className="text-[15px] font-semibold text-stone-800 truncate">
+                        Hi, {user.first_name || "User"}
+                      </span>
+                    </div>
+                    <hr className="border-t border-gray-200 my-2" />
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/sign-up"
+                      className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Sign up
+                    </Link>
+                    <Link
+                      href="/login"
+                      className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Log in
+                    </Link>
+                    <hr className="border-t border-stone-100 my-2" />
+                  </>
+                )}
+
                 <Link
-                  href="/sign-up"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  href="/profile"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
-                  Sign up
+                  Profile
                 </Link>
-                <Link
-                  href="/login"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Log in
-                </Link>
-
-                <hr className="border-t border-stone-100 my-2" />
-
                 <Link
                   href="/categories"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Shop
                 </Link>
                 <Link
                   href="/contact"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Contact us
                 </Link>
                 <Link
                   href="/help"
-                  className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   Help
                 </Link>
+
+                {mounted && user && (
+                  <>
+                    <hr className="border-t border-gray-200 my-2" />
+                    <button
+                      onClick={() => {
+                        setIsOpen(false);
+                        logout();
+                      }}
+                      className="text-[17px] font-medium text-red-500 text-left py-2 hover:font-semibold transition-all"
+                    >
+                      Log out
+                    </button>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -176,16 +223,14 @@ export default function ShopNavbar() {
         )}
       </header>
 
-      {/* Left-Sliding Category Sidebar Sheet Overlay */}
+      {/* Category Sidebar*/}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex">
-          {/* Smooth Dark Backdrop */}
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"
             onClick={() => setIsSidebarOpen(false)}
           />
 
-          {/* Left Sheet Drawer Content Panel */}
           <div className="relative flex flex-col w-full max-w-xs h-full bg-white shadow-2xl overflow-y-auto transform transition-transform duration-300 ease-out animate-in slide-in-from-left">
             <div className="flex items-center justify-between px-4">
               <Logo />
@@ -200,8 +245,6 @@ export default function ShopNavbar() {
                 </button>
               </div>
             </div>
-
-            {/* Nested Filter/Category Menu Content Wrapper */}
             <div className="flex-1">
               <MenuList />
             </div>
