@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Quantity from "../quantitiy";
 import Button from "../button";
+import { useState } from "react";
 
 interface ProductColor {
   hex: string;
@@ -25,6 +26,7 @@ export default function ProductCard({
   imageSrc,
   currentPrice,
 }: BagCardProps) {
+  const [localQuantity, setLocalQuantity] = useState<number>(1);
   return (
     <div className="flex flex-col w-full group bg-gray-50 p-4 overflow-hidden">
       <Link
@@ -55,7 +57,7 @@ export default function ProductCard({
           <span className="text-sm font-bold text-gray-900">
             ${currentPrice}
           </span>
-          <Quantity />
+          <Quantity value={localQuantity} onChange={setLocalQuantity} />
         </div>
       </div>
       <Button variant="primary" className="my-4">
