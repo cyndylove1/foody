@@ -7,7 +7,7 @@ const fetchSingleProduct = async (id: string) => {
   const response = await axios.get(`${BASE_URL}/products/${id}`);
 
     // console.log("Single Product:", response.data);
-    // console.log(response.data)
+    console.log(response.data)
 
   return response.data;
 };

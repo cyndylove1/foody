@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { LuShoppingBasket } from "react-icons/lu";
 import ShopNavbar from "../components/ui/shopNavbar";
@@ -8,12 +9,21 @@ import Footer from "../components/ui/footer";
 import Quantity from "../components/quantitiy";
 import { Trash2 } from "lucide-react";
 import SummaryTotals from "../components/summaryTotal";
-import { useCart } from "@/app/hooks/useCart"; // Adjust path as needed
+import { useCart } from "@/app/hooks/useCart"; // Dynamically binding to your hook
 import Link from "next/link";
 
 export default function Cart() {
-  const { cart, loading, removeFromCart, increaseQuantity, decreaseQuantity } =
-    useCart();
+  const { cartItems, removeItem, updateQuantity } = useCart();
+  const [mounted, setMounted] = useState(false);
+
+  // Guarding against hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <>
@@ -22,31 +32,39 @@ export default function Cart() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Product Table */}
           <div className="lg:col-span-8 overflow-x-auto">
-            {loading ? (
-              <div className="py-20 text-center text-stone-500 text-lg">
-                Loading your cart...
-              </div>
-            ) : (
-              <table className="w-full border-collapse border border-stone-200 min-w-[600px]">
-                <thead>
-                  <tr className="bg-[#f5f5f5] text-stone-700 text-sm tracking-wide border-b border-stone-200">
-                    <th className="py-3 px-4 text-center font-medium border-r border-stone-200 w-32">
-                      PRODUCT
-                    </th>
-                    <th className="py-3 px-6 text-left font-medium border-r border-stone-200">
-                      NAME
-                    </th>
-                    <th className="py-3 px-4 text-center font-medium border-r border-stone-200 w-40">
-                      QUANTITY
-                    </th>
-                    <th className="py-3 px-6 text-right font-medium w-32">
-                      TOTAL
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cart.length > 0 ? (
-                    cart.map((item) => (
+            <table className="w-full border-collapse border border-stone-200 min-w-[600px]">
+              <thead>
+                <tr className="bg-[#f5f5f5] text-stone-700 text-sm tracking-wide border-b border-stone-200">
+                  <th className="py-3 px-4 text-center font-medium border-r border-stone-200 w-32">
+                    PRODUCT
+                  </th>
+                  <th className="py-3 px-6 text-left font-medium border-r border-stone-200">
+                    NAME
+                  </th>
+                  <th className="py-3 px-4 text-center font-medium border-r border-stone-200 w-40">
+                    QUANTITY
+                  </th>
+                  <th className="py-3 px-6 text-right font-medium w-32">
+                    TOTAL
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {cartItems && cartItems.length > 0 ? (
+                  cartItems.map((item: any) => {
+                    // Extract safe image path from API structure
+                    const itemImage =
+                      item.thumbnail ||
+                      item.image_url ||
+                      item.image ||
+                      item.images?.[0] ||
+                      "/poundo.jpg";
+
+                    const itemPrice = Number(
+                      item.effective_price || item.price || 0,
+                    );
+
+                    return (
                       <tr
                         key={item.id}
                         className="border-b border-stone-200 align-middle"
@@ -55,7 +73,7 @@ export default function Cart() {
                         <td className="p-4 border-r border-stone-200 text-center">
                           <div className="relative w-24 h-24 mx-auto bg-stone-100 border border-stone-200 overflow-hidden rounded-md">
                             <Image
-                              src={item.thumbnail || "/placeholder.jpg"}
+                              src={itemImage}
                               alt={item.name}
                               fill
                               className="object-cover"
@@ -74,14 +92,15 @@ export default function Cart() {
                         <td className="p-4 border-r border-stone-200 text-center">
                           <div className="flex items-center justify-center gap-4">
                             <Quantity
+                              value={item.quantity}
+                              onChange={(newQty) =>
+                                updateQuantity(item.id, newQty)
+                              }
                               className="w-full"
-                              // value={item.quantity}
-                              // onIncrease={() => increaseQuantity(item.id)}
-                              // onDecrease={() => decreaseQuantity(item.id)}
                             />
                             <button
                               type="button"
-                              onClick={() => removeFromCart(item.id)}
+                              onClick={() => removeItem(item.id)}
                               className="bg-(--main) hover:bg-[#d63f26] text-white p-2 rounded transition-colors duration-150 cursor-pointer"
                               aria-label="Remove item"
                             >
@@ -92,38 +111,35 @@ export default function Cart() {
 
                         {/* Total Price */}
                         <td className="p-6 text-right font-normal text-[15px] text-(--main)">
-                          CAD{" "}
-                          {(item.effective_price * item.quantity).toFixed(2)}
+                          CAD {(itemPrice * item.quantity).toFixed(2)}
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    /* Empty State Layout */
-                    <tr>
-                      <td colSpan={4} className="py-16 text-center">
-                        <div className="flex flex-col items-center justify-center space-y-4">
-                          <LuShoppingBasket className="w-24 h-24 text-stone-300 stroke-[1.5]" />
-                          <h2 className="text-gray-500 font-medium text-lg tracking-wide">
-                            Your cart is empty.
-                          </h2>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            )}
+                    );
+                  })
+                ) : (
+                  /* Empty State Layout */
+                  <tr>
+                    <td colSpan={4} className="py-16 text-center">
+                      <div className="flex flex-col items-center justify-center space-y-4">
+                        <LuShoppingBasket className="w-24 h-24 text-stone-300 stroke-[1.5]" />
+                        <h2 className="text-gray-500 font-medium text-lg tracking-wide">
+                          Your cart is empty.
+                        </h2>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
 
             {/* Continue Shopping Button */}
-            <div className="mt-8">
-              <Link href="/categories">
-                <Button variant="secondary">Continue Shopping</Button>
-              </Link>
-            </div>
+            <Link href="/shop" className="mt-8">
+              <Button variant="secondary">Continue Shopping</Button>
+            </Link>
           </div>
 
-          {/* Summary Total*/}
-          {/* <SummaryTotals/> */}
+          {/* Summary Total */}
+          <SummaryTotals cartItems={cartItems} />
         </div>
       </div>
       <Footer />

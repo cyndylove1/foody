@@ -29,7 +29,7 @@ export default function ProductDetails({ params }: PageProps) {
 
   const productLinks = [
     { label: "Home", href: "/" },
-    { label: "Products", href: "/products" },
+    { label: "Products", href: "/shop" },
     { label: product?.name || "Loading..." },
   ];
 
@@ -96,17 +96,14 @@ export default function ProductDetails({ params }: PageProps) {
                 </>
               )}
             </div>
-
-            {/* RIGHT: Product Information */}
+            {/* Product Information */}
             <div>
-              <ProductInformation />
+              <ProductInformation product={product} isLoading={isLoading} />
             </div>
           </div>
         </div>
       </div>
-
       <CustomerFeedback />
-
       <Footer />
     </>
   );

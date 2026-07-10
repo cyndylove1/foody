@@ -17,11 +17,14 @@ export interface CartItem {
 
 interface CartContextType {
   cart: CartItem[];
+  cartItems: CartItem[];
   loading: boolean;
-  addToCart: (product: any) => void; // Widened type slightly to safely accept item maps from products API
-  removeFromCart: (id: number) => void;
-  increaseQuantity: (id: number) => void;
-  decreaseQuantity: (id: number) => void;
+  addToCart: (product: any) => void;
+  removeFromCart: (id: number | string) => void;
+  removeItem: (id: number | string) => void;
+  increaseQuantity: (id: number | string) => void;
+  decreaseQuantity: (id: number | string) => void;
+  updateQuantity: (id: number | string, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -36,30 +39,33 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { data, isLoading } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
-      const res = await axios.get(`${BASE_URL}/cart`);
-      return res.data.data;
+      // If you store your token in localStorage, grab it dynamically here:
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+      const res = await axios.get(`${BASE_URL}/cart`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+
+      return res.data?.data?.items || [];
     },
   });
 
-  // Safe Array Guard: Double-check that data is strictly an array before reducing
+  // Safe Guard: Since the query function now always returns an array, this stays clean
   const cart: CartItem[] = Array.isArray(data) ? data : [];
 
   // Add to cart
   const addMutation = useMutation({
     mutationFn: async (product: any) => {
-      // 1. Force the product ID to be parsed safely as an integer number
       const targetId = Number(product.id);
-
-      // 2. Check if the item already exists in the local state.
-      // If it exists, call the PUT update endpoint instead of POST duplicate items.
       const existingItem = cart.find((i) => Number(i.id) === targetId);
+
       if (existingItem) {
         return axios.put(`${BASE_URL}/cart/${targetId}`, {
           quantity: existingItem.quantity + 1,
         });
       }
 
-      // 3. Fallback payloads: Provide both standard variant namings to prevent route parameter issues
       return axios.post(`${BASE_URL}/cart`, {
         id: targetId,
         product_id: targetId,
@@ -67,15 +73,38 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
     },
     onSuccess: () => {
-      // Wipes stale local state queries immediately and pulls updated data arrays from database
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
   });
 
-  // Remove
+  // Remove Mutation
   const removeMutation = useMutation({
-    mutationFn: async (id: number) => {
+    mutationFn: async (id: number | string) => {
       return axios.delete(`${BASE_URL}/cart/${Number(id)}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+
+  // Direct Quantity Update Mutation
+  const updateQuantityMutation = useMutation({
+    mutationFn: async ({
+      id,
+      quantity,
+    }: {
+      id: number | string;
+      quantity: number;
+    }) => {
+      const targetId = Number(id);
+
+      if (quantity <= 0) {
+        return axios.delete(`${BASE_URL}/cart/${targetId}`);
+      }
+
+      return axios.put(`${BASE_URL}/cart/${targetId}`, {
+        quantity,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
@@ -84,7 +113,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Increase
   const increaseMutation = useMutation({
-    mutationFn: async (id: number) => {
+    mutationFn: async (id: number | string) => {
       const targetId = Number(id);
       const item = cart.find((i) => Number(i.id) === targetId);
       if (!item) return;
@@ -100,7 +129,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Decrease
   const decreaseMutation = useMutation({
-    mutationFn: async (id: number) => {
+    mutationFn: async (id: number | string) => {
       const targetId = Number(id);
       const item = cart.find((i) => Number(i.id) === targetId);
       if (!item) return;
@@ -128,7 +157,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  // Fallback calculations handles safely wrapped
+  // Calculations
   const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
   const totalPrice = cart.reduce(
     (sum, item) =>
@@ -140,11 +169,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     <CartContext.Provider
       value={{
         cart,
+        cartItems: cart,
         loading: isLoading,
         addToCart: addMutation.mutate,
         removeFromCart: removeMutation.mutate,
+        removeItem: removeMutation.mutate,
         increaseQuantity: increaseMutation.mutate,
         decreaseQuantity: decreaseMutation.mutate,
+        updateQuantity: (id, quantity) =>
+          updateQuantityMutation.mutate({ id, quantity }),
         clearCart: clearMutation.mutate,
         totalItems,
         totalPrice,
@@ -154,6 +187,5 @@ export function CartProvider({ children }: { children: ReactNode }) {
     </CartContext.Provider>
   );
 }
-
 
 export { CartContext };

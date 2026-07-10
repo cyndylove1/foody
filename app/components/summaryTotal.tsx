@@ -5,24 +5,34 @@ import Link from "next/link";
 import Button from "./button";
 
 interface CartItem {
-  id: string;
-  imageSrc: string;
+  id: string | number;
+  imageSrc?: string;
+  thumbnail?: string;
+  image_url?: string;
+  image?: string;
+  images?: string[];
   name: string;
   quantity: number;
-  price: number;
+  price?: number;
+  effective_price?: number;
 }
 
 interface SummaryTotalsProps {
   cartItems: CartItem[];
 }
 
-export default function SummaryTotals({ cartItems }: SummaryTotalsProps) {
+export default function SummaryTotals({ cartItems = [] }: SummaryTotalsProps) {
   const [coupon, setCoupon] = useState("");
 
-  const subTotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
+  // Safeguard: Ensure cartItems is an array before processing
+  const safeCartItems = Array.isArray(cartItems) ? cartItems : [];
+
+  const subTotal = safeCartItems.reduce((acc, item) => {
+    // API compatibility fallback check for product price
+    const itemPrice = Number(item.effective_price || item.price || 0);
+    return acc + itemPrice * (item.quantity || 1);
+  }, 0);
+
   const tax = subTotal > 0 ? 0.7 : 0.0;
   const total = subTotal + tax;
 
@@ -42,9 +52,7 @@ export default function SummaryTotals({ cartItems }: SummaryTotalsProps) {
             onChange={(e) => setCoupon(e.target.value)}
             className="flex-1 border border-stone-300 px-3 py-2 text-sm text-stone-800 focus:outline-none placeholder-stone-300"
           />
-          <Button variant="secondary" className="">
-            Apply Coupon
-          </Button>
+          <Button variant="secondary">Apply Coupon</Button>
         </div>
       </div>
 

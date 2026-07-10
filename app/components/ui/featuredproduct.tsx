@@ -37,7 +37,7 @@ export default function FeaturedProduct() {
                       src={product.image || "/bonnet.jpg"}
                       alt={product.name}
                       fill
-                      className="object-contain p-4"
+                      className="object-cover p-4"
                     />
                   </div>
 

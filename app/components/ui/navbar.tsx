@@ -95,11 +95,10 @@ export default function Navbar() {
           >
             <Search size={20} strokeWidth={2.5} />
           </button>
-
           <Link href="/cart">
             <button
               aria-label="Cart"
-              className="p-2 text-[#2C2C2C] hover:text-[#EA4D32] transition-colors relative"
+              className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2.5} />
               {mounted && totalItems > 0 && (
