@@ -50,20 +50,7 @@ export default function ProductInformation({
   }).format(Number(product.effective_price || product.price || 0));
 
   const handleAddToCart = () => {
-    addItem(
-      {
-        id: product.id,
-        name: product.name,
-        imageSrc:
-          product.thumbnail ||
-          product.image_url ||
-          product.image ||
-          product.images?.[0] ||
-          "/poundo.jpg",
-        price: Number(product.effective_price || product.price || 0),
-      },
-      localQuantity,
-    );
+    addItem(product.id, localQuantity);
   };
 
   return (

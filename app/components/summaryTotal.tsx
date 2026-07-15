@@ -3,38 +3,18 @@
 import { useState } from "react";
 import Link from "next/link";
 import Button from "./button";
-
-interface CartItem {
-  id: string | number;
-  imageSrc?: string;
-  thumbnail?: string;
-  image_url?: string;
-  image?: string;
-  images?: string[];
-  name: string;
-  quantity: number;
-  price?: number;
-  effective_price?: number;
-}
+import { CartObject } from "../context/cartContext";
 
 interface SummaryTotalsProps {
-  cartItems: CartItem[];
+  cart?: CartObject;
 }
 
-export default function SummaryTotals({ cartItems = [] }: SummaryTotalsProps) {
+export default function SummaryTotals({ cart }: SummaryTotalsProps) {
   const [coupon, setCoupon] = useState("");
 
-  // Safeguard: Ensure cartItems is an array before processing
-  const safeCartItems = Array.isArray(cartItems) ? cartItems : [];
-
-  const subTotal = safeCartItems.reduce((acc, item) => {
-    // API compatibility fallback check for product price
-    const itemPrice = Number(item.effective_price || item.price || 0);
-    return acc + itemPrice * (item.quantity || 1);
-  }, 0);
-
-  const tax = subTotal > 0 ? 0.7 : 0.0;
-  const total = subTotal + tax;
+  const subTotal = cart?.subtotal ?? 0;
+  const tax = cart?.tax ?? 0;
+  const total = cart?.total ?? 0;
 
   return (
     <div className="lg:col-span-4 space-y-6 bg-white p-4 rounded-xl">

@@ -1,83 +1,180 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useRef, ReactNode } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import apiClient from "../config/axiosConfig";
+
+export interface CartProduct {
+  id: number;
+  name: string;
+  slug: string;
+  thumbnail?: string;
+  effective_price?: number;
+  price?: number;
+  [key: string]: unknown;
+}
 
 export interface CartItem {
-  id: string;
-  imageSrc: string;
-  name: string;
+  id: number;
+  product_id: number;
+  product: CartProduct;
   quantity: number;
   price: number;
+  subtotal: number;
+}
+
+export interface CartObject {
+  id: number;
+  items: CartItem[];
+  items_count: number;
+  coupon: unknown;
+  subtotal: number;
+  tax: number;
+  shipping: number;
+  discount: number;
+  total: number;
 }
 
 interface CartContextValue {
+  cart: CartObject | undefined;
   cartItems: CartItem[];
-  addItem: (item: Omit<CartItem, "quantity">, quantity?: number) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
   itemCount: number;
+  isLoading: boolean;
+  isAdding: boolean;
+  isUpdating: boolean;
+  isRemoving: boolean;
+  addItem: (productId: number, quantity?: number) => void;
+  removeItem: (itemId: number) => void;
+  updateQuantity: (itemId: number, quantity: number) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-const STORAGE_KEY = "cart";
+const CART_QUERY_KEY = ["cart"];
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isHydrated, setIsHydrated] = useState(false);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored) setCartItems(JSON.parse(stored));
-    } catch {
-      // ignore malformed storage
-    }
-    setIsHydrated(true);
-  }, []);
+  const { data: cart, isLoading } = useQuery<CartObject>({
+    queryKey: CART_QUERY_KEY,
+    queryFn: async () => {
+      const response = await apiClient.get("/cart");
+      return response.data.data;
+    },
+  });
 
-  useEffect(() => {
-    if (!isHydrated) return;
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
-  }, [cartItems, isHydrated]);
+  // Guards against two races that make cart items flicker in and out:
+  // 1. A GET /cart in flight when a mutation resolves can land afterward and
+  //    overwrite the cache with a stale pre-mutation snapshot.
+  // 2. Two overlapping mutations (e.g. rapid quantity clicks) can resolve out
+  //    of order, so the response for the *older* call can be applied last.
+  // requestIdRef tracks the most recently *initiated* cart write; a
+  // mutation's result is only written to the cache if no newer write has
+  // started since.
+  const requestIdRef = useRef(0);
 
-  const addItem = (item: Omit<CartItem, "quantity">, quantity = 1) => {
-    setCartItems((prev) => {
-      const existing = prev.find((cartItem) => cartItem.id === item.id);
-      if (existing) {
-        return prev.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + quantity }
-            : cartItem,
-        );
-      }
-      return [...prev, { ...item, quantity }];
-    });
+  const beginRequest = async () => {
+    await queryClient.cancelQueries({ queryKey: CART_QUERY_KEY });
+    return { requestId: ++requestIdRef.current };
   };
 
-  const removeItem = (id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const setCartData = (
+    data: CartObject,
+    _variables: unknown,
+    context?: { requestId: number },
+  ) => {
+    if (context && context.requestId !== requestIdRef.current) return;
+    queryClient.setQueryData(CART_QUERY_KEY, data);
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: Math.max(1, quantity) } : item,
-      ),
-    );
+  const addItemMutation = useMutation({
+    onMutate: beginRequest,
+    mutationFn: async ({
+      productId,
+      quantity,
+    }: {
+      productId: number;
+      quantity: number;
+    }) => {
+      const response = await apiClient.post(
+        "/cart",
+        { product_id: productId, quantity },
+        { headers: { "x-show-toast": "true" } as any },
+      );
+      return response.data.data;
+    },
+    onSuccess: setCartData,
+  });
+
+  const updateQuantityMutation = useMutation({
+    onMutate: beginRequest,
+    mutationFn: async ({
+      itemId,
+      quantity,
+    }: {
+      itemId: number;
+      quantity: number;
+    }) => {
+      const response = await apiClient.put(`/cart/${itemId}`, { quantity });
+      return response.data.data;
+    },
+    onSuccess: setCartData,
+  });
+
+  const removeItemMutation = useMutation({
+    onMutate: beginRequest,
+    mutationFn: async (itemId: number) => {
+      const response = await apiClient.delete(`/cart/${itemId}`, {
+        headers: { "x-show-toast": "true" } as any,
+      });
+      return response.data.data;
+    },
+    onSuccess: setCartData,
+  });
+
+  const clearCartMutation = useMutation({
+    onMutate: beginRequest,
+    mutationFn: async () => {
+      await apiClient.delete("/cart");
+    },
+    onSuccess: (_data, _variables, context) => {
+      if (context.requestId !== requestIdRef.current) return;
+      queryClient.invalidateQueries({ queryKey: CART_QUERY_KEY });
+    },
+  });
+
+  const addItem = (productId: number, quantity = 1) => {
+    addItemMutation.mutate({ productId, quantity });
   };
 
-  const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const removeItem = (itemId: number) => {
+    removeItemMutation.mutate(itemId);
+  };
+
+  const updateQuantity = (itemId: number, quantity: number) => {
+    updateQuantityMutation.mutate({ itemId, quantity: Math.max(1, quantity) });
+  };
+
+  const clearCart = () => {
+    clearCartMutation.mutate();
+  };
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addItem, removeItem, updateQuantity, itemCount }}
+      value={{
+        cart,
+        cartItems: cart?.items ?? [],
+        itemCount: cart?.items_count ?? 0,
+        isLoading,
+        isAdding: addItemMutation.isPending,
+        isUpdating: updateQuantityMutation.isPending,
+        isRemoving: removeItemMutation.isPending,
+        addItem,
+        removeItem,
+        updateQuantity,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

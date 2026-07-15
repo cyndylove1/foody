@@ -13,12 +13,12 @@ interface ProductColor {
 }
 
 interface BagCardProps {
-  id: string;
+  id: string | number;
   name: string;
   imageSrc: string;
-  originalPrice: number;
+  originalPrice?: number;
   currentPrice: number;
-  colors: ProductColor[];
+  colors?: ProductColor[];
 }
 
 export default function ProductCard({
@@ -33,7 +33,7 @@ export default function ProductCard({
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem({ id, name, imageSrc, price: currentPrice }, quantity);
+    addItem(Number(id), quantity);
   };
 
   return (

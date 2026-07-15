@@ -102,17 +102,7 @@ export default function Collection() {
                   <div className="grid grid-cols-2 gap-3 mt-auto">
                     <Button
                       variant="secondary"
-                      onClick={() =>
-                        addItem({
-                          id: item.id,
-                          name: item.name,
-                          price: Number(item.effective_price || 0),
-                          imageSrc:
-                            item.thumbnail ||
-                            item.images?.[0] ||
-                            "/poundo.jpg",
-                        })
-                      }
+                      onClick={() => addItem(item.id)}
                     >
                       Add to Cart
                     </Button>
