@@ -53,7 +53,7 @@ function ResetPasswordForm() {
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-md space-y-5">
       {/* Email Address */}
-      <div>
+      {/* <div>
         <CustomInput
           label="Email Address"
           name="email"
@@ -64,10 +64,10 @@ function ResetPasswordForm() {
           required={true}
           disabled={isResettingPassword}
         />
-      </div>
+      </div> */}
 
       {/* Verification Code / OTP */}
-      <div>
+      {/* <div>
         <CustomInput
           label="Verification Code (OTP)"
           name="otp"
@@ -78,7 +78,7 @@ function ResetPasswordForm() {
           required={true}
           disabled={isResettingPassword}
         />
-      </div>
+      </div> */}
 
       {/* Password & Confirm Password */}
       <div>

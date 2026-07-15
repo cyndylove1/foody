@@ -80,6 +80,7 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
             )}
           </Link>
+          
         </nav>
 
         {/* Action Items */}

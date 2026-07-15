@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, ReactNode } from "react";
+import { createContext,  ReactNode } from "react";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -39,36 +39,37 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { data, isLoading } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
-      // If you store your token in localStorage, grab it dynamically here:
       const token =
         typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
       const res = await axios.get(`${BASE_URL}/cart`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
+       console.log("Cart API Response:", res);
+       console.log("Cart Response Data:", res.data);
+       
 
-      return res.data?.data?.items || [];
+      return res.data?.data?.items;
     },
   });
 
-  // Safe Guard: Since the query function now always returns an array, this stays clean
   const cart: CartItem[] = Array.isArray(data) ? data : [];
 
   // Add to cart
   const addMutation = useMutation({
     mutationFn: async (product: any) => {
-      const targetId = Number(product.id);
-      const existingItem = cart.find((i) => Number(i.id) === targetId);
+      const itemId = Number(product.id);
+      const existingItem = cart.find((i) => Number(i.id) === itemId);
 
       if (existingItem) {
-        return axios.put(`${BASE_URL}/cart/${targetId}`, {
+        return axios.put(`${BASE_URL}/cart/${itemId}`, {
           quantity: existingItem.quantity + 1,
         });
       }
 
       return axios.post(`${BASE_URL}/cart`, {
-        id: targetId,
-        product_id: targetId,
+        id: itemId,
+        product_id: itemId,
         quantity: 1,
       });
     },
@@ -87,7 +88,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  // Direct Quantity Update Mutation
+  //  Quantity Update Mutation
   const updateQuantityMutation = useMutation({
     mutationFn: async ({
       id,
@@ -96,13 +97,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       id: number | string;
       quantity: number;
     }) => {
-      const targetId = Number(id);
+      const itemId = Number(id);
 
       if (quantity <= 0) {
-        return axios.delete(`${BASE_URL}/cart/${targetId}`);
+        return axios.delete(`${BASE_URL}/cart/${itemId}`);
       }
 
-      return axios.put(`${BASE_URL}/cart/${targetId}`, {
+      return axios.put(`${BASE_URL}/cart/${itemId}`, {
         quantity,
       });
     },

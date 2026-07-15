@@ -9,7 +9,7 @@ import Footer from "../components/ui/footer";
 import Quantity from "../components/quantitiy";
 import { Trash2 } from "lucide-react";
 import SummaryTotals from "../components/summaryTotal";
-import { useCart } from "@/app/hooks/useCart"; // Dynamically binding to your hook
+import { useCart } from "@/app/hooks/useCart"; 
 import Link from "next/link";
 
 export default function Cart() {
@@ -48,7 +48,7 @@ export default function Cart() {
                     TOTAL
                   </th>
                 </tr>
-              </thead>
+           </thead>
               <tbody>
                 {cartItems && cartItems.length > 0 ? (
                   cartItems.map((item: any) => {
