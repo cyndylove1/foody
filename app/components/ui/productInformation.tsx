@@ -6,61 +6,33 @@ import StarRating from "../StarRating";
 import Button from "../button";
 import Quantity from "../quantitiy";
 import Link from "next/link";
-import { CartContext } from "@/app/context/CartContext"; // Adjust path to your cart context
+import { useCart } from "../../context/cartContext";
 
 interface ProductInformationProps {
-  product: any;
-  isLoading: boolean;
+  id: string;
+  name: string;
+  price: number;
+  imageSrc: string;
 }
 
 export default function ProductInformation({
-  product,
-  isLoading,
+  id,
+  name,
+  price,
+  imageSrc,
 }: ProductInformationProps) {
   const [activeAccordion, setActiveAccordion] = useState<string | null>(
     "descriptions",
   );
-  const [localQuantity, setLocalQuantity] = useState<number>(1);
-
-  // Hook up your global cart state update tools
-  const cartContext = useContext(CartContext);
+  const [quantity, setQuantity] = useState(1);
+  const { addItem } = useCart();
 
   const toggleAccordion = (section: string) => {
     setActiveAccordion(activeAccordion === section ? null : section);
   };
 
-  // State loading placeholders
-  if (isLoading) {
-    return (
-      <div className="flex flex-col gap-4 animate-pulse pt-2">
-        <div className="h-8 bg-gray-200 w-3/4 rounded-sm" />
-        <div className="h-4 bg-gray-200 w-1/4 rounded-sm" />
-        <div className="h-10 bg-gray-200 w-1/3 rounded-sm" />
-      </div>
-    );
-  }
-
-  if (!product) {
-    return <p className="text-gray-500">Product details missing.</p>;
-  }
-
-  // Formatting variables based on your explicit api structure
-  const formattedPrice = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  }).format(Number(product.effective_price || product.price || 0));
-
   const handleAddToCart = () => {
-    if (!cartContext) return;
-
-    // Pass along localQuantity selections directly to your context mutations
-    // Ensure both item entry mappings are bundled
-    cartContext.addToCart({
-      ...product,
-      id: product.id,
-      product_id: product.id,
-      quantity: localQuantity,
-    });
+    addItem({ id, name, imageSrc, price }, quantity);
   };
 
   return (
@@ -68,16 +40,18 @@ export default function ProductInformation({
       <div className="flex flex-col h-full justify-between space-y-6 pt-2">
         {/* Product Name */}
         <div className="space-y-2">
-          <h1 className="md:text-4xl text-2xl font-semibold tracking-tight text-[#111111] leading-[1.1] uppercase">
-            {product.name}
+          <h1 className="md:text-4xl text-2xl font-semibold md:text-4xl tracking-tight text-[#111111] leading-[1.1] uppercase">
+            {name}
           </h1>
-          <p className="text-gray-400 text-[15px]">{product.slug}</p>
+          <p className="text-sm font-medium text-gray-400">
+            Fresh {name}
+          </p>
         </div>
 
         {/* Pricing */}
         <div className="flex items-center gap-3 py-1">
           <span className="text-2xl font-black text-[#111111] tracking-tight">
-            {formattedPrice}
+            ${price}
           </span>
         </div>
         {product.sku && (
@@ -91,7 +65,7 @@ export default function ProductInformation({
           <span className="text-xs font-bold text-[#111111] block pb-4">
             Quantity
           </span>
-          <Quantity value={localQuantity} onChange={setLocalQuantity} />
+          <Quantity value={quantity} onChange={setQuantity} />
         </div>
 
         {/* Social Rating */}
@@ -184,9 +158,8 @@ export default function ProductInformation({
             variant="secondary"
             className="w-full"
             onClick={handleAddToCart}
-            disabled={!product.in_stock}
           >
-            {product.in_stock ? "Add To Cart" : "Out of Stock"}
+            Add To Cart
           </Button>
 
           <Link href="/checkout" className="w-full">
