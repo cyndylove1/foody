@@ -6,14 +6,23 @@ import { Search, ShoppingCart, Menu, X } from "lucide-react";
 import Logo from "../logo";
 import Link from "next/link";
 import Button from "../button";
+import LoggedInButton from "../LoggedInButton";
+import { useAuth } from "@/app/hooks/useAuth";
 import { useCart } from "../../context/cartContext";
+import { useProfile } from "@/app/hooks/useProfile";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const { logout } = useAuth();
   const { itemCount } = useCart();
+  const { data: user } = useProfile();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (path: string) => pathname === path;
 
@@ -93,7 +102,7 @@ export default function Navbar() {
               className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2.5} />
-              {itemCount > 0 && (
+              {mounted && itemCount > 0 && (
                 <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                   {itemCount}
                 </span>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { IoChevronDown, IoChevronUpOutline } from "react-icons/io5";
 import StarRating from "../StarRating";
 import Button from "../button";
@@ -9,30 +9,61 @@ import Link from "next/link";
 import { useCart } from "../../context/cartContext";
 
 interface ProductInformationProps {
-  id: string;
-  name: string;
-  price: number;
-  imageSrc: string;
+  product: any;
+  isLoading: boolean;
 }
 
 export default function ProductInformation({
-  id,
-  name,
-  price,
-  imageSrc,
+  product,
+  isLoading,
 }: ProductInformationProps) {
   const [activeAccordion, setActiveAccordion] = useState<string | null>(
     "descriptions",
   );
-  const [quantity, setQuantity] = useState(1);
+  const [localQuantity, setLocalQuantity] = useState<number>(1);
+
   const { addItem } = useCart();
 
   const toggleAccordion = (section: string) => {
     setActiveAccordion(activeAccordion === section ? null : section);
   };
 
+  // State loading placeholders
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-4 animate-pulse pt-2">
+        <div className="h-8 bg-gray-200 w-3/4 rounded-sm" />
+        <div className="h-4 bg-gray-200 w-1/4 rounded-sm" />
+        <div className="h-10 bg-gray-200 w-1/3 rounded-sm" />
+      </div>
+    );
+  }
+
+  if (!product) {
+    return <p className="text-gray-500">Product details missing.</p>;
+  }
+
+  // Formatting variables based on your explicit api structure
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(Number(product.effective_price || product.price || 0));
+
   const handleAddToCart = () => {
-    addItem({ id, name, imageSrc, price }, quantity);
+    addItem(
+      {
+        id: product.id,
+        name: product.name,
+        imageSrc:
+          product.thumbnail ||
+          product.image_url ||
+          product.image ||
+          product.images?.[0] ||
+          "/poundo.jpg",
+        price: Number(product.effective_price || product.price || 0),
+      },
+      localQuantity,
+    );
   };
 
   return (
@@ -40,18 +71,16 @@ export default function ProductInformation({
       <div className="flex flex-col h-full justify-between space-y-6 pt-2">
         {/* Product Name */}
         <div className="space-y-2">
-          <h1 className="md:text-4xl text-2xl font-semibold md:text-4xl tracking-tight text-[#111111] leading-[1.1] uppercase">
-            {name}
+          <h1 className="md:text-4xl text-2xl font-semibold tracking-tight text-[#111111] leading-[1.1] uppercase">
+            {product.name}
           </h1>
-          <p className="text-sm font-medium text-gray-400">
-            Fresh {name}
-          </p>
+          <p className="text-gray-400 text-[15px]">{product.slug}</p>
         </div>
 
         {/* Pricing */}
         <div className="flex items-center gap-3 py-1">
           <span className="text-2xl font-black text-[#111111] tracking-tight">
-            ${price}
+            {formattedPrice}
           </span>
         </div>
         {product.sku && (
@@ -65,7 +94,7 @@ export default function ProductInformation({
           <span className="text-xs font-bold text-[#111111] block pb-4">
             Quantity
           </span>
-          <Quantity value={quantity} onChange={setQuantity} />
+          <Quantity value={localQuantity} onChange={setLocalQuantity} />
         </div>
 
         {/* Social Rating */}
@@ -158,8 +187,9 @@ export default function ProductInformation({
             variant="secondary"
             className="w-full"
             onClick={handleAddToCart}
+            disabled={!product.in_stock}
           >
-            Add To Cart
+            {product.in_stock ? "Add To Cart" : "Out of Stock"}
           </Button>
 
           <Link href="/checkout" className="w-full">

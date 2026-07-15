@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Footer from "./components/ui/footer";
+import { ToastContainer } from "react-toastify";
+import Providers from "./provider";
+import { AuthProvider } from "./context/authContext";
 import { CartProvider } from "./context/cartContext";
+import "react-toastify/dist/ReactToastify.css";
 
 const jakarta = Plus_Jakarta_Sans({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
@@ -23,7 +26,24 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jakarta.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <CartProvider>{children}</CartProvider>
+        <Providers>
+          <AuthProvider>
+            <CartProvider>
+              {children}
+              <ToastContainer
+                limit={1}
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+            </CartProvider>
+          </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

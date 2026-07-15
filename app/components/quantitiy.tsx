@@ -1,10 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 interface QuantityProps {
-  value: number;
-  onChange: (quantity: number) => void;
   className?: string;
   value?: number;
   onChange?: (quantity: number) => void;
@@ -40,7 +39,7 @@ export default function Quantity({ className, value, onChange }: QuantityProps) 
       <button
         type="button"
         onClick={handleDecrease}
-        disabled={value <= 1}
+        disabled={quantity <= 1}
         className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg disabled:opacity-30 disabled:hover:bg-transparent transition-colors flex items-center justify-center shrink-0 aspect-square"
         aria-label="Decrease quantity"
       >
@@ -48,7 +47,7 @@ export default function Quantity({ className, value, onChange }: QuantityProps) 
       </button>
 
       <span className="text-xs sm:text-sm font-bold text-[#111111] px-1 text-center flex-1 min-w-0">
-        {value}
+        {quantity}
       </span>
 
       {/* Button Increase */}

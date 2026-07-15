@@ -9,6 +9,7 @@ import Quantity from "../components/quantitiy";
 import { Trash2 } from "lucide-react";
 import SummaryTotals from "../components/summaryTotal";
 import { useCart } from "../context/cartContext";
+import Link from "next/link";
 
 export default function Cart() {
   const { cartItems, removeItem, updateQuantity } = useCart();
@@ -52,33 +53,58 @@ export default function Cart() {
                       item.effective_price || item.price || 0,
                     );
 
-                      {/* Quantity & Trash Button */}
-                      <td className="p-4 border-r border-stone-200 text-center">
-                        <div className="flex items-center justify-center gap-4">
-                          <Quantity
-                            className="w-full"
-                            value={item.quantity}
-                            onChange={(quantity) =>
-                              updateQuantity(item.id, quantity)
-                            }
-                          />
-                          <button
-                            type="button"
-                            onClick={() => removeItem(item.id)}
-                            className="bg-(--main) hover:bg-[#d63f26] text-white p-2 rounded transition-colors duration-150 cursor-pointer"
-                            aria-label="Remove item"
-                          >
-                            <Trash2 className="w-5 h-5 stroke-[2.2]" />
-                          </button>
-                        </div>
-                      </td>
+                    return (
+                      <tr
+                        key={item.id}
+                        className="border-b border-stone-200 align-middle"
+                      >
+                        {/* Product Image */}
+                        <td className="p-4 border-r border-stone-200 text-center">
+                          <div className="relative w-24 h-24 mx-auto bg-stone-100 border border-stone-200 overflow-hidden rounded-md">
+                            <Image
+                              src={itemImage}
+                              alt={item.name}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        </td>
 
-                      {/* Total Price */}
-                      <td className="p-6 text-right font-normal text-[15px] text-(--main)">
-                        CAD {(item.price * item.quantity).toFixed(2)}
-                      </td>
-                    </tr>
-                  ))
+                        {/* Product Name */}
+                        <td className="p-6 border-r border-stone-200 text-left">
+                          <span className="text-stone-600 font-normal text-[15px]">
+                            {item.name}
+                          </span>
+                        </td>
+
+                        {/* Quantity & Trash Button */}
+                        <td className="p-4 border-r border-stone-200 text-center">
+                          <div className="flex items-center justify-center gap-4">
+                            <Quantity
+                              className="w-full"
+                              value={item.quantity}
+                              onChange={(quantity) =>
+                                updateQuantity(item.id, quantity)
+                              }
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeItem(item.id)}
+                              className="bg-(--main) hover:bg-[#d63f26] text-white p-2 rounded transition-colors duration-150 cursor-pointer"
+                              aria-label="Remove item"
+                            >
+                              <Trash2 className="w-5 h-5 stroke-[2.2]" />
+                            </button>
+                          </div>
+                        </td>
+
+                        {/* Total Price */}
+                        <td className="p-6 text-right font-normal text-[15px] text-(--main)">
+                          CAD {(itemPrice * item.quantity).toFixed(2)}
+                        </td>
+                      </tr>
+                    );
+                  })
                 ) : (
                   /* Empty State Layout */
                   <tr>

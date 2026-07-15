@@ -8,9 +8,7 @@ import ProductInformation from "@/app/components/ui/productInformation";
 import Footer from "@/app/components/ui/footer";
 import CustomerFeedback from "@/app/components/ui/customerFeedback";
 import BreadCrumbs from "@/app/components/breadCrumbs";
-import { productsMock } from "@/app/constant";
-
-const images = [maggi, maggi1, maggi2, maggi3, maggi4];
+import { useSingleProduct } from "@/app/hooks/useSingleProuduct";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -34,8 +32,6 @@ export default function ProductDetails({ params }: PageProps) {
     { label: "Products", href: "/shop" },
     { label: product?.name || "Loading..." },
   ];
-
-  const product = productsMock.find((p) => p.id === id) ?? productsMock[0];
 
   return (
     <>
@@ -100,13 +96,9 @@ export default function ProductDetails({ params }: PageProps) {
                 </>
               )}
             </div>
-            <div className="flex-grow">
-              <ProductInformation
-                id={product.id}
-                name={product.name}
-                price={product.currentPrice}
-                imageSrc={product.imageSrc}
-              />
+            {/* Product Information */}
+            <div>
+              <ProductInformation product={product} isLoading={isLoading} />
             </div>
           </div>
         </div>
