@@ -58,12 +58,12 @@ export default function Cart() {
                         {/* Product Image */}
                         <td className="p-4 border-r border-stone-200 text-center">
                           <div className="relative w-24 h-24 mx-auto bg-stone-100 border border-stone-200 overflow-hidden rounded-md">
-                            <Image
+                            {/* <Image
                               src={itemImage}
                               alt={item.product?.name ?? ""}
                               fill
                               className="object-cover"
-                            />
+                            /> */}
                           </div>
                         </td>
 

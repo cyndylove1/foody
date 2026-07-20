@@ -65,12 +65,12 @@ export default function Collection() {
                   className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group"
                 >
                   <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
-                    <Image
+                    {/* <Image
                       src={item.thumbnail || item.images?.[0] || "/poundo.jpg"}
                       alt={item.name}
                       fill
                       className="object-cover"
-                    />
+                    /> */}
                   </div>
 
                   <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider text-stone-700 bg-white/90 px-2.5 py-1 rounded-md">

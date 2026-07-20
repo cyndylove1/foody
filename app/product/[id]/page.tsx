@@ -56,7 +56,7 @@ export default function ProductDetails({ params }: PageProps) {
                 <>
                   {/* Main Image */}
                   <div className="rounded-xl overflow-hidden border border-gray-200">
-                    <Image
+                    {/* <Image
                       src={
                         selectedImage ||
                         product?.thumbnail ||
@@ -66,7 +66,7 @@ export default function ProductDetails({ params }: PageProps) {
                       width={600}
                       height={600}
                       className="w-full h-full object-cover"
-                    />
+                    /> */}
                   </div>
 
                   {/* Thumbnail Images */}
@@ -82,13 +82,13 @@ export default function ProductDetails({ params }: PageProps) {
                               : "border-gray-200 hover:border-gray-400"
                           }`}
                         >
-                          <Image
+                          {/* <Image
                             src={img}
                             alt={`Thumbnail ${index + 1}`}
                             width={80}
                             height={80}
                             className="w-full h-full object-cover"
-                          />
+                          /> */}
                         </div>
                       ))}
                     </div>

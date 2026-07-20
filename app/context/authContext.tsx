@@ -292,7 +292,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const registerMutation = useMutation({
     mutationFn: async (data: RegisterData) => {
-      const response = await apiClient.post("/", data, {
+      const response = await apiClient.post("/auth/register", data, {
         headers: { "x-show-toast": "true" } as any,
       });
       return response.data;

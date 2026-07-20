@@ -12,7 +12,6 @@ interface CustomInputProps {
   placeholder?: string;
   required?: boolean;
   type?: string;
-  defaultValue?: string;
   name?: string;
   value?: string;
   height?: string | number;
@@ -25,7 +24,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
   placeholder,
   required = false,
   type = "text",
-  defaultValue = "",
   name,
   value,
   height = "46px",
@@ -60,9 +58,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
         required={required}
         label={label}
         placeholder={placeholder}
-        defaultValue={defaultValue}
         disabled={disabled}
-        type={inputType} // Dynamically derived input type
+        type={inputType} 
         onChange={onChange}
         fullWidth
         variant="outlined"
