@@ -1,10 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Quantity from "../quantitiy";
 import Button from "../button";
-import { useState } from "react";
+import { useCart } from "../../context/cartContext";
 
 interface ProductColor {
   hex: string;
@@ -12,12 +13,12 @@ interface ProductColor {
 }
 
 interface BagCardProps {
-  id: string;
+  id: string | number;
   name: string;
   imageSrc: string;
-  originalPrice: number;
+  originalPrice?: number;
   currentPrice: number;
-  colors: ProductColor[];
+  colors?: ProductColor[];
 }
 
 export default function ProductCard({
@@ -26,7 +27,15 @@ export default function ProductCard({
   imageSrc,
   currentPrice,
 }: BagCardProps) {
-  const [localQuantity, setLocalQuantity] = useState<number>(1);
+  const { addItem } = useCart();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(Number(id), quantity);
+  };
+
   return (
     <div className="flex flex-col w-full group bg-gray-50 p-4 overflow-hidden">
       <Link
@@ -57,10 +66,10 @@ export default function ProductCard({
           <span className="text-sm font-bold text-gray-900">
             ${currentPrice}
           </span>
-          <Quantity value={localQuantity} onChange={setLocalQuantity} />
+          <Quantity value={quantity} onChange={setQuantity} />
         </div>
       </div>
-      <Button variant="primary" className="my-4">
+      <Button variant="primary" className="my-4" onClick={handleAddToCart}>
         Add to Cart
       </Button>
     </div>

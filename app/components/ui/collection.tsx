@@ -7,7 +7,7 @@ import { Heart } from "lucide-react";
 import Button from "../button";
 import Title from "../title";
 import { useProducts } from "@/app/hooks/useCollection";
-import { useCart } from "@/app/hooks/useCart"; // Adjust path as needed
+import { useCart } from "../../context/cartContext";
 
 export default function Collection() {
   const {
@@ -20,7 +20,7 @@ export default function Collection() {
     isFetchingNextPage,
   } = useProducts();
 
-  const { addToCart } = useCart();
+  const { addItem } = useCart();
 
   const products =
     data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
@@ -100,7 +100,10 @@ export default function Collection() {
                   </p>
 
                   <div className="grid grid-cols-2 gap-3 mt-auto">
-                    <Button variant="secondary" onClick={() => addToCart(item)}>
+                    <Button
+                      variant="secondary"
+                      onClick={() => addItem(item.id)}
+                    >
                       Add to Cart
                     </Button>
 

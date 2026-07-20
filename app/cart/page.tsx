@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { LuShoppingBasket } from "react-icons/lu";
 import ShopNavbar from "../components/ui/shopNavbar";
@@ -9,21 +8,12 @@ import Footer from "../components/ui/footer";
 import Quantity from "../components/quantitiy";
 import { Trash2 } from "lucide-react";
 import SummaryTotals from "../components/summaryTotal";
-import { useCart } from "@/app/hooks/useCart"; 
+import { useCart } from "../context/cartContext";
 import Link from "next/link";
 
 export default function Cart() {
-  const { cartItems, removeItem, updateQuantity } = useCart();
-  const [mounted, setMounted] = useState(false);
-
-  // Guarding against hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const { cart, cartItems, isLoading, removeItem, updateQuantity } =
+    useCart();
 
   return (
     <>
@@ -50,19 +40,15 @@ export default function Cart() {
                 </tr>
            </thead>
               <tbody>
-                {cartItems && cartItems.length > 0 ? (
-                  cartItems.map((item: any) => {
-                    // Extract safe image path from API structure
-                    const itemImage =
-                      item.thumbnail ||
-                      item.image_url ||
-                      item.image ||
-                      item.images?.[0] ||
-                      "/poundo.jpg";
-
-                    const itemPrice = Number(
-                      item.effective_price || item.price || 0,
-                    );
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={4} className="py-16 text-center text-gray-500">
+                      Loading your cart...
+                    </td>
+                  </tr>
+                ) : cartItems && cartItems.length > 0 ? (
+                  cartItems.map((item) => {
+                    const itemImage = item.product?.thumbnail || "/poundo.jpg";
 
                     return (
                       <tr
@@ -74,7 +60,7 @@ export default function Cart() {
                           <div className="relative w-24 h-24 mx-auto bg-stone-100 border border-stone-200 overflow-hidden rounded-md">
                             <Image
                               src={itemImage}
-                              alt={item.name}
+                              alt={item.product?.name ?? ""}
                               fill
                               className="object-cover"
                             />
@@ -84,7 +70,7 @@ export default function Cart() {
                         {/* Product Name */}
                         <td className="p-6 border-r border-stone-200 text-left">
                           <span className="text-stone-600 font-normal text-[15px]">
-                            {item.name}
+                            {item.product?.name}
                           </span>
                         </td>
 
@@ -92,11 +78,11 @@ export default function Cart() {
                         <td className="p-4 border-r border-stone-200 text-center">
                           <div className="flex items-center justify-center gap-4">
                             <Quantity
-                              value={item.quantity}
-                              onChange={(newQty) =>
-                                updateQuantity(item.id, newQty)
-                              }
                               className="w-full"
+                              value={item.quantity}
+                              onChange={(quantity) =>
+                                updateQuantity(item.id, quantity)
+                              }
                             />
                             <button
                               type="button"
@@ -111,7 +97,7 @@ export default function Cart() {
 
                         {/* Total Price */}
                         <td className="p-6 text-right font-normal text-[15px] text-(--main)">
-                          CAD {(itemPrice * item.quantity).toFixed(2)}
+                          CAD {item.subtotal.toFixed(2)}
                         </td>
                       </tr>
                     );
@@ -139,7 +125,7 @@ export default function Cart() {
           </div>
 
           {/* Summary Total */}
-          <SummaryTotals cartItems={cartItems} />
+          <SummaryTotals cart={cart} />
         </div>
       </div>
       <Footer />

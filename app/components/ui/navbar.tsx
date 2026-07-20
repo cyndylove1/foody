@@ -8,8 +8,8 @@ import Link from "next/link";
 import Button from "../button";
 import LoggedInButton from "../LoggedInButton";
 import { useAuth } from "@/app/hooks/useAuth";
-import { useCart } from "@/app/hooks/useCart";
-import { useProfile } from "@/app/hooks/useProfile"; // Imported custom profile hook
+import { useCart } from "../../context/cartContext";
+import { useProfile } from "@/app/hooks/useProfile";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function Navbar() {
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { logout } = useAuth();
-  const { totalItems } = useCart();
+  const { itemCount } = useCart();
   const { data: user } = useProfile();
 
   useEffect(() => {
@@ -102,9 +102,9 @@ export default function Navbar() {
               className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2.5} />
-              {mounted && totalItems > 0 && (
+              {mounted && itemCount > 0 && (
                 <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                  {totalItems}
+                  {itemCount}
                 </span>
               )}
             </button>

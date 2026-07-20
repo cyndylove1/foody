@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { IoChevronDown, IoChevronUpOutline } from "react-icons/io5";
 import StarRating from "../StarRating";
 import Button from "../button";
 import Quantity from "../quantitiy";
 import Link from "next/link";
-import { CartContext } from "@/app/context/CartContext"; // Adjust path to your cart context
+import { useCart } from "../../context/cartContext";
 
 interface ProductInformationProps {
   product: any;
@@ -22,8 +22,7 @@ export default function ProductInformation({
   );
   const [localQuantity, setLocalQuantity] = useState<number>(1);
 
-  // Hook up your global cart state update tools
-  const cartContext = useContext(CartContext);
+  const { addItem } = useCart();
 
   const toggleAccordion = (section: string) => {
     setActiveAccordion(activeAccordion === section ? null : section);
@@ -51,16 +50,7 @@ export default function ProductInformation({
   }).format(Number(product.effective_price || product.price || 0));
 
   const handleAddToCart = () => {
-    if (!cartContext) return;
-
-    // Pass along localQuantity selections directly to your context mutations
-    // Ensure both item entry mappings are bundled
-    cartContext.addToCart({
-      ...product,
-      id: product.id,
-      product_id: product.id,
-      quantity: localQuantity,
-    });
+    addItem(product.id, localQuantity);
   };
 
   return (

@@ -1,12 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import MenuList from "@/app/components/ui/menuList";
 import ProductCard from "@/app/components/ui/productCard";
 import { LayoutGrid, List } from "lucide-react";
-import { productsMock } from "../constant";
+import { useProducts } from "@/app/hooks/useCollection";
 import Footer from "../components/ui/footer";
 import ShopNavbar from "../components/ui/shopNavbar";
 
 export default function Category() {
+  const { data, isLoading, isError, error } = useProducts();
+
+  const products =
+    data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
+
   return (
     <>
       <ShopNavbar />
@@ -33,25 +40,37 @@ export default function Category() {
             <MenuList />
           </div>
 
-          <div className="">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {productsMock.map((prod) => (
-                <Link
-                  href={`/product/${prod.id}`}
-                  key={prod.id}
-                  className="block transition-transform duration-200 hover:-translate-y-1"
-                >
-                  <ProductCard
-                    id={prod.id}
-                    name={prod.name}
-                    imageSrc={prod.imageSrc}
-                    originalPrice={prod.originalPrice}
-                    currentPrice={prod.currentPrice}
-                    colors={prod.colors}
-                  />
-                </Link>
-              ))}
-            </div>
+          <div className="w-full">
+            {isLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <p className="text-lg text-gray-500">Loading products...</p>
+              </div>
+            ) : isError ? (
+              <div className="flex justify-center items-center py-20">
+                <p className="text-red-500">{(error as Error).message}</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {products.map((prod: any) => (
+                  <Link
+                    href={`/product/${prod.id}`}
+                    key={prod.id}
+                    className="block transition-transform duration-200 hover:-translate-y-1"
+                  >
+                    <ProductCard
+                      id={prod.id}
+                      name={prod.name}
+                      imageSrc={
+                        prod.thumbnail || prod.images?.[0] || "/poundo.jpg"
+                      }
+                      currentPrice={Number(
+                        prod.effective_price || prod.price || 0,
+                      )}
+                    />
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </main>

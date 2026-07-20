@@ -8,7 +8,7 @@ import Logo from "../logo";
 import MenuList from "./menuList";
 import LoggedInButton from "../LoggedInButton";
 import { useAuth } from "@/app/hooks/useAuth";
-import { useCart } from "@/app/hooks/useCart";
+import { useCart } from "../../context/cartContext";
 import { useProfile } from "@/app/hooks/useProfile";
 
 export default function ShopNavbar() {
@@ -17,8 +17,7 @@ export default function ShopNavbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-   const { totalItems } = useCart();
-
+  const { itemCount } = useCart();
   const { logout } = useAuth();
   const { data: user } = useProfile();
 
@@ -97,13 +96,12 @@ export default function ShopNavbar() {
               aria-label="Cart"
               className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
             >
-              <ShoppingCart size={20} strokeWidth={2.5} />
-              {mounted && totalItems > 0 && (
-                <span className="absolute top-0 right-0 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
-                  {totalItems}
+              <ShoppingCart size={20} strokeWidth={2} />
+              {mounted && itemCount > 0 && (
+                <span className="absolute top-2 right-2 w-4 h-4 bg-[#F5A623] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {itemCount}
                 </span>
               )}
-             
             </button>
           </Link>
 

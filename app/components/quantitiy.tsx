@@ -1,26 +1,34 @@
 "use client";
 
+import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 interface QuantityProps {
-  value: number;
-  onChange: (quantity: number) => void;
   className?: string;
+  value?: number;
+  onChange?: (quantity: number) => void;
 }
 
-export default function Quantity({
-  value,
-  onChange,
-  className,
-}: QuantityProps) {
-  const handleDecrease = () => {
-    if (value > 1) {
-      onChange(value - 1);
+export default function Quantity({ className, value, onChange }: QuantityProps) {
+  const [internalQuantity, setInternalQuantity] = useState<number>(1);
+
+  const isControlled = value !== undefined;
+  const quantity = isControlled ? value : internalQuantity;
+
+  const setQuantity = (next: number) => {
+    if (isControlled) {
+      onChange?.(next);
+    } else {
+      setInternalQuantity(next);
     }
   };
 
+  const handleDecrease = () => {
+    if (quantity > 1) setQuantity(quantity - 1);
+  };
+
   const handleIncrease = () => {
-    onChange(value + 1);
+    setQuantity(quantity + 1);
   };
 
   return (
@@ -31,7 +39,7 @@ export default function Quantity({
       <button
         type="button"
         onClick={handleDecrease}
-        disabled={value <= 1}
+        disabled={quantity <= 1}
         className="p-2 text-gray-600 hover:bg-gray-50 rounded-lg disabled:opacity-30 disabled:hover:bg-transparent transition-colors flex items-center justify-center shrink-0 aspect-square"
         aria-label="Decrease quantity"
       >
@@ -39,7 +47,7 @@ export default function Quantity({
       </button>
 
       <span className="text-xs sm:text-sm font-bold text-[#111111] px-1 text-center flex-1 min-w-0">
-        {value}
+        {quantity}
       </span>
 
       {/* Button Increase */}
