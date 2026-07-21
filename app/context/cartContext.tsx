@@ -25,6 +25,7 @@ export interface CartItem {
 
 export interface CartObject {
   id: number;
+  session_id?: string | null;
   items: CartItem[];
   items_count: number;
   coupon: unknown;
@@ -34,6 +35,17 @@ export interface CartObject {
   discount: number;
   total: number;
 }
+
+// The cart_session cookie is httpOnly and cross-site (frontend/backend live on
+// different origins), so browsers intermittently drop it (ITP, tracking
+// protection, etc). When that happens the backend can't identify the guest
+// cart and silently creates a new empty one. We persist the session_id the
+// backend hands back and echo it as X-Cart-Session on every request (see
+// axiosConfig.ts) so cart identity doesn't depend on the cookie surviving.
+const persistCartSession = (data?: CartObject) => {
+  if (typeof window === "undefined" || !data?.session_id) return;
+  localStorage.setItem("cart_session", data.session_id);
+};
 
 interface CartContextValue {
   cart: CartObject | undefined;
@@ -60,7 +72,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     queryKey: CART_QUERY_KEY,
     queryFn: async () => {
       const response = await apiClient.get("/cart");
-      return response.data.data;
+      const data = response.data.data as CartObject;
+      persistCartSession(data);
+      return data;
     },
   });
 
@@ -85,6 +99,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     context?: { requestId: number },
   ) => {
     if (context && context.requestId !== requestIdRef.current) return;
+    persistCartSession(data);
     queryClient.setQueryData(CART_QUERY_KEY, data);
   };
 

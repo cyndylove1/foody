@@ -93,6 +93,12 @@ const setupInterceptors = () => {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+
+        const cartSession = localStorage.getItem("cart_session");
+
+        if (cartSession) {
+          config.headers["X-Cart-Session"] = cartSession;
+        }
       }
 
       return config;

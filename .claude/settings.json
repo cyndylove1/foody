@@ -4,7 +4,10 @@
       "Bash(git rm *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Read(//c/Users/ucgni/Desktop/**)"
+      "Read(//c/Users/ucgni/Desktop/**)",
+      "Bash(ls \"C:\\\\Users\\\\ucgni\\\\Herd\\\\commerce\")",
+      "Read(//c/Users/ucgni/Herd/commerce/**)",
+      "Read(//c/Users/ucgni/Herd/commerce/routes/**)"
     ]
   }
 }
