@@ -47,11 +47,13 @@ export default function CategoryPage({
       <ShopNavbar />
       <div className="bg-[#faf8f2] w-full px-4 py-8 flex flex-col md:flex-row gap-8">
         {/* Sidebar Navigation */}
-        <MenuList />
+        <div className="hidden md:flex">
+          <MenuList />
+        </div>
 
         {/* Main Content Area */}
         <main className="flex-1 mt-[13rem] md:mt-0">
-          <h1 className="text-3xl font-bold capitalize mb-6">
+          <h1 className="md:text-3xl text-2xl font-bold capitalize mb-6">
             {subCategory ? subCategory.name : slug.replace(/-/g, " ")}
           </h1>
 

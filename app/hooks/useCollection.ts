@@ -28,7 +28,7 @@ const fetchProducts = async ({
   const endpoint = `${BASE_URL}/products?${params.toString()}`;
 
   const response = await axios.get(endpoint);
-  console.log("Products API:", response.data);
+  // console.log("Products API:", response.data);
   return response.data;
 };
 
