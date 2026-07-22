@@ -29,7 +29,7 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-row items-center justify-center lg:justify-start gap-5 pt-2">
-            <Link href="/categories">
+            <Link href="/category/seasonings">
               <Button variant="primary">Shop Groceries</Button>
             </Link>
             <Link href="/contact">
