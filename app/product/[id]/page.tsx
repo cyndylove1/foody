@@ -29,7 +29,7 @@ export default function ProductDetails({ params }: PageProps) {
 
   const productLinks = [
     { label: "Home", href: "/" },
-    { label: "Products", href: "/shop" },
+    { label: "Products", href: "/category/seasonings" },
     { label: product?.name || "Loading..." },
   ];
 
@@ -56,17 +56,15 @@ export default function ProductDetails({ params }: PageProps) {
                 <>
                   {/* Main Image */}
                   <div className="rounded-xl overflow-hidden border border-gray-200">
-                    {/* <Image
+                    <Image
                       src={
-                        selectedImage ||
-                        product?.thumbnail ||
                         "/placeholder.jpg"
                       }
                       alt={product?.name || "Product"}
                       width={600}
                       height={600}
                       className="w-full h-full object-cover"
-                    /> */}
+                    />
                   </div>
 
                   {/* Thumbnail Images */}

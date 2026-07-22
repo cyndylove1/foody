@@ -161,16 +161,9 @@ const setupInterceptors = () => {
           config.headers.Authorization = `Bearer ${token}`;
         }
 
-<<<<<<< HEAD
         // 👈 Attach session ID header for guest users
         if (sessionId) {
           config.headers["X-Session-ID"] = sessionId;
-=======
-        const cartSession = localStorage.getItem("cart_session");
-
-        if (cartSession) {
-          config.headers["X-Cart-Session"] = cartSession;
->>>>>>> 36d096f0508c08841c2dd8b27378bc37f10aae30
         }
       }
 
