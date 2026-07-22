@@ -25,28 +25,35 @@ export default function FeaturedProduct() {
       ) : (
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product: any) => (
-              <Link
-                key={product.id}
-                href={`/product/${product.id}`}
-                className="border border-gray-200 rounded-lg bg-white overflow-hidden hover:shadow-md transition-all duration-300 group block"
-              >
-                <div className="p-4">
-                  <div className="relative w-full h-[260px]">
-                    {/* <Image
-                      src={product.image || "/bonnet.jpg"}
-                      alt={product.name}
-                      fill
-                      className="object-cover p-4"
-                    /> */}
-                  </div>
+            {products.map((product: any) => {
+              // Extract category slug or fallback to checking category_id
+              const categorySlug =
+                product.category?.slug || product.category_slug;
 
-                  <h3 className="text-center text-gray-600 text-lg">
-                    {product.name}
-                  </h3>
-                </div>
-              </Link>
-            ))}
+              return (
+                <Link
+                  key={product.id}
+                  href={`/category/${categorySlug}`}
+                  className="border border-gray-200 rounded-lg bg-white overflow-hidden hover:shadow-md transition-all duration-300 group block"
+                >
+                  <div className="p-4">
+                    <div className="relative w-full h-[260px]">
+                      {/* Un-comment when you want the image back */}
+                      {/* <Image
+                        src={product.image || "/bonnet.jpg"}
+                        alt={product.name}
+                        fill
+                        className="object-cover p-4"
+                      /> */}
+                    </div>
+
+                    <h3 className="text-center text-gray-600 text-lg">
+                      {product.name}
+                    </h3>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

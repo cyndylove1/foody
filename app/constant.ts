@@ -204,48 +204,48 @@ export const categoriesData: Category[] = [
   {
     name: "Soups",
     subCategories: [
-      { name: "Seasonings", slug: "seasonings" },
-      { name: "Spices", slug: "spices" },
-      { name: "Dry Food", slug: "dry-food" },
-      { name: "Utensils", slug: "utensils" },
+      { id: 2, name: "Seasonings", slug: "seasonings" },
+      { id: 3, name: "Spices", slug: "spices" },
+      { id: 4, name: "Dry Food", slug: "dry-food" },
+      { id: 5, name: "Utensils", slug: "utensils" },
     ],
   },
   {
     name: "Drinks & Snacks",
     subCategories: [
-      { name: "Drinks", slug: "drinks" },
-      { name: "Snack", slug: "snack" },
-      { name: "Candy", slug: "candy" },
+      { id: 8, name: "Drinks", slug: "drinks" },
+      { id: 7, name: "Snack", slug: "snack" },
+      { id: 25, name: "Candy", slug: "candy" },
     ],
   },
   {
     name: "Frozen Foods",
     subCategories: [
-      { name: "Meat & Poultry", slug: "meat & poultry " },
-      { name: "Fish", slug: "fish" },
-      { name: "Vegetables", slug: "vegetables" },
+      { id: 11, name: "Meat & Poultry", slug: "meat-poultry" },
+      { id: 12, name: "Fish", slug: "fish" },
+      { id: 13, name: "Vegetables", slug: "vegetables" },
     ],
   },
   {
     name: "Grocery",
     subCategories: [
-      { name: "Grain", slug: "grain " },
-      { name: "Flours", slug: "flours" },
-      { name: "Cooking Oils", slug: "cooking-oil" },
-      { name: "Fresh Produce", slug: "fresh-produce" },
-      { name: "Beverages & Cereals", slug: "beverages & cereals" },
-      { name: "Baked Foods", slug: "baked-foods" },
+      { id: 15, name: "Grain", slug: "grain" },
+      { id: 16, name: "Flours", slug: "flours" },
+      { id: 14, name: "Cooking Oils", slug: "cooking-oil" },
+      { id: 18, name: "Fresh Produce", slug: "fresh-produce" },
+      { id: 19, name: "Beverages & Cereals", slug: "beverages-cereals" },
+      { id: 17, name: "Baked Foods", slug: "baked-foods" },
     ],
   },
   {
     name: "Beauty & Health",
     subCategories: [
-      { name: "Personal Care", slug: "personal-care " },
-      { name: "Hair", slug: "hair" },
-      { name: "Apparel", slug: "apparel" },
+      { id: 123, name: "Personal Care", slug: "personal-care" },
+      { id: 23, name: "Hair", slug: "hair" },
+      { id: 20, name: "Apparel", slug: "apparel" },
     ],
-  },
-];
+  }
+]
 
 // Category
 export const productsMock = [

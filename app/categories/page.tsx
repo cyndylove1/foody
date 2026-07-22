@@ -16,7 +16,7 @@ export default function Category() {
 
   return (
     <>
-      <ShopNavbar />
+      
       <main className="mx-auto px-4 py-8 bg-[#faf8f2] min-h-screen w-full">
         <div className="flex justify-end items-center gap-2 border-b border-gray-200/60 pb-3 mb-6">
           <button

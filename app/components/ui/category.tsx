@@ -1,54 +1,155 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { Heart } from "lucide-react";
+
 import Button from "../button";
-import { categories } from "@/app/constant";
 import Title from "../title";
+import { useProducts } from "@/app/hooks/useCollection";
+import { useCart } from "../../context/cartContext";
 
 export default function Category() {
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useProducts();
+
+  const { addItem } = useCart();
+
+  const products =
+    data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
+
   return (
-    <section className="w-full py-16 px-4 lg:px-12 md:px-6 bg-gray-50 select-none">
-      <div className="max-w-7xl mx-auto space-y-10">
-        {/* Title */}
-        <Title text="Our Market Categories" className="items-start" />
-        {/* IMAGE GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-          {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/categories`}
-              className="relative rounded-[24px] overflow-hidden md:h-[420px] h-[300px] group flex flex-col justify-between p-6 shadow-sm border border-gray-100 bg-white cursor-pointer block"
-            >
-              {/*Image */}
-              <Image
-                src={category.imageSrc}
-                alt={category.imageAlt}
-                fill
-                sizes="(max-w-768px) 100vw, (max-w-1024px) 50vw, 25vw"
-                priority={category.priority}
-                className="object-cover absolute inset-0 w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
-              />
+    <div className="max-w-7xl mx-auto px-4 py-12 bg-white lg:px-12 md:px-6">
+      {/* Header */}
+      <div>
+        <Title
+          text="Authentic African Kitchen Staples"
+          className="items-center"
+        />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10" />
-
-              {/* Top Badge */}
-              <div className="relative z-20 self-start">
-                <span className="inline-block text-white text-[10px] font-bold tracking-widest bg-(--main) px-2.5 py-0.5 rounded-md uppercase">
-                  {category.badge}
-                </span>
-              </div>
-
-              {/* title*/}
-              <div className="relative z-20 space-y-4 mt-auto">
-                <h3 className="text-white text-lg font-extrabold tracking-tight leading-snug drop-shadow-sm">
-                  {category.title}
-                </h3>
-                {/* Button*/}
-                <Button variant="tertiary">{category.buttonText}</Button>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <p className="pt-6 pb-10 max-w-xl mx-auto text-base md:text-lg text-center text-gray-600 leading-relaxed">
+          Bring the genuine taste of home to your kitchen. Explore our
+          handpicked category of premium pantry items, essential spices, and
+          classic ingredients delivered fresh for your everyday cooking.
+        </p>
       </div>
-    </section>
+
+      {/* Loading */}
+      {isLoading ? (
+        <div className="flex justify-center items-center py-20">
+          <p className="text-lg text-gray-500">Loading products...</p>
+        </div>
+      ) : isError ? (
+        /* Error */
+        <div className="flex justify-center items-center py-20">
+          <p className="text-red-500">{(error as Error).message}</p>
+        </div>
+      ) : (
+        <>
+          {/* Products */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map((item: any) => {
+              // Construct category path safely with fallbacks
+              const categorySlug = item.category?.slug;
+              const categoryUrl = categorySlug
+                ? `/category/${categorySlug}`
+                : "#";
+
+              return (
+                <div
+                  key={item.id}
+                  className="flex flex-col border border-gray-100 overflow-hidden p-4 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
+                  {/* Card Image Wrapper links directly to Category Page */}
+                  <Link
+                    href={categoryUrl}
+                    className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group"
+                  >
+                    <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
+                      {/* <Image
+                        src={item.thumbnail || item.images?.[0] || "/poundo.jpg"}
+                        alt={item.name}
+                        fill
+                        className="object-cover"
+                      /> */}
+                    </div>
+
+                    {/* Category Badge - Clicking routes to category page */}
+                    {item.category?.name && (
+                      <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider text-stone-700 bg-white/90 hover:bg-white px-2.5 py-1 rounded-md transition-colors">
+                        {item.category.name}
+                      </span>
+                    )}
+                  </Link>
+
+                  <div className="flex flex-col flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-2xl font-extrabold tracking-tight text-stone-900">
+                        ${Number(item.effective_price || 0).toFixed(2)}
+                      </span>
+
+                      <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
+                        <Heart className="w-5 h-5" />
+                      </button>
+                    </div>
+
+                    {/* Clicking product title navigates to Category page */}
+                    <Link href={categoryUrl}>
+                      <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600">
+                        {item.name}
+                      </h3>
+                    </Link>
+
+                    <p className="text-[13px] leading-relaxed text-stone-600 min-h-[56px] mb-6 line-clamp-3">
+                      {item.short_description}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                      <Button
+                        variant="secondary"
+                        onClick={() => addItem(item.id)}
+                      >
+                        Add to Cart
+                      </Button>
+
+                      {/* Buy Now navigates to Category page */}
+                      <Link href={categoryUrl} className="w-full">
+                        <Button variant="primary" className="w-full">
+                          Buy Now
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Load More */}
+          <div className="flex justify-center mt-14">
+            {hasNextPage ? (
+              <Button
+                variant="secondary"
+                onClick={() => fetchNextPage()}
+                disabled={isFetchingNextPage}
+              >
+                {isFetchingNextPage ? "Loading..." : "See More Collections"}
+              </Button>
+            ) : (
+              <Button variant="secondary" disabled>
+                No More Products
+              </Button>
+            )}
+          </div>
+        </>
+      )}
+    </div>
   );
 }

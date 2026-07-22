@@ -24,13 +24,15 @@ export interface Product {
   image: string;
 }
 // menuList Sidebar
+export interface SubCategory {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface Category {
   name: string;
   subCategories?: SubCategory[];
-}
-export interface SubCategory {
-  name: string;
-  slug: string;
 }
 
 // FAQ

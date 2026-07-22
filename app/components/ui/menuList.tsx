@@ -1,17 +1,21 @@
+// components/MenuList.tsx
 "use client";
+
 import { useState } from "react";
+import Link from "next/link";
 import { Plus, Minus } from "lucide-react";
 import { categoriesData } from "@/app/constant";
 
 export default function MenuList() {
-  const [openCategory, setOpenCategory] = useState<string | null>("Soups"); // Defaulting to Soups open like image 2
+  const [openCategory, setOpenCategory] = useState<string | null>("Soups");
   const [selectedSize, setSelectedSize] = useState<string>("None");
 
   const toggleCategory = (name: string) => {
     setOpenCategory(openCategory === name ? null : name);
   };
+
   return (
-    <aside className="w-full h-full  md:w-64 md:flex flex-col p-6 rounded-md bg-white">
+    <aside className="w-full h-screen md:w-64 md:flex flex-col p-6 rounded-md bg-white">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-black border-b border-gray-300 pb-3 mb-4">
           Categories
@@ -42,17 +46,17 @@ export default function MenuList() {
                   )}
                 </button>
 
-                {/* Subcategories Dropdown*/}
+                {/* Subcategories Dropdown */}
                 {hasSubs && isOpen && (
                   <div className="mt-3 ml-6 space-y-3 pl-2 border-l border-gray-100">
                     {category.subCategories?.map((sub) => (
-                      <a
+                      <Link
                         key={sub.slug}
                         href={`/category/${sub.slug}`}
                         className="block text-sm text-gray-500 hover:text-black font-medium transition-colors"
                       >
                         {sub.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -61,10 +65,10 @@ export default function MenuList() {
           })}
         </div>
       </div>
-      {/* Filter Section*/}
+
+      {/* Filter Section */}
       <div>
         <h2 className="text-2xl font-bold text-black mb-4">Filter</h2>
-        {/* Size Filter */}
         <div className="space-y-3">
           <span className="text-sm font-semibold text-gray-400 block mb-2">
             Size

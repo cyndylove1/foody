@@ -46,13 +46,13 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/categories"
+            href="/category/seasonings"
             className={`relative py-2 transition-colors hover:text-(--main) ${
-              isActive("/categories") ? "text-(--main) font-semibold" : ""
+              isActive("/category/seasonings") ? "text-(--main) font-semibold" : ""
             }`}
           >
             Shop
-            {isActive("/categories") && (
+            {isActive("/category/seasonings") && (
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
             )}
           </Link>
