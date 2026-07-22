@@ -119,7 +119,7 @@ export default function Cart() {
             </table>
 
             {/* Continue Shopping Button */}
-            <Link href="/shop" className="mt-8">
+            <Link href="/category/seasonings" className="mt-8">
               <Button variant="secondary">Continue Shopping</Button>
             </Link>
           </div>
