@@ -15,7 +15,7 @@ export default function Collection() {
           {categories.map((category) => (
             <Link
               key={category.id}
-              href={`/category`}
+              href={`/category/seasonings`}
               className="relative rounded-[24px] overflow-hidden md:h-[420px] h-[300px] group flex flex-col justify-between p-6 shadow-sm border border-gray-100 bg-white cursor-pointer block"
             >
               {/*Image */}
