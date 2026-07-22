@@ -52,7 +52,7 @@ export default function CategoryPage({
         </div>
 
         {/* Main Content Area */}
-        <main className="flex-1 mt-[13rem] md:mt-0">
+        <main className="flex-1">
           <h1 className="md:text-3xl text-2xl font-bold capitalize mb-6">
             {subCategory ? subCategory.name : slug.replace(/-/g, " ")}
           </h1>
