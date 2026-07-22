@@ -15,7 +15,7 @@ export default function MenuList() {
   };
 
   return (
-    <aside className="w-full h-screen md:w-64 md:flex flex-col p-6 rounded-md bg-white">
+    <aside className="w-full h-full md:w-64 md:flex flex-col p-6 rounded-md bg-white">
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-black border-b border-gray-300 pb-3 mb-4">
           Categories

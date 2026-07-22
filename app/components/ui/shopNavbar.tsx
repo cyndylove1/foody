@@ -38,7 +38,7 @@ export default function ShopNavbar() {
 
   return (
     <>
-      <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 md:px-12 flex items-center justify-between relative z-40">
+      <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 lg:px-12 flex items-center justify-between relative z-40">
         <div className="flex items-center gap-3 select-none shrink-0">
           {/* Drawer Trigger icon*/}
           <button
