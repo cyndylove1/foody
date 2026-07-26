@@ -47,7 +47,7 @@ const WholeSaleBanner: NextPage = () => {
       <div className="py-8 px-4 md:px-6 lg:px-8 flex items-center border-b border-gray-300 justify-center ">
         <div className="flex gap-4 max-w-[1200px] w-full">
           {/* Left Vertical Banner */}
-          <div className="md:w-[300px] aspect-[2/3] w-full rounded-lg overflow-hidden relative shadow-2xl flex-shrink-0 group">
+          <div className="w-[300px] aspect-[2/3] hidden md:flex rounded-lg overflow-hidden relative shadow-2xl flex-shrink-0 group">
             <div className="w-full h-full">
               <CustomSwiper
                 showNavigation={true}
@@ -103,7 +103,7 @@ const WholeSaleBanner: NextPage = () => {
           </div>
 
           {/* Right Horizontal Banner (iPhone 15 Pro Max) */}
-          <div className="w-full aspect-[2/1] hidden md:flex rounded-lg overflow-hidden relative shadow-2xl flex items-center group">
+          <div className="w-full h-[500px] sm:h-[600px] md:h-auto md:aspect-[2/1] rounded-lg overflow-hidden relative shadow-2xl flex items-center group">
             <div className="w-full h-full">
               <CustomSwiper
                 showNavigation={false}
@@ -168,7 +168,7 @@ const WholeSaleBanner: NextPage = () => {
                     </div>
 
                     {/* 4. Golden Medal/Seal with Price (Positioned top-right over the image) */}
-                    <div className="absolute top-[8%] right-[8%] z-20 md:flex flex-col items-center hidden">
+                    <div className="absolute top-[8%] right-[8%] z-20 flex flex-col items-center">
                       <div className="relative w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center">
                         {/* Outer Spiky Gold Seal */}
                         <div
