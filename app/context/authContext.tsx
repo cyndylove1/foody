@@ -350,17 +350,45 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return result;
   };
 
+  // const login = async (data: LoginData) => {
+  //   const result = await loginMutation.mutateAsync(data);
+  //   const payload = result?.data || result;
+  //   const receivedToken = payload?.token;
+  //   if (receivedToken) {
+  //     localStorage.setItem("auth_token", receivedToken);
+  //     localStorage.setItem("user", JSON.stringify(payload.user));
+
+  //     setToken(receivedToken);
+  //     queryClient.setQueryData(["user-profile"], payload.user);
+  //     router.push("/");
+  //   }
+  //   return result;
+  // };
+
+
   const login = async (data: LoginData) => {
     const result = await loginMutation.mutateAsync(data);
     const payload = result?.data || result;
     const receivedToken = payload?.token;
+
     if (receivedToken) {
       localStorage.setItem("auth_token", receivedToken);
       localStorage.setItem("user", JSON.stringify(payload.user));
 
       setToken(receivedToken);
       queryClient.setQueryData(["user-profile"], payload.user);
-      router.push("/");
+
+      // Check for saved vibe selection
+      const savedVibe = localStorage.getItem("selected_vibe");
+
+      if (savedVibe === "retail" || savedVibe === "wholesale") {
+        // Clean up key so future logins aren't locked to this selection forever
+        localStorage.removeItem("selected_vibe");
+        router.push(`/${savedVibe}`);
+      } else {
+        // Default fallback route
+        router.push("/");
+      }
     }
     return result;
   };

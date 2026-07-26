@@ -63,7 +63,7 @@ export default function ExploreWholesale() {
             <Sparkles className="w-3.5 h-3.5" />
             <span>WholeSale Collection</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl md:text-4xl font-bold text-slate-900 tracking-tight">
             Explore Our WholeSales Stores
           </h2>
           <p className="text-slate-600 mt-2 text-base max-w-xl">

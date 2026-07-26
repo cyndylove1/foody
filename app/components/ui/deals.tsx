@@ -116,15 +116,15 @@ export default function Deals() {
     <section className="max-w-7xl lg:px-8 md:px-6 mx-auto px-4 py-8 mt-10">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
+        <h2 className="md:text-4xl text-2xl font-bold text-slate-900 tracking-tight">
           Todays Best Deals For You!
         </h2>
       </div>
 
       {/* Product Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
-          <div key={product.id} className="flex flex-col group cursor-pointer">
+          <div key={product.id} className="flex border border-gray-300 p-4 rounded-lg flex-col group cursor-pointer">
             {/* Image Box */}
             <div className="relative bg-[#f2f4f8] rounded-xl w-full h-52 flex items-center justify-center mb-3 transition-transform duration-200 group-hover:-translate-y-1">
               {/* Wishlist Heart Icon Button */}
@@ -140,11 +140,11 @@ export default function Deals() {
             {/* Content Box */}
             <div className="flex flex-col flex-1 justify-between px-1">
               <div className="flex justify-between items-center">
-                <h3 className="text-xs font-medium text-slate-800 line-clamp-2 leading-relaxed">
+                <h3 className="text-lg font-medium text-slate-800 line-clamp-2 leading-relaxed">
                   {product.title}
                 </h3>
                 <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
-                  <Heart className="w-4 h-4" />
+                  <Heart className="w-5 h-5" />
                 </button>
               </div>
               {/* Title */}
@@ -176,7 +176,7 @@ export default function Deals() {
                   </span>
                 )}
               </div>
-              <div className="my-6">
+              <div className="mt-6">
                 <Button
                   variant="primary"
                   className="flex w-full items-center justify-center gap-3"

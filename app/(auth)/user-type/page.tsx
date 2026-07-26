@@ -16,7 +16,7 @@ interface OptionCard {
   features: string[];
 }
 
-export default function ModeSelection() {
+export default function UserType() {
   const router = useRouter();
   const [selectedVibe, setSelectedVibe] = useState<
     "retail" | "wholesale" | null
@@ -52,11 +52,11 @@ export default function ModeSelection() {
   const handleContinue = () => {
     if (!selectedVibe) return;
 
-    if (selectedVibe === "retail") {
-      router.push("/retail");
-    } else if (selectedVibe === "wholesale") {
-      router.push("/wholesale");
-    }
+    // 1. Save the selected vibe to local storage
+    localStorage.setItem("selected_vibe", selectedVibe);
+
+    // 2. Redirect to the sign-up flow
+    router.push("/sign-up");
   };
 
   return (
