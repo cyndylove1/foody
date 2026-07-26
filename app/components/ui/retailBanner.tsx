@@ -27,36 +27,37 @@ export default function RetailBanner() {
     <>
       <div className="px-4 md:px-6 lg:px-8">
         <div className="max-w-7xl pt-10 mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4">
-          <div className="lg:col-span-7 relative rounded-lg overflow-hidden shadow-md min-h-[400px] lg:min-h-full flex flex-col justify-between">
+          <div className="lg:col-span-7 relative rounded-lg overflow-hidden shadow-md flex flex-col justify-between h-[420px] sm:h-[500px] lg:h-auto">
             <div className="w-full h-full">
               <CustomSwiper
-                showNavigation={true}
-                showPagination={true}
+                showNavigation={false}
+                showPagination={false}
                 autoplay={true}
                 autoplayDelay={4000}
               >
                 {slides.map((slide, index) => (
                   <div
                     key={index}
-                    className="relative w-full h-full rounded-2xl overflow-hidden"
+                    className="relative w-full h-full rounded-2xl overflow-hidden min-h-[420px] sm:min-h-[500px] lg:min-h-0"
                   >
-                    {/* Background Image */}
+                    {/* Background Image (Forces full width & height cover) */}
                     <img
                       src={slide.img}
                       alt={slide.title}
-                      className="object-cover h-full"
+                      className="absolute inset-0 w-full h-full object-cover z-0"
                     />
 
                     {/* Dark Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-10" />
 
                     {/* Custom Content Layered On Top */}
-                    <div className="absolute bottom-6 left-6 z-20 text-white flex flex-col gap-2">
-                      <h2 className="text-2xl font-bold">{slide.title}</h2>
-                      <p className="text-sm text-gray-200">{slide.subtitle}</p>
-                      {/* <button className="mt-2 w-fit bg-white text-black text-xs font-semibold px-4 py-2 rounded-lg hover:bg-gray-100 transition">
-                                    Shop Now
-                                  </button> */}
+                    <div className="absolute bottom-6 left-6 right-6 z-20 text-white flex flex-col gap-2">
+                      <h2 className="text-2xl sm:text-3xl font-bold">
+                        {slide.title}
+                      </h2>
+                      <p className="text-sm sm:text-base text-gray-200">
+                        {slide.subtitle}
+                      </p>
                     </div>
                   </div>
                 ))}
