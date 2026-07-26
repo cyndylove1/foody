@@ -54,7 +54,7 @@ export const RetailSection: React.FC = () => {
       </div>
 
       {/* Category Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 pt-10 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {categories.map((category, idx) => (
           <div
             key={idx}

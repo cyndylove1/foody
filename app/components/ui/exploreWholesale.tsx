@@ -93,7 +93,7 @@ export default function ExploreWholesale() {
       {/* Category Cards Scroll Container */}
       <div
         ref={scrollContainerRef}
-        className="flex gap-6 pt-10 md:pt-0 overflow-x-auto scrollbar-none scroll-smooth pb-4"
+        className="flex gap-6 pt-10 overflow-x-auto scrollbar-none scroll-smooth pb-4"
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {categories.map((category, idx) => (
