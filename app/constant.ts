@@ -142,12 +142,12 @@ export const socialLinks = [
 
 // links for footer section
 export const categoryLinks = [
-  { name: "Seasoning", href: "/shop/seasoning" },
-  { name: "Spices", href: "/shop/spices" },
+  { name: "Seasoning", href: "/category/seasoning" },
+  { name: "Spices", href: "/category/spices" },
   { name: "Food Items", href: "/shop/food-items" },
   { name: "Grocery", href: "/shop/grocery" },
   { name: "Beauty", href: "/shop/beauty" },
-  { name: "Frozen Foods", href: "/shop/frozen-foods" },
+  { name: "Frozen Foods", href: "/category/frozen-foods" },
 ];
 
 export const legalLinks = [

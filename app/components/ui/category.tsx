@@ -2,12 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 
 import Button from "../button";
 import Title from "../title";
 import { useProducts } from "@/app/hooks/useCollection";
 import { useCart } from "../../context/cartContext";
+import StarRating from "../StarRating";
 
 export default function Category() {
   const {
@@ -91,9 +92,9 @@ export default function Category() {
 
                   <div className="flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-2xl font-extrabold tracking-tight text-stone-900">
-                        ${Number(item.effective_price || 0).toFixed(2)}
-                      </span>
+                      <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600">
+                        {item.name}
+                      </h3>
 
                       <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
                         <Heart className="w-5 h-5" />
@@ -101,30 +102,29 @@ export default function Category() {
                     </div>
 
                     {/* Clicking product title navigates to Category page */}
-                    <Link href={categoryUrl}>
-                      <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600">
-                        {item.name}
-                      </h3>
-                    </Link>
+                    <Link href={categoryUrl}></Link>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-1 mb-2">
+                        <StarRating />
+                      </div>
+                      <span className="text-2xl font-extrabold tracking-tight text-stone-900">
+                        ${Number(item.effective_price || 0).toFixed(2)}
+                      </span>
+                    </div>
 
                     <p className="text-[13px] leading-relaxed text-stone-600 min-h-[56px] mb-6 line-clamp-3">
                       {item.short_description}
                     </p>
-
-                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                    <div className="my-6">
                       <Button
-                        variant="secondary"
-                        onClick={() => addItem(item.id)}
+                        variant="primary"
+                        className="flex w-full items-center justify-center gap-3"
                       >
+                        <span>
+                          <ShoppingCart size={20} />
+                        </span>
                         Add to Cart
                       </Button>
-
-                      {/* Buy Now navigates to Category page */}
-                      <Link href={categoryUrl} className="w-full">
-                        <Button variant="primary" className="w-full">
-                          Buy Now
-                        </Button>
-                      </Link>
                     </div>
                   </div>
                 </div>

@@ -17,7 +17,7 @@ export default function StarRating({
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <div className="flex items-center gap-[10px]">
+    <div className="flex items-center gap-[4px]">
       {Array.from({ length: 5 }).map((_, i) => {
         const ratingValue = i + 1;
 
@@ -32,10 +32,10 @@ export default function StarRating({
             onMouseEnter={() => !readOnly && setHovered(ratingValue)}
             onMouseLeave={() => !readOnly && setHovered(null)}
             onClick={() => !readOnly && onChange && onChange(ratingValue)}
-            className={`h-[18px] w-[18px] transition-colors ${
+            className={`h-[13px] w-[13px] transition-colors ${
               readOnly ? "cursor-default" : "cursor-pointer"
             }`}
-            style={{ color: isFilled ? "#F6B01E" : "#D1D5DB" }}
+            style={{ color: isFilled ? "#F6B01E" : "#F6B01E" }}
           />
         );
       })}

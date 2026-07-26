@@ -119,7 +119,7 @@ export default function Navbar() {
                 <Link href="/login">
                   <Button variant="primary">Sign in</Button>
                 </Link>
-                <Link href="/sign-up">
+                <Link href="/user-type">
                   <Button variant="secondary">Sign up</Button>
                 </Link>
               </>
@@ -145,12 +145,12 @@ export default function Navbar() {
 
       {/* Search Input Row */}
       {isSearchOpen && (
-        <div className="absolute top-full left-0 w-full bg-white border-b border-gray-100 px-6 py-3 shadow-md animate-in slide-in-from-top-2 duration-200">
+        <div className="absolute top-full left-0 w-full border-b border-gray-100 px-6 py-3 shadow-md animate-in slide-in-from-top-2 duration-200">
           <div className="relative max-w-3xl">
             <input
               type="text"
               placeholder="Search items, categories, brands..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-gray-300"
+              className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-gray-300"
               autoFocus
             />
             <Search
@@ -177,7 +177,7 @@ export default function Navbar() {
           ) : (
             <>
               <Link
-                href="/sign-up"
+                href="/user-type"
                 className="text-[15px] font-medium text-[#2C2C2C] hover:text-(--main)"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -206,9 +206,9 @@ export default function Navbar() {
             Profile
           </Link>
           <Link
-            href="/categories"
+            href="/category/seasonings"
             className={`text-[15px] font-medium hover:text-(--main) ${
-              isActive("/categories")
+              isActive("/category/seasonings")
                 ? "text-(--main) font-semibold"
                 : "text-[#2C2C2C]"
             }`}

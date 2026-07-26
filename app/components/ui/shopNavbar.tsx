@@ -38,7 +38,7 @@ export default function ShopNavbar() {
 
   return (
     <>
-      <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 lg:px-12 flex items-center justify-between relative z-40">
+      <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 lg:px-8 flex items-center justify-between relative z-40">
         <div className="flex items-center gap-3 select-none shrink-0">
           {/* Drawer Trigger icon*/}
           <button
@@ -139,7 +139,7 @@ export default function ShopNavbar() {
                 ) : (
                   <>
                     <Link
-                      href="/sign-up"
+                      href="/user-type"
                       className="text-[17px] text-stone-900 font-normal py-2.5 hover:text-(--main) transition-colors"
                       onClick={() => setIsOpen(false)}
                     >
@@ -164,7 +164,7 @@ export default function ShopNavbar() {
                   Profile
                 </Link>
                 <Link
-                  href="/categories"
+                  href="/category/seasonings"
                   className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >

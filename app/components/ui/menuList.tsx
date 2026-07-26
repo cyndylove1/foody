@@ -7,13 +7,20 @@ import { Plus, Minus } from "lucide-react";
 import { categoriesData } from "@/app/constant";
 
 export default function MenuList() {
-  const [openCategory, setOpenCategory] = useState<string | null>("Soups");
+  const [openCategory, setOpenCategory] = useState<string []>([]);
   const [selectedSize, setSelectedSize] = useState<string>("None");
 
   const toggleCategory = (name: string) => {
-    setOpenCategory(openCategory === name ? null : name);
-  };
+    setOpenCategory((prev) => {
+      if (prev.includes(name)) {
+        // Close only the clicked category
+        return prev.filter((category) => category !== name);
+      }
 
+      // Keep previously opened categories and add the new one
+      return [...prev, name];
+    });
+  };
   return (
     <aside className="w-full h-full md:w-64 md:flex flex-col p-6 rounded-md bg-white">
       <div className="mb-8">
@@ -24,7 +31,7 @@ export default function MenuList() {
           {categoriesData.map((category) => {
             const hasSubs =
               category.subCategories && category.subCategories.length > 0;
-            const isOpen = openCategory === category.name;
+            const isOpen = openCategory.includes(category.name);
 
             return (
               <div
