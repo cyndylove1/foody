@@ -7,39 +7,41 @@ import CustomSwiper from "../customSwiper";
 const WholeSaleBanner: NextPage = () => {
   const slides = [
     {
-      img: "/assets/grocery7.jpg",
-      title: "Farm-Fresh Quality Daily",
+      img: "/assets/icefish.jpg",
+      title: "Authentic African Ingredients",
       subtitle:
-        "Handpicked organic fruits and vegetables delivered straight to your kitchen",
+        "Shop premium dried fish, seafood, spices, and pantry essentials for your favorite African dishes.",
     },
     {
-      img: "/assets/grocery8.jpg",
-      title: "Premium Pantry Essentials",
+      img: "/assets/stockfish.png",
+      title: "Fresh & Traditional Flavors",
       subtitle:
-        "Upgrade your mealtime with hand-selected gourmet ingredients and healthy staples",
+        "Find quality stockfish, smoked fish, crayfish, palm oil, and more—all in one place.",
     },
     {
-      img: "/assets/grocery10.jpg",
-      title: "Big Savings On Daily Items",
+      img: "/assets/beef.png",
+      title: "Everything You Need to Cook African Meals",
       subtitle:
-        "Shop top-rated grocery brands at unbeatable wholesale and retail discounts",
+        "From fresh meats and vegetables to grains, seasonings, and local delicacies, we've got your kitchen covered.",
     },
   ];
   const slides2 = [
     {
-      img: "/assets/grocery9.jpg",
-      title: "Wholesale Fresh Produce",
-      subtitle: "Fresh fruits and vegetables at bulk prices.",
+      img: "/assets/banner4.png", // Recommended image: Fresh yams, plantains, or peppers
+      title: "Authentic African Foodstuff",
+      subtitle:
+        "Yams, plantains, fresh peppers, and local produce delivered fresh.",
     },
     {
-      img: "/assets/grocery11.jpg",
-      title: "Bulk Grocery Deals",
-      subtitle: "Stock up on quality pantry essentials for less.",
+      img: "/assets/banner5.png", // Recommended image: Grains, cassava flour, garri, or palm oil
+      title: "Pantry Staples & Grains",
+      subtitle: "Quality Garri, Egusi, Ogbono, Crayfish, and premium Rice.",
     },
     {
-      img: "/assets/grocery12.jpg",
-      title: "Save More in Bulk",
-      subtitle: "Best wholesale prices for homes and businesses.",
+      img: "/assets/foodstuff.jpg", // Recommended image: Bulk sacks of rice, beans, or pepper mix
+      title: "Wholesale & Bulk Deals",
+      subtitle:
+        "Save more when you stock up for your home, events, or restaurant.",
     },
   ];
   return (

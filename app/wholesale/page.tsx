@@ -5,7 +5,7 @@ import ExploreWholesale from "../components/ui/exploreWholesale";
 import Footer from "../components/ui/footer";
 import ShopNavbar from "../components/ui/shopNavbar";
 import WholeSaleBanner from "../components/ui/wholesaleBanner";
-import WholesaleSection from "../components/ui/wholesaleSection";
+import WholesaleSwitch from "../components/ui/wholesaleSwitch";
 
 export default function Wholesale() {
   return (
@@ -13,7 +13,7 @@ export default function Wholesale() {
       <ShopNavbar />
       <div className="bg-[#fff1e1]/60">
         <WholeSaleBanner />
-        <WholesaleSection />
+        <WholesaleSwitch />
         <ExploreWholesale />
         <Deals />
         <Cta />

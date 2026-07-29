@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "app/checkout"
+    "app/checkout",
+    "app/components/ui/wholesaleSwitch.tsx"
   ],
   "exclude": ["node_modules"]
 }

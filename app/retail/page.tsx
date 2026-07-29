@@ -6,7 +6,8 @@ import Cta from "../components/ui/cta";
 import Footer from "../components/ui/footer";
 import RetailSection from "../components/ui/retailSection";
 import RetailBanner from "../components/ui/retailBanner";
-import RetailTrust from "../components/ui/retailTrust";
+
+import RetailSwitch from "../components/ui/retailSwitch";
 
 export default function Retail() {
   return (
@@ -14,7 +15,7 @@ export default function Retail() {
       <ShopNavbar />
       <div className=" bg-[#fff1e1]/60">
         <RetailBanner />
-        <RetailTrust />
+        <RetailSwitch />
         <RetailSection />
         {/* <Popular /> */}
         <Deals />

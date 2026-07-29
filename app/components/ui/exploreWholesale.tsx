@@ -11,34 +11,41 @@ interface CategoryCardProps {
 
 const categories: CategoryCardProps[] = [
   {
-    title: "Puff",
+    title: "African bell pepper",
     itemCount: "120+ Items",
-    image: "/assets/puff.webp",
-    tag: "Provision",
+    image: "/assets/tatashe.jpg",
+    tag: "Spices",
   },
   {
-    title: "Peak",
+    title: "Tomatoes",
     itemCount: "350+ Items",
-    image: "/assets/peak.webp",
+    image: "/assets/tomatoes.png",
   },
   {
-    title: "Noodles",
-    itemCount: "85+ Items",
-    image: "/assets/noodles.webp",
-  },
-  {
-    title: "Spices",
+    title: "Beef",
     itemCount: "Up to 50% Off",
-    image: "/assets/spices.webp",
+    image: "/assets/beef.png",
     tag: "Seasoning",
   },
   {
-    title: "Peanut",
+    title: "Yam",
+    itemCount: "85+ Items",
+    image: "/assets/yam.png",
+  },
+  {
+    title: "Dawa Dawa",
     itemCount: "Up to 50% Off",
-    image: "/assets/peanut.webp",
-    tag: "Provision",
+    image: "/assets/dawadawa.png",
+    tag: "Seasoning",
+  },
+  {
+    title: "Pepper",
+    itemCount: "Up to 50% Off",
+    image: "/assets/freshPepper.jpg",
+    tag: "Seasoning",
   },
 ];
+
 
 export default function ExploreWholesale() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);

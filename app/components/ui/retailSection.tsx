@@ -10,25 +10,25 @@ interface CategoryCardProps {
 
 const categories: CategoryCardProps[] = [
   {
-    title: "Puff",
+    title: "African bell pepper",
     itemCount: "120+ Items",
-    image: "/assets/puff.webp",
-    tag: "Provision",
+    image: "/assets/tatashe.jpg",
+    tag: "Spices",
   },
   {
-    title: "Peak",
+    title: "Tomatoes",
     itemCount: "350+ Items",
-    image: "/assets/peak.webp",
+    image: "/assets/tomatoes.png",
   },
   {
-    title: "Noodles",
+    title: "Yam",
     itemCount: "85+ Items",
-    image: "/assets/noodles.webp",
+    image: "/assets/yam.png",
   },
   {
-    title: "Spices",
+    title: "Dawa Dawa",
     itemCount: "Up to 50% Off",
-    image: "/assets/spices.webp",
+    image: "/assets/dawadawa.png",
     tag: "Seasoning",
   },
 ];

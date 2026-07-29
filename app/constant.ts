@@ -63,14 +63,14 @@ export const premiumCollectionData: GroceryItem[] = [
     category: "Food items",
   },
 ];
-// Market Category
+// Market Collection
 export const categories: MarketCategory[] = [
   {
     id: 1,
     title: "Frozen Foods",
     badge: "Chilled Proteins",
     imageSrc: "/assets/fish.jpg",
-    imageAlt: "Fresh ice fish and meats",
+    imageAlt: "Frozen fish, chicken, beef, turkey, and other chilled proteins",
     buttonText: "Find Your Fit",
     priority: true,
   },
@@ -78,28 +78,30 @@ export const categories: MarketCategory[] = [
     id: 2,
     title: "Seasoning, Spices and Dry Foods",
     badge: "Essential Spices",
-    imageSrc: "/assets/ingredient.webp",
-    imageAlt: "Cooking Staples like Maggi, Salt, Tin Tomatoes",
+    imageSrc: "/assets/ogbono.png",
+    imageAlt:
+      "Ogbono, crayfish, pepper, curry, thyme, locust beans, and other African dry food ingredients",
     buttonText: "Get Your Pack",
   },
   {
     id: 3,
-    title: "Refreshing Soft Drinks & Carbonated Mixers.",
-    badge: "Ice Chilled",
-    imageSrc: "/assets/drinks.jpg",
-    imageAlt: "Chilled soft drinks and refreshments",
-    buttonText: "Order Cold",
+    title: "Seasoning, Spices",
+    badge: "Seasoning",
+    imageSrc: "/assets/openyi.png",
+    imageAlt:
+      "Traditional African seasonings, spices, bouillon cubes, and cooking condiments",
+    buttonText: "Shop Seasonings",
   },
   {
     id: 4,
-    title: "Beautician Essentials & Hydrating Skincare Cosmetics.",
-    badge: "Style & Glow",
-    imageSrc: "/assets/beauty3.png",
-    imageAlt: "Premium beauty and skin care cosmetic products",
-    buttonText: "Shop Cosmetics",
+    title: "Seafoods",
+    badge: "Smoked Fish",
+    imageSrc: "/assets/smokedfish.jpg",
+    imageAlt:
+      "Smoked fish, stockfish, dried fish, prawns, and other premium seafood",
+    buttonText: "Shop Seafoods",
   },
 ];
-
 // Trending Products
 export const products: Product[] = [
   { id: 1, name: "Spinach", image: "/assets/spinach.jpg" },
