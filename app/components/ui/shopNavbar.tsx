@@ -1,7 +1,9 @@
+// components/ShopNavbar.tsx
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { IoIosList } from "react-icons/io";
 import { Search, Heart, Menu as MenuIcon, ShoppingCart, X } from "lucide-react";
 import Logo from "../logo";
@@ -17,9 +19,14 @@ export default function ShopNavbar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const pathname = usePathname();
   const { itemCount } = useCart();
   const { logout } = useAuth();
   const { data: user } = useProfile();
+
+  // Check if current route is retail or wholesale
+  const hideMenuList = pathname === "/retail" || pathname === "/wholesale";
 
   useEffect(() => {
     setMounted(true);
@@ -40,15 +47,17 @@ export default function ShopNavbar() {
     <>
       <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 lg:px-8 flex items-center justify-between relative z-40">
         <div className="flex items-center gap-3 select-none shrink-0">
-          {/* Drawer Trigger icon*/}
-          <button
-            type="button"
-            onClick={() => setIsSidebarOpen(true)}
-            aria-label="Open categories menu"
-            className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all md:hidden shadow-xs active:scale-95"
-          >
-            <IoIosList className="w-6 h-6 stroke-[1.75]" />
-          </button>
+          {/* Drawer Trigger icon - Hidden on retail & wholesale pages */}
+          {!hideMenuList && (
+            <button
+              type="button"
+              onClick={() => setIsSidebarOpen(true)}
+              aria-label="Open categories menu"
+              className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all md:hidden shadow-xs active:scale-95"
+            >
+              <IoIosList className="w-6 h-6 stroke-[1.75]" />
+            </button>
+          )}
 
           {/* Logo */}
           <div className="flex items-center">
@@ -128,7 +137,6 @@ export default function ShopNavbar() {
                 {mounted && user ? (
                   <>
                     <div className="flex items-center gap-3 py-1.5">
-                      {/* Disabled dropdown functionality here safely */}
                       <LoggedInButton disableDropdown={true} />
                       <span className="text-[15px] font-semibold text-stone-800 truncate">
                         Hi, {user.first_name || "User"}
@@ -221,8 +229,8 @@ export default function ShopNavbar() {
         )}
       </header>
 
-      {/* Category Sidebar*/}
-      {isSidebarOpen && (
+      {/* Category Sidebar - Rendered only when not on retail/wholesale */}
+      {!hideMenuList && isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"

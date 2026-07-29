@@ -3,24 +3,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Plus, Minus } from "lucide-react";
 import { categoriesData } from "@/app/constant";
 
 export default function MenuList() {
-  const [openCategory, setOpenCategory] = useState<string []>([]);
+  const pathname = usePathname();
+  const [openCategory, setOpenCategory] = useState<string[]>([]);
   const [selectedSize, setSelectedSize] = useState<string>("None");
+
+  // Do not render MenuList on retail or wholesale routes
+  if (pathname === "/retail" || pathname === "/wholesale") {
+    return null;
+  }
 
   const toggleCategory = (name: string) => {
     setOpenCategory((prev) => {
       if (prev.includes(name)) {
-        // Close only the clicked category
         return prev.filter((category) => category !== name);
       }
-
-      // Keep previously opened categories and add the new one
       return [...prev, name];
     });
   };
+
   return (
     <aside className="w-full h-full md:w-64 md:flex flex-col p-6 rounded-md bg-white">
       <div className="mb-8">
