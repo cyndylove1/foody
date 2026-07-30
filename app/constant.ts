@@ -293,9 +293,9 @@ export const productsMock = [
 export const faqData: FaqItem[] = [
   {
     id: 1,
-    question: "What types of items can I find on Foody?",
+    question: "What types of items can I find on MotherLand International?",
     answer:
-      "Foody is your one-stop online destination for premium authentic seasonings, traditional soup ingredients (like authentic soup bases and thickeners), everyday grocery essentials, and natural beauty products sourced to keep you feeling vibrant inside and out.",
+      "MotherLand International is your one-stop online destination for premium authentic seasonings, traditional soup ingredients (like authentic soup bases and thickeners), everyday grocery essentials, and natural beauty products sourced to keep you feeling vibrant inside and out.",
   },
   {
     id: 2,
@@ -306,7 +306,8 @@ export const faqData: FaqItem[] = [
   },
   {
     id: 3,
-    question: "How should I store my Foody grocery purchases?",
+    question:
+      "How should I store my MotherLand International grocery purchases?",
     answer:
       "We recommend keeping dry goods, ground seasonings, and flour blends in a cool, dry place away from direct sunlight, ideally inside airtight containers. Fresh ingredients or specialized pastes should be refrigerated immediately upon arrival.",
   },
