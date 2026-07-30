@@ -24,7 +24,7 @@ export default function Cart() {
           <div className="lg:col-span-8 overflow-x-auto">
             <table className="w-full border-collapse border border-stone-200 min-w-[600px]">
               <thead>
-                <tr className="bg-[#f5f5f5] text-stone-700 text-sm tracking-wide border-b border-stone-200">
+                <tr className="bg-[#f9f9f9] text-stone-700 text-sm tracking-wide border-b border-stone-200">
                   <th className="py-3 px-4 text-center font-medium border-r border-stone-200 w-32">
                     PRODUCT
                   </th>
@@ -119,7 +119,7 @@ export default function Cart() {
             </table>
 
             {/* Continue Shopping Button */}
-            <div className="mt-10">
+            <div className="py-10">
               <Link href="/category/seasonings">
                 <Button variant="primary">Continue Shopping</Button>
               </Link>

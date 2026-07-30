@@ -44,7 +44,7 @@ export default function PaymentForm({ onSubmit }: Props) {
               <VisaIcon />
             </div>
           </div>
-          <div className="w-[369px] mx-14 mt-4 mb-6 gradient-border">
+          <div className="mt-4 mb-6 gradient-border">
             <p className="text-[14px] font-[400] text-(--gray-800) gradient-border p-2">
               You will be redirected to our secure checkout page
             </p>

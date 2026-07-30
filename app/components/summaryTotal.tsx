@@ -17,7 +17,7 @@ export default function SummaryTotals({ cart }: SummaryTotalsProps) {
   const total = cart?.total ?? 0;
 
   return (
-    <div className="lg:col-span-4 space-y-6 bg-white p-4 rounded-xl">
+    <div className="lg:col-span-4 space-y-6 bg-[#f9f9f9] border border-gray-200 p-4 rounded-xl">
       {/* Coupon Entry Card */}
       <div className="py-4 px-2 bg-white">
         <label htmlFor="coupon" className="block text-stone-600 text-sm mb-2.5">

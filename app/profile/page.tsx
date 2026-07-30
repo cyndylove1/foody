@@ -19,7 +19,7 @@ export default function Profile() {
 
           <div className="flex flex-col items-center justify-center gap-12 w-full">
             <div className="flex flex-col items-center justify-center gap-6">
-              <div className="h-[108px] w-[108px] rounded-full bg-(--color) border border-stone-300 flex items-center justify-center text-2xl font-bold text-white">
+              <div className="h-[108px] w-[108px] rounded-full bg-(--main) border border-stone-300 flex items-center justify-center text-2xl font-bold text-white">
                 {userDetails?.first_name
                   ? userDetails.first_name.charAt(0).toUpperCase()
                   : "U"}

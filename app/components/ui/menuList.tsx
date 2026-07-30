@@ -13,7 +13,7 @@ export default function MenuList() {
   const [selectedSize, setSelectedSize] = useState<string>("None");
 
   // Do not render MenuList on retail or wholesale routes
-  if (pathname === "/retail" || pathname === "/wholesale") {
+  if (!pathname.startsWith("/category/")) {
     return null;
   }
 

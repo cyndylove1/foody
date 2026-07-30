@@ -25,8 +25,7 @@ export default function ShopNavbar() {
   const { logout } = useAuth();
   const { data: user } = useProfile();
 
-  // Check if current route is retail or wholesale
-  const hideMenuList = pathname === "/retail" || pathname === "/wholesale";
+  const showMenuList = pathname.startsWith("/category/");
 
   useEffect(() => {
     setMounted(true);
@@ -48,7 +47,7 @@ export default function ShopNavbar() {
       <header className="w-full bg-white border-b border-gray-200 py-4 px-4 lg:px-8 flex items-center justify-between relative z-40">
         <div className="flex items-center gap-3 select-none shrink-0">
           {/* Drawer Trigger icon - Hidden on retail & wholesale pages */}
-          {!hideMenuList && (
+          {showMenuList && (
             <button
               type="button"
               onClick={() => setIsSidebarOpen(true)}
@@ -230,7 +229,7 @@ export default function ShopNavbar() {
       </header>
 
       {/* Category Sidebar - Rendered only when not on retail/wholesale */}
-      {!hideMenuList && isSidebarOpen && (
+      {showMenuList && isSidebarOpen && (
         <div className="fixed inset-0 z-50 flex">
           <div
             className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity duration-300"

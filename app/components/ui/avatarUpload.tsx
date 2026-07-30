@@ -57,7 +57,7 @@ export default function AvatarUpload({
             alt="profile image"
           />
         ) : (
-          <div className="h-[108px] w-[108px] rounded-full bg-(--color) border border-stone-300 flex items-center justify-center text-2xl font-bold text-white">
+          <div className="h-[108px] w-[108px] rounded-full bg-(--main) border border-stone-300 flex items-center justify-center text-2xl font-bold text-white">
             {userDetails?.first_name
               ? userDetails.first_name.charAt(0).toUpperCase()
               : "U"}
@@ -72,7 +72,7 @@ export default function AvatarUpload({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="rounded-lg bg-(--main) px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#d63f26] active:scale-95"
+            className="rounded-lg bg-(--main) px-4 py-2 text-xs font-semibold text-white shadow-sm transition-all hover:bg-transparent border border-gray-200 hover:text-black active:scale-95"
           >
             {previewUrl ? "Change Image" : "Upload Image"}
           </button>

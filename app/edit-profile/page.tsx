@@ -88,7 +88,7 @@ export default function EditProfile() {
   return (
     <>
       <ShopNavbar />
-      <section className="bg-[#fff1e1]/60 px-4 md:px-0">
+      <section className="bg-white px-4 md:px-0">
         <form
           onSubmit={handleSubmit}
           className="flex flex-col items-start justify-center gap-6 py-12 md:m-auto md:w-[755px] md:items-center md:px-16 md:py-12"

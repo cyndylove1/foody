@@ -1,7 +1,7 @@
 "use client";
 
-import Button from "./button";
-import RadioButton from "./radioButton"; // Adjust import path if needed
+import Button from "../button";
+import RadioButton from "../radioButton"; // Adjust import path if needed
 
 interface ShippingMethodProps {
   shippingMethod: "free" | "express";
@@ -28,7 +28,7 @@ export default function ShippingMethod({
   };
 
   return (
-    <div className="p-6">
+    <div className="md:p-6 px-4">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">
         Select Shipping Method
       </h3>

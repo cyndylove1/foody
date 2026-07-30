@@ -6,7 +6,7 @@ import { IoCheckmarkCircle, IoChevronDown, IoChevronUp } from "react-icons/io5";
 
 import Footer from "../components/ui/footer";
 import BreadCrumbs from "../components/breadCrumbs";
-import ShippingMethod from "../components/shippingMethod";
+import ShippingMethod from "../components/ui/shippingMethod";
 import OrderSummary from "../components/orderSummary";
 import Logo from "../components/logo";
 import PaymentMethod from "../components/ui/paymentMethod";

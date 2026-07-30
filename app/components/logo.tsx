@@ -16,7 +16,7 @@ export default function Logo({textColor} :LogoProps) {
           className="w-8 h-auto sm:w-10"
         />
         <span className={`md:text-xl text-md font-bold tracking-tight truncate max-w-[200px] sm:max-w-none ${textColor}`}>
-          MotherLand International
+          MotherLand 
         </span>
       </div>
     </Link>

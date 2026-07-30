@@ -19,7 +19,7 @@ export default function OrderSummary({ shippingMethod }: OrderSummaryProps) {
         </h2>
 
         {/* Cart Items List Wrapper */}
-        <div className="space-y-4 mb-6">
+        <div className="space-y-4 mb-6 bg-[#f9f9f9] border border-gray-200">
           {/* Product Item 1: Puffed Jacket */}
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
@@ -121,9 +121,11 @@ export default function OrderSummary({ shippingMethod }: OrderSummaryProps) {
         </div>
 
         {/* Checkout Button */}
-        <Button variant="primary" className="w-full">
-          Continue to Payment
-        </Button>
+        <div className="mb-4">
+          <Button variant="primary" className="w-full">
+            Continue to Payment
+          </Button>
+        </div>
       </div>
     </div>
   );
