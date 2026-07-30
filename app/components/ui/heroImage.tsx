@@ -21,7 +21,7 @@ export default function HeroImage() {
           </div>
         </div>
         {/* Overlaid Info Feature Box Card */}
-        <div className="absolute bottom-[-20px] left-[-10px] sm:left-[20px] bg-white/80 backdrop-blur-md rounded-2xl p-5 shadow-xl border border-white/60 max-w-[240px] space-y-4">
+        <div className="absolute bottom-[-20px] left-[-10px] sm:left-[20px] bg-[#f9f9f9] backdrop-blur-md rounded-2xl p-5 shadow-xl border border-white/60 max-w-[240px] space-y-4">
           {/*  Fast Delivery */}
           <div className="flex items-start gap-3">
             <div className="mt-0.5 text-[#2C2C2C]">
@@ -50,7 +50,7 @@ export default function HeroImage() {
           </div>
 
           {/* Divider */}
-          <div className="h-px bg-gray-200/60 w-full" />
+          <div className="h-px bg-gray-200 w-full" />
           {/* Pick Up */}
           <div className="flex items-start gap-3">
             <div className="mt-0.5 text-[#2C2C2C]">
