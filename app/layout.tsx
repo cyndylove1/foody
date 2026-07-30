@@ -14,7 +14,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Ecommerce website",
+  title: "MotherLand International Foods",
   description: "MotherLand International is an online African groceries store.",
 };
 
