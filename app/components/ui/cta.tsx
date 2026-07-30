@@ -7,7 +7,7 @@ export default function Cta() {
     <div className="relative w-full overflow-hidden bg-white my-20 h-[380px] sm:h-[450px] md:h-[300px] flex items-center justify-center">
       <div className="absolute inset-0 z-0 mx-4 rounded-xl overflow-hidden">
         <Image
-          src={"/assets/basket2.png"}
+          src={"/assets/grocery7.jpg"}
           alt="Fresh essentials and beauty background"
           fill
           priority

@@ -24,7 +24,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="bg-[#fff1e1]/60">
+    <section className="bg-white">
       <Navbar />
       <div className="py-16 w-full px-4 md:px-8 lg:px-16 min-h-[600px] flex items-center justify-center">
         <div className="w-full max-w-7xl overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.015)] border border-gray-300 rounded-[24px]">
@@ -95,7 +95,7 @@ export default function Contact() {
             {/* IMAGE */}
             <div className="relative min-h-[400px] lg:min-h-full w-full bg-[#f2e6d9] hidden lg:flex">
               <Image
-                src="/assets/contact.jpg"
+                src="/assets/grocery9.jpg"
                 alt="Cozy ambient interior decoration"
                 fill
                 priority

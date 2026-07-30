@@ -11,7 +11,7 @@ export default function Profile() {
   return (
     <>
       <ShopNavbar />
-      <div className="bg-[#fff1e1]/60 min-h-screen">
+      <div className="bg-white min-h-screen">
         <div className="flex flex-col items-center justify-center gap-6 md:m-auto md:w-[755px] md:px-16 md:py-12 px-4 py-8">
           <div className="flex items-center ap-[25px] self-start w-full">
             <h2 className="text-[20px] font-bold">Profile</h2>

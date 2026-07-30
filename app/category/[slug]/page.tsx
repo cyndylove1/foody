@@ -45,7 +45,7 @@ export default function CategoryPage({
   return (
     <>
       <ShopNavbar />
-      <div className="bg-[#faf8f2] w-full px-4 py-8 flex flex-col md:flex-row gap-8">
+      <div className="bg-white w-full px-4 pb-8 pt-20 flex flex-col md:flex-row gap-8">
         {/* Sidebar Navigation */}
         <div className="hidden md:flex">
           <MenuList />

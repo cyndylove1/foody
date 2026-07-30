@@ -96,7 +96,7 @@ export default function Category() {
                         {item.name}
                       </h3>
 
-                      <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
+                      <button className="p-2 rounded-full text-gray-400 hover:text-(--main) hover:bg-(--main)/10 bg-gray-50">
                         <Heart className="w-5 h-5" />
                       </button>
                     </div>

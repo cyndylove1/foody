@@ -37,7 +37,7 @@ export default function ProductDetails({ params }: PageProps) {
     <>
       <ShopNavbar />
 
-      <div className="bg-[#fff1e1]/60">
+      <div className="bg-white">
         <BreadCrumbs items={productLinks} className="mx-4 md:mx-12" />
 
         <div className="p-4 md:p-8 border-y border-gray-300">
@@ -101,8 +101,8 @@ export default function ProductDetails({ params }: PageProps) {
           </div>
         </div>
       </div>
-      <CustomerFeedback />
-      <Footer />
+      {/* <CustomerFeedback /> */}
+      {/* <Footer /> */}
     </>
   );
 }

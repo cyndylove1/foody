@@ -143,7 +143,7 @@ export default function Deals() {
                 <h3 className="text-lg font-medium text-slate-800 line-clamp-2 leading-relaxed">
                   {product.title}
                 </h3>
-                <button className="p-2 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 bg-gray-50">
+                <button className="p-2 rounded-full text-gray-400 hover:text-(--main) hover:bg-(--main)/10 bg-gray-50">
                   <Heart className="w-5 h-5" />
                 </button>
               </div>

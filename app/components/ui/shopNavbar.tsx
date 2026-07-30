@@ -45,7 +45,7 @@ export default function ShopNavbar() {
 
   return (
     <>
-      <header className="w-full bg-[#fff1e1]/60 border-b border-stone-100 py-4 px-4 lg:px-8 flex items-center justify-between relative z-40">
+      <header className="w-full bg-white border-b border-gray-200 py-4 px-4 lg:px-8 flex items-center justify-between relative z-40">
         <div className="flex items-center gap-3 select-none shrink-0">
           {/* Drawer Trigger icon - Hidden on retail & wholesale pages */}
           {!hideMenuList && (
@@ -53,7 +53,7 @@ export default function ShopNavbar() {
               type="button"
               onClick={() => setIsSidebarOpen(true)}
               aria-label="Open categories menu"
-              className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all md:hidden shadow-xs active:scale-95"
+              className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all md:hidden shadow-xs active:scale-95"
             >
               <IoIosList className="w-6 h-6 stroke-[1.75]" />
             </button>
@@ -72,7 +72,7 @@ export default function ShopNavbar() {
             <input
               type="text"
               placeholder="Search"
-              className="w-full bg-white border border-stone-200/80 text-stone-800 placeholder-stone-400 text-[15px] pl-13 pr-6 py-3.5 rounded-2xl focus:outline-none focus:border-stone-400/60 transition-all duration-150 shadow-xs"
+              className="w-full bg-white border border-gray-200 text-stone-800 placeholder-stone-400 text-[15px] pl-13 pr-6 py-3.5 rounded-2xl focus:outline-none focus:border-stone-400/60 transition-all duration-150"
             />
           </div>
         </div>
@@ -82,7 +82,7 @@ export default function ShopNavbar() {
           <button
             type="button"
             aria-label="View favorites"
-            className="w-12 h-12 rounded-full hidden bg-white border border-stone-100 md:flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all shadow-xs active:scale-95"
+            className="w-12 h-12 rounded-full hidden bg-white border border-gray-200 md:flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all active:scale-95"
           >
             <Heart className="w-5 h-5 stroke-[1.75]" />
           </button>
@@ -103,7 +103,7 @@ export default function ShopNavbar() {
           <Link href="/cart">
             <button
               aria-label="Cart"
-              className="w-12 h-12 rounded-full bg-white border border-stone-100 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
+              className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#016738] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2} />
               {mounted && itemCount > 0 && (

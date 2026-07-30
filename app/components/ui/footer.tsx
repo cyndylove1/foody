@@ -11,7 +11,7 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#fff1e1] text-[#d6cdb7] overflow-hidden py-16 px-4 md:px-12 border-t border-gray-300">
+    <footer className="relative bg-[#016738] text-[#d6cdb7] overflow-hidden py-16 px-4 md:px-12 border-t border-gray-300">
       {/* Decorative Background Graphic matching footer3.PNG */}
       <div className="absolute right-0 bottom-0 pointer-events-none select-none opacity-10 translate-x-12 translate-y-12">
         <svg
@@ -36,8 +36,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16">
           <div className="lg:col-span-5 flex flex-col space-y-6">
             {/* Logo */}
-            <Logo />
-            <p className="text-[14px] leading-relaxed max-w-sm text-gray-900">
+            <Logo textColor="text-white"/>
+            <p className="text-[14px] leading-relaxed max-w-sm text-white">
               We specialize in sourcing and providing high-quality, authentic
               African ingredients, pantry staples, and spices that bring the
               unique flavors and culture of home straight to your kitchen.
@@ -45,7 +45,7 @@ export default function Footer() {
 
             {/* Newsletter Subscription Block */}
             <div className="space-y-3 pt-2">
-              <h4 className="text-(--main) text-lg font-medium tracking-wide">
+              <h4 className="text-white text-lg font-medium tracking-wide">
                 Subscribe to Newsletter
               </h4>
               <form
@@ -74,15 +74,15 @@ export default function Footer() {
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
             {/* Categories Links */}
             <div className="space-y-4">
-              <h4 className="text-(--main) text-xl font-medium tracking-wide">
+              <h4 className="text-white text-xl font-medium tracking-wide">
                 Categories
               </h4>
-              <ul className="space-y-2.5 text-[14px] text-gray-900">
+              <ul className="space-y-2.5 text-[14px] text-gray-200">
                 {categoryLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="hover:text-(--main) transition-colors duration-200"
+                      className="hover:text-white transition-colors duration-200"
                     >
                       {item.name}
                     </Link>
@@ -93,15 +93,15 @@ export default function Footer() {
 
             {/* Legal Links */}
             <div className="space-y-4">
-              <h4 className="text-(--main) text-xl font-medium tracking-wide">
+              <h4 className="text-white text-xl font-medium tracking-wide">
                 Legal
               </h4>
-              <ul className="space-y-2.5 text-[14px] text-gray-900">
+              <ul className="space-y-2.5 text-[14px] text-gray-200">
                 {legalLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="hover:text-(--main) transition-colors duration-200"
+                      className="hover:text-white transition-colors duration-200"
                     >
                       {item.name}
                     </Link>
@@ -112,15 +112,15 @@ export default function Footer() {
 
             {/* Help Links */}
             <div className="space-y-4 col-span-2 sm:col-span-1">
-              <h4 className="text-(--main) text-xl font-medium tracking-wide">
+              <h4 className="text-white text-xl font-medium tracking-wide">
                 Help
               </h4>
-              <ul className="space-y-2.5 text-[14px] text-gray-900">
+              <ul className="space-y-2.5 text-[14px] text-gray-200">
                 {helpLinks.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="hover:text-(--main) transition-colors duration-200"
+                      className="hover:text-white transition-colors duration-200"
                     >
                       {item.name}
                     </Link>
@@ -133,7 +133,7 @@ export default function Footer() {
 
         {/* Bottom Metadata & Social Row */}
         <div className="border-t border-stone-300 pt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <p className="text-[13px] text-gray-900 text-center sm:text-left order-2 sm:order-1">
+          <p className="text-[13px] text-gray-200 text-center sm:text-left order-2 sm:order-1">
             © 2026 Copyright by Foody. All Right Reserved
           </p>
 
@@ -147,7 +147,7 @@ export default function Footer() {
                   key={social.id}
                   href={social.href}
                   aria-label={social.label}
-                  className="hover:bg-(--main) bg-[#362719] border border-[#332518] text-white p-2 rounded-full transition-all duration-200 flex items-center justify-center"
+                  className="hover:bg-white bg-black border border-[#332518] hover:text-black text-white p-2 rounded-full transition-all duration-200 flex items-center justify-center"
                 >
                   <Icon className="w-4 h-4" />
                 </Link>

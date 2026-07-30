@@ -6,14 +6,14 @@ export default function HeroImage() {
       <div className="lg:col-span-6 relative flex justify-center items-center select-none">
         <div className="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] lg:w-[460px] lg:h-[460px] rounded-full dynamic-dish-shadow">
           <Image
-            src="/assets/basket2.png"
+            src="/assets/woman2.png"
             alt="hero-image"
             fill
             sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 460px"
-            className="object-cover transform scale-105 hover:rotate-6 transition-transform duration-700 ease-out"
+            className="object-cover"
           />
           {/* 20% Off Floating Badge */}
-          <div className="absolute top-[10%] right-[-5%] bg-[#B1D244] text-[#2C2C2C] font-extrabold p-4 rounded-full shadow-lg flex flex-col items-center justify-center aspect-square transform rotate-12 scale-90 sm:scale-100 border-4 border-white">
+          <div className="absolute top-[10%] right-[-5%] bg-(--main) text-white font-extrabold p-4 rounded-full shadow-lg flex flex-col items-center justify-center aspect-square transform rotate-12 scale-90 sm:scale-100 border-4 border-white">
             <span className="text-xl leading-none">20%</span>
             <span className="text-[11px] font-bold uppercase tracking-wider leading-none mt-0.5">
               Off

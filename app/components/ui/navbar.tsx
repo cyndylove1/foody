@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <header className="relative bg-transparent z-50">
       <div className="px-4 md:px-12 py-5 flex items-center justify-between">
-        <Logo />
+        <Logo textColor="text-[#2C2C2C]" />
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-6 font-medium text-[#4A4A4A] text-sm absolute left-1/2 -translate-x-1/2 h-full">
@@ -48,7 +48,9 @@ export default function Navbar() {
           <Link
             href="/category/seasonings"
             className={`relative py-2 transition-colors hover:text-(--main) ${
-              isActive("/category/seasonings") ? "text-(--main) font-semibold" : ""
+              isActive("/category/seasonings")
+                ? "text-(--main) font-semibold"
+                : ""
             }`}
           >
             Shop
@@ -80,7 +82,6 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
             )}
           </Link>
-          
         </nav>
 
         {/* Action Items */}
@@ -99,7 +100,7 @@ export default function Navbar() {
           <Link href="/cart">
             <button
               aria-label="Cart"
-              className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#EA4D32] transition-all shadow-xs active:scale-95 relative"
+              className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center text-[#2C2C2C] hover:text-[#016738] transition-all shadow-xs active:scale-95 relative"
             >
               <ShoppingCart size={20} strokeWidth={2.5} />
               {mounted && itemCount > 0 && (

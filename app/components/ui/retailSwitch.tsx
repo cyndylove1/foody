@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RetailSwitch() {
   return (
-    <section className="relative overflow-hidden border-[2px] border-gray-300 rounded-3xl bg-white p-8 lg:mx-8 md:mx-6 mx-4 mt-20 text-white">
+    <section className="relative overflow-hidden border-[2px] border-gray-300 rounded-3xl bg-[#f9f9f9] p-8 lg:mx-8 md:mx-6 mx-4 mt-20 text-white">
       <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
         {/* Left */}
         <div className="max-w-2xl">

@@ -18,7 +18,7 @@ export default function Cart() {
   return (
     <>
       <ShopNavbar />
-      <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-[#fff1e1]/60 text-stone-800">
+      <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white text-stone-800">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Product Table */}
           <div className="lg:col-span-8 overflow-x-auto">
@@ -38,7 +38,7 @@ export default function Cart() {
                     TOTAL
                   </th>
                 </tr>
-           </thead>
+              </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
@@ -119,9 +119,11 @@ export default function Cart() {
             </table>
 
             {/* Continue Shopping Button */}
-            <Link href="/category/seasonings" className="mt-8">
-              <Button variant="secondary">Continue Shopping</Button>
-            </Link>
+            <div className="mt-10">
+              <Link href="/category/seasonings">
+                <Button variant="primary">Continue Shopping</Button>
+              </Link>
+            </div>
           </div>
 
           {/* Summary Total */}

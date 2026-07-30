@@ -11,7 +11,7 @@ export default function Wholesale() {
   return (
     <>
       <ShopNavbar />
-      <div className="bg-[#fff1e1]/60">
+      <div className="bg-white">
         <WholeSaleBanner />
         <WholesaleSwitch />
         <ExploreWholesale />

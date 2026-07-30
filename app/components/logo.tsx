@@ -1,11 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
 
-export default function Logo() {
+interface LogoProps{
+  textColor?: string;
+}
+export default function Logo({textColor} :LogoProps) {
   return (
     <Link href="/">
       <div className="flex items-center gap-2 cursor-pointer group max-w-full">
-        <span className="md:text-xl text-md font-bold text-[#2C2C2C] tracking-tight truncate max-w-[200px] sm:max-w-none">
-          MotherLand
+        <Image
+          src="/assets/logo.png"
+          alt="MotherLand Logo"
+          width={40}
+          height={40}
+          className="w-8 h-auto sm:w-10"
+        />
+        <span className={`md:text-xl text-md font-bold tracking-tight truncate max-w-[200px] sm:max-w-none ${textColor}`}>
+          MotherLand International
         </span>
       </div>
     </Link>

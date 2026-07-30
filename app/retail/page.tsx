@@ -13,7 +13,7 @@ export default function Retail() {
   return (
     <section className="">
       <ShopNavbar />
-      <div className=" bg-[#fff1e1]/60">
+      <div className=" bg-white">
         <RetailBanner />
         <RetailSwitch />
         <RetailSection />

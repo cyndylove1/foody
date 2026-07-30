@@ -21,7 +21,7 @@ export default function RadioButton({ checked, onChange }: Props) {
         },
 
         "&.Mui-checked .MuiSvgIcon-root": {
-          color: "#c02b29",
+          color: "#016738",
         },
       }}
     />

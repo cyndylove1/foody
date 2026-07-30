@@ -66,7 +66,7 @@ export default function ExploreWholesale() {
 
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#c02b29] text-white text-xs font-bold tracking-wide uppercase mb-3">
+          <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#016738] text-white text-xs font-bold tracking-wide uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>WholeSale Collection</span>
           </div>

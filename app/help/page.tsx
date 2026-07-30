@@ -16,7 +16,7 @@ export default function Help() {
 
   return (
     <>
-      <div className=" bg-[#fff1e1]/60">
+      <div className="bg-white">
         <Navbar />
         <Title text=" Help and FAQ"  className="items-center pt-20 pb-10"/>
         <div className="py-12 px-4 flex justify-center items-center">

@@ -60,7 +60,7 @@ export default function UserType() {
   };
 
   return (
-    <section className="w-full bg-[#fff1e1]/60">
+    <section className="w-full bg-white">
       <div className="p-10">
         <Logo />
       </div>
@@ -86,7 +86,7 @@ export default function UserType() {
               <div
                 key={card.id}
                 onClick={() => setSelectedVibe(card.id)}
-                className={`bg-white border border-gray-200 rounded-[28px] p-8 flex flex-col items-center justify-between cursor-pointer transition-all duration-300 relative select-none shadow-sm ${
+                className={`bg-[#f9f9f9] border border-gray-200 rounded-[28px] p-8 flex flex-col items-center justify-between cursor-pointer transition-all duration-300 relative select-none shadow-sm ${
                   isSelected
                     ? "ring-2 ring-offset-2 ring-(--main) scale-[1.02] shadow-xl border-transparent"
                     : "hover:border-gray-300 hover:shadow-md hover:scale-[1.01]"

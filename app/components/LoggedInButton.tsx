@@ -37,7 +37,7 @@ export default function LoggedInButton({
           alt="profile"
         />
       ) : firstLetter ? (
-        <div className="w-full h-full rounded-full bg-(--color) flex items-center justify-center text-white font-bold text-base shadow-sm">
+        <div className="w-full h-full rounded-full bg-(--main) flex items-center justify-center text-white font-bold text-base shadow-sm">
           {firstLetter}
         </div>
       ) : (

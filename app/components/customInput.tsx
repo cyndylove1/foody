@@ -59,7 +59,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         label={label}
         placeholder={placeholder}
         disabled={disabled}
-        type={inputType} 
+        type={inputType}
         onChange={onChange}
         fullWidth
         variant="outlined"
@@ -79,11 +79,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
                   disabled={disabled}
                   sx={{ color: "#6b7280", mr: 0.5 }}
                 >
-                  {showPassword ? (
-                    <FiEyeOff  size={17} />
-                  ) : (
-                    <FiEye size={17}/>
-                  )}
+                  {showPassword ? <FiEyeOff size={17} /> : <FiEye size={17} />}
                 </IconButton>
               </InputAdornment>
             ) : undefined,
@@ -94,7 +90,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             height: height,
             borderRadius: "8px",
             fontFamily: jakartaFont,
-            backgroundColor: disabled ? "#f3f4f6" : "#fff",
+            // backgroundColor: disabled ? "#f3f4f6" : "#fff",
           },
           "& .MuiInputBase-input": {
             color: disabled ? "#9ca3af" : "#111827",
@@ -121,10 +117,10 @@ const CustomInput: React.FC<CustomInputProps> = ({
               borderColor: "#d8dadc",
             },
             "&:hover fieldset": {
-              borderColor: disabled ? "#d8dadc" : "#c02b29",
+              borderColor: disabled ? "#d8dadc" : "#016738",
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#c02b29",
+              borderColor: "#016738",
               borderWidth: "2px",
             },
           },

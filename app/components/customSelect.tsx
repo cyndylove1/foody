@@ -67,15 +67,15 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
             borderRadius: "8px",
             fontSize: "0.875rem",
             color: "#111827",
-            backgroundColor: "#ffff",
+            // backgroundColor: "#ffff",
             "& .MuiOutlinedInput-notchedOutline": {
               borderColor: "#d8dadc",
             },
             "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#c02b29",
+              borderColor: "#016738",
             },
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#c02b29",
+              borderColor: "#016738",
               borderWidth: "2px",
             },
           }}

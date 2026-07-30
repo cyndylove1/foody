@@ -64,7 +64,7 @@ export default function Checkout() {
 
   return (
     <>
-      <div className="bg-[#fff1e1]/60 min-h-screen">
+      <div className="bg-white min-h-screen">
         <div className="text-[#1a1a1a] antialiased w-full">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-screen">
             {/* LEFT COLUMN */}
@@ -84,7 +84,7 @@ export default function Checkout() {
                   return (
                     <div
                       key={step.id}
-                      className="border border-gray-300 bg-white rounded-[16px] w-full overflow-hidden transition-all duration-200"
+                      className="border border-gray-300 bg-[#f9f9f9] rounded-[16px] w-full overflow-hidden transition-all duration-200"
                     >
                       {/* HEADER */}
                       <div
