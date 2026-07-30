@@ -15,8 +15,8 @@ export default function Hero() {
         <div className="lg:col-span-6 space-y-8 text-center lg:text-left pt-4 lg:pt-0">
           <h1 className="text-4xl md:text-6xl max-w-2xl font-extrabold text-[#1A1A1A] tracking-tight leading-[1.15]">
             African Groceries <br />
-            <span className="text-[#016738]">Delivered</span> to Your{" "}
-            <span className="text-[#0B8B4B]">Doorstep.</span>
+            <span className="text-(--main)">Delivered</span> to Your{" "}
+            <span className="text-(--main)">Doorstep.</span>
           </h1>
 
           <p className="text-gray-700 text-base md:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">
