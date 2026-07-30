@@ -78,7 +78,7 @@ export default function RetailBanner() {
               <div className="absolute inset-0 bg-black/30 flex items-center justify-end p-6">
                 <div className="text-right pt-10">
                   <div className="flex items-center justify-between">
-                    <span className="bg-white text-(--main) text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
+                    <span className="bg-white/70 text-(--main) text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
                       FRESH FOODS
                     </span>
                   </div>
@@ -98,7 +98,7 @@ export default function RetailBanner() {
               <div className="absolute inset-0 bg-black/30 flex flex-col justify-center p-6">
                 <div className="text-white pt-2">
                   <div className="flex items-center justify-between">
-                    <span className="bg-white text-(--main) text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
+                    <span className="bg-white/70 text-(--main) text-xs font-bold px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
                       NATURAL FOODS
                     </span>
                   </div>
