@@ -6,18 +6,18 @@ import grocery from "@/public/assets/grocery7.jpg";
 export default function RetailBanner() {
   const slides = [
     {
-      img: "/assets/banner1.png",
+      img: "/assets/dried.webp",
       title: "Fresh Organic Produce",
       subtitle: "Sourced directly from certified local farms daily.",
     },
     {
-      img: "/assets/banner2.png",
+      img: "/assets/provision.png",
       title: "Eat Fresh. Live Better",
       subtitle:
         "Stock up on premium groceries, healthy foods, and everyday essentials with ease",
     },
     {
-      img: "/assets/banner3.png",
+      img: "/assets/frypan.jpg",
       title: "Freshness You Can Trust",
       subtitle:
         "Discover quality groceries at affordable prices with fast and convenient delivery",
@@ -69,7 +69,7 @@ export default function RetailBanner() {
             {/* Top Card: Fresh Food */}
             <div className="relative h-48 sm:h-48 rounded-lg overflow-hidden shadow-md group">
               <Image
-                src="/assets/freshPepper.jpg"
+                src="/assets/garri.webp"
                 alt="Fresh Food Bowl"
                 width={500}
                 height={500}
@@ -89,7 +89,7 @@ export default function RetailBanner() {
             {/* Bottom Card: Natural Food */}
             <div className="relative h-48 sm:h-48 rounded-lg overflow-hidden shadow-md bg-white">
               <Image
-                src="/assets/tomato.jpg"
+                src="/assets/puff2.webp"
                 alt="Fresh Food Bowl"
                 width={500}
                 height={500}

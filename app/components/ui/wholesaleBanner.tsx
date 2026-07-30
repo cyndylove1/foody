@@ -7,19 +7,19 @@ import CustomSwiper from "../customSwiper";
 const WholeSaleBanner: NextPage = () => {
   const slides = [
     {
-      img: "/assets/icefish.jpg",
+      img: "/assets/checkers.webp",
       title: "Authentic African Ingredients",
       subtitle:
         "Shop premium dried fish, seafood, spices, and pantry essentials for your favorite African dishes.",
     },
     {
-      img: "/assets/stockfish.png",
+      img: "/assets/cocoyam.webp",
       title: "Fresh & Traditional Flavors",
       subtitle:
         "Find quality stockfish, smoked fish, crayfish, palm oil, and more—all in one place.",
     },
     {
-      img: "/assets/beef.png",
+      img: "/assets/bean.webp",
       title: "Everything You Need to Cook African Meals",
       subtitle:
         "From fresh meats and vegetables to grains, seasonings, and local delicacies, we've got your kitchen covered.",
@@ -27,18 +27,18 @@ const WholeSaleBanner: NextPage = () => {
   ];
   const slides2 = [
     {
-      img: "/assets/banner4.png", // Recommended image: Fresh yams, plantains, or peppers
+      img: "/assets/banga.webp", // Recommended image: Fresh yams, plantains, or peppers
       title: "Authentic African Foodstuff",
       subtitle:
         "Yams, plantains, fresh peppers, and local produce delivered fresh.",
     },
     {
-      img: "/assets/banner5.png", // Recommended image: Grains, cassava flour, garri, or palm oil
+      img: "/assets/dates.webp", // Recommended image: Grains, cassava flour, garri, or palm oil
       title: "Pantry Staples & Grains",
       subtitle: "Quality Garri, Egusi, Ogbono, Crayfish, and premium Rice.",
     },
     {
-      img: "/assets/foodstuff.jpg", // Recommended image: Bulk sacks of rice, beans, or pepper mix
+      img: "/assets/bambara.webp", // Recommended image: Bulk sacks of rice, beans, or pepper mix
       title: "Wholesale & Bulk Deals",
       subtitle:
         "Save more when you stock up for your home, events, or restaurant.",
@@ -76,8 +76,8 @@ const WholeSaleBanner: NextPage = () => {
                     <div className="relative z-20 p-6 flex flex-col justify-between h-full text-white">
                       {/* Top Badge */}
                       <div className="flex items-center justify-between">
-                        <span className="bg-red-700/80 text-orange-100 text-xs font-semibold px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
-                          WHOLESALE
+                        <span className="bg-(--main) text-white text-xs font-semibold px-4 py-1.5 rounded-full backdrop-blur-md shadow-sm">
+                          WholeSale
                         </span>
                       </div>
 
