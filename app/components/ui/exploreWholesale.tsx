@@ -11,38 +11,83 @@ interface CategoryCardProps {
 
 const categories: CategoryCardProps[] = [
   {
-    title: "African bell pepper",
+    title: "Locust Bean",
     itemCount: "120+ Items",
-    image: "/assets/tatashe.jpg",
-    tag: "Spices",
+    image: "/assets/locustbean.webp",
+    tag: "Seasoning",
   },
   {
-    title: "Tomatoes",
+    title: "Loko Rub",
+    itemCount: "120+ Items",
+    image: "/assets/rub.webp",
+    tag: "Cosmetics",
+  },
+  {
+    title: "Peanut",
     itemCount: "350+ Items",
-    image: "/assets/tomatoes.png",
+    image: "/assets/peanut.webp",
   },
   {
-    title: "Beef",
+    title: "Periwinkle",
     itemCount: "Up to 50% Off",
-    image: "/assets/beef.png",
-    tag: "Seasoning",
+    image: "/assets/perwinkle3.webp",
+    tag: "Proteins",
   },
   {
-    title: "Yam",
+    title: "Whole Prekese",
     itemCount: "85+ Items",
-    image: "/assets/yam.png",
+    image: "/assets/prekese.webp",
   },
   {
-    title: "Dawa Dawa",
+    title: "Puff Puff",
     itemCount: "Up to 50% Off",
-    image: "/assets/dawadawa.png",
+    image: "/assets/puff2.webp",
+    tag: "Snacks",
+  },
+  {
+    title: "Plastic Sponge",
+    itemCount: "Up to 50% Off",
+    image: "/assets/sponge.webp",
+    // tag: "Seasoning",
+  },
+  {
+    title: "Tigernut",
+    itemCount: "Up to 50% Off",
+    image: "/assets/tigernut.webp",
+    // tag: "Seasoning",
+  },
+  {
+    title: "Uziza Leaf",
+    itemCount: "Up to 50% Off",
+    image: "/assets/uziza.webp",
     tag: "Seasoning",
   },
   {
-    title: "Pepper",
+    title: "white Corn",
     itemCount: "Up to 50% Off",
-    image: "/assets/freshPepper.jpg",
-    tag: "Seasoning",
+    image: "/assets/corn.webp",
+    // tag: "Seasoning",
+  },
+  {
+    title: "cocoyam Powder",
+    itemCount: "120+ Items",
+    image: "/assets/cocoyam.webp",
+    tag: "Cosmetics",
+  },
+  {
+    title: "Ijebu Garri",
+    itemCount: "350+ Items",
+    image: "/assets/garri.webp",
+  },
+  {
+    title: "Suya Pepper Mix",
+    itemCount: "350+ Items",
+    image: "/assets/suya.webp",
+  },
+  {
+    title: "Hoe",
+    itemCount: "350+ Items",
+    image: "/assets/hoes.webp",
   },
 ];
 
