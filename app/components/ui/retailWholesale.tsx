@@ -80,18 +80,18 @@ export default function RetailWholesale() {
   };
   return (
     <section className="bg-gray-50 py-20">
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4 md:px-6">
         {/* Heading */}
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#016738] text-white text-xs font-bold tracking-wide uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Shop Your Way </span>
           </div>
-          <h2 className="mt-6 text-4xl font-bold text-gray-900">
+          <h2 className="mt-6 md:text-4xl text-2xl font-bold text-gray-900">
             Buy in Retail or Wholesale
           </h2>
 
-          <p className="mt-5 text-lg text-gray-600">
+          <p className="mt-5 md:text-lg text-sm text-gray-600">
             Whether you're shopping for your home or buying in bulk for your
             business, MotherLand International Foods, we've got you covered. Switch between Retail and Wholesale
             to explore products tailored to your needs.
@@ -103,7 +103,7 @@ export default function RetailWholesale() {
           <div className="flex rounded-full bg-white p-1 border border-gray-300">
             <button
               onClick={() => setType("retail")}
-              className={`rounded-full px-8 py-3 text-sm font-semibold transition-all duration-300 ${
+              className={`rounded-full md:px-8 py-2 px-4 md:py-3 text-sm font-semibold transition-all duration-300 ${
                 type === "retail"
                   ? "bg-(--main) text-white shadow-md"
                   : "text-gray-700"
@@ -126,7 +126,7 @@ export default function RetailWholesale() {
         </div>
 
         {/* Info Card */}
-        <div className="mt-10 p-8 ">
+        <div className="mt-10 md:p-8 py-4">
           <div className="grid gap-8 lg:grid-cols-2 items-center">
             <div>
               <span className="inline-flex rounded-full bg-(--main) px-3 py-1 text-xs font-semibold text-white">
@@ -135,7 +135,7 @@ export default function RetailWholesale() {
                   : "For Businesses & Resellers"}
               </span>
 
-              <h3 className="mt-4 text-3xl font-bold text-gray-900">
+              <h3 className="mt-4 md:text-3xl text-2xl font-bold text-gray-900">
                 {type === "retail"
                   ? "Everything You Need for Daily Living"
                   : "Bulk Shopping Made Easy"}
@@ -147,7 +147,7 @@ export default function RetailWholesale() {
                   : "Purchase products in larger quantities at discounted wholesale prices. Perfect for supermarkets, restaurants, food vendors, caterers, hotels, and retailers looking to maximize profit while reducing purchasing costs."}
               </p>
 
-              <div className="mt-8 grid grid-cols-2 gap-6">
+              <div className="mt-8 grid md:grid-cols-2 gap-6">
                 <div className="rounded-xl border border-gray-200 bg-white p-5">
                   <h4 className="text-3xl font-bold text-(--main)">
                     {type === "retail" ? "1+" : "10+"}
@@ -236,7 +236,7 @@ export default function RetailWholesale() {
 
             {/* Products */}
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid md:grid-cols-2 gap-5">
               {products.map((product) => (
                 <div
                   key={product.id}
