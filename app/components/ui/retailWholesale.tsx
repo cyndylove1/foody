@@ -126,7 +126,7 @@ export default function RetailWholesale() {
         </div>
 
         {/* Info Card */}
-        <div className="mt-10 md:p-8 py-4">
+        <div className="md:mt-10 mt-14 md:p-8 py-4">
           <div className="grid gap-8 lg:grid-cols-2 items-center">
             <div>
               <span className="inline-flex rounded-full bg-(--main) px-3 py-1 text-xs font-semibold text-white">
