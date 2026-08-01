@@ -22,7 +22,7 @@ const retailProducts: Product[] = [
   {
     id: 2,
     name: "Local Pot",
-    image: "/assets/localpot.jpg",
+    image: "/assets/localPot.jpg",
     price: "₦1,300",
   },
   {
