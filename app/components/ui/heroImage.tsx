@@ -6,7 +6,7 @@ export default function HeroImage() {
       <div className="lg:col-span-6 relative flex justify-center items-center select-none">
         <div className="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] lg:w-[460px] lg:h-[460px] rounded-full dynamic-dish-shadow">
           <Image
-            src="/assets/woman2.png"
+            src="/assets/woman3.png"
             alt="hero-image"
             fill
             sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 460px"

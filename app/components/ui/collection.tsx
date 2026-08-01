@@ -42,6 +42,9 @@ export default function Collection() {
                 <h3 className="text-white text-lg font-extrabold tracking-tight leading-snug drop-shadow-sm">
                   {category.title}
                 </h3>
+                <h3 className="text-white text-xs font-extrabold tracking-tight leading-snug drop-shadow-sm">
+                  {category.imageAlt}
+                </h3>
                 {/* Button*/}
                 <Button variant="tertiary">{category.buttonText}</Button>
               </div>

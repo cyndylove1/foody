@@ -67,10 +67,10 @@ export const premiumCollectionData: GroceryItem[] = [
 export const categories: MarketCategory[] = [
   {
     id: 1,
-    title: "Frozen Foods",
-    badge: "Chilled Proteins",
-    imageSrc: "/assets/fish.jpg",
-    imageAlt: "Frozen fish, chicken, beef, turkey, and other chilled proteins",
+    title: "Bambara Beans",
+    badge: "Whole Grains",
+    imageSrc: "/assets/bambara.webp",
+    imageAlt: "Bambara beans, Basmatic Rice, Brown beans and Ofada Rice",
     buttonText: "Find Your Fit",
     priority: true,
   },
@@ -78,27 +78,27 @@ export const categories: MarketCategory[] = [
     id: 2,
     title: "Seasoning, Spices and Dry Foods",
     badge: "Essential Spices",
-    imageSrc: "/assets/ogbono.png",
+    imageSrc: "/assets/ogbono.webp",
     imageAlt:
-      "Ogbono, crayfish, pepper, curry, thyme, locust beans, and other African dry food ingredients",
+      "Ogbono, crayfish, pepper, locust beans, and other African dry food ingredients",
     buttonText: "Get Your Pack",
   },
   {
     id: 3,
-    title: "Seasoning, Spices",
-    badge: "Seasoning",
-    imageSrc: "/assets/openyi.png",
+    title: "Provisions",
+    badge: "Provisions",
+    imageSrc: "/assets/ovaltine.webp",
     imageAlt:
-      "Traditional African seasonings, spices, bouillon cubes, and cooking condiments",
-    buttonText: "Shop Seasonings",
+      "Peak milk, Ovaltine and Checker",
+    buttonText: "Shop Provision",
   },
   {
     id: 4,
-    title: "Seafoods",
-    badge: "Smoked Fish",
-    imageSrc: "/assets/smokedfish.jpg",
+    title: "Utensils",
+    badge: "Utensils",
+    imageSrc: "/assets/spoon.webp",
     imageAlt:
-      "Smoked fish, stockfish, dried fish, prawns, and other premium seafood",
+      "Pot, wooden Spoon, Aluminum Spoon, and other premium utensils",
     buttonText: "Shop Seafoods",
   },
 ];

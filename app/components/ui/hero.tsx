@@ -10,7 +10,7 @@ export default function Hero() {
       <Navbar />
 
       {/* Hero */}
-      <main className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+      <main className="px-6 md:px-12 pt-10 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         {/* Text */}
         <div className="lg:col-span-6 space-y-8 text-center lg:text-left pt-4 lg:pt-0">
           <h1 className="text-4xl md:text-6xl max-w-2xl font-extrabold text-[#1A1A1A] tracking-tight leading-[1.15]">
