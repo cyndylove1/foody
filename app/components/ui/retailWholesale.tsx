@@ -129,11 +129,11 @@ export default function RetailWholesale() {
         <div className="md:mt-10 mt-14 md:p-8 py-4">
           <div className="grid gap-8 lg:grid-cols-2 items-center">
             <div>
-              <span className="inline-flex rounded-full bg-(--main) px-3 py-1 text-xs font-semibold text-white">
+              {/* <span className="inline-flex rounded-full bg-(--main) px-3 py-1 text-xs font-semibold text-white">
                 {type === "retail"
                   ? "For Individuals & Families"
                   : "For Businesses & Resellers"}
-              </span>
+              </span> */}
 
               <h3 className="mt-4 md:text-3xl text-2xl font-bold text-gray-900">
                 {type === "retail"
