@@ -13,14 +13,16 @@ export default function Logo({ textColor }: LogoProps) {
           alt="MotherLand Logo"
           width={64}
           height={64}
-          className="w-16 h-auto sm:w-20"
+          className="w-14 h-auto md:w-20"
         />
         <div
-          className={`flex flex-col md:items-center items-start font-bold tracking-tight leading-tight ${textColor}`}
+          className={`flex flex-col items-start font-bold tracking-tight leading-tight ${textColor}`}
         >
-          <p className="md:text-md text-sm">MotherLand International</p>
+          <span className="text-sm md:text-base">
+            MotherLand <span className="block md:inline">International</span>
+          </span>
 
-          <p className="md:text-md text-sm">Foods LLC</p>
+          <p className="text-sm md:text-md">Foods LLC</p>
         </div>
       </div>
     </Link>
