@@ -16,25 +16,25 @@ const retailProducts: Product[] = [
     id: 1,
     name: "Peak Milk",
     image: "/assets/peak2.jpg",
-    price: "₦2,000",
+    price: "$2",
   },
   {
     id: 2,
     name: "Local Pot",
     image: "/assets/localPot.jpg",
-    price: "₦1,300",
+    price: "$15",
   },
   {
     id: 3,
     name: "Tin Tomatoes",
     image: "/assets/rica.jpg",
-    price: "₦3,500",
+    price: "$5",
   },
   {
     id: 4,
     name: "Checker Custard",
     image: "/assets/checker.webp",
-    price: "₦2,500",
+    price: "$8",
   },
 ];
 
@@ -43,25 +43,25 @@ const wholesaleProducts: Product[] = [
     id: 101,
     name: "Peak Milk (Carton)",
     image: "/assets/peakmilk.webp",
-    price: "₦48,000",
+    price: "$200",
   },
   {
     id: 102,
     name: "Indomie Noodles (Carton)",
     image: "/assets/indomie.webp",
-    price: "₦32,000",
+    price: "$150",
   },
   {
     id: 103,
     name: "Satchet Tomatoes (Carton)",
     image: "/assets/gino.webp",
-    price: "₦58,000",
+    price: "$300",
   },
   {
     id: 104,
     name: "Dudu-Osun Black Soap (Carton)",
     image: "/assets/dudu.webp",
-    price: "₦250,000",
+    price: "$100",
   },
 ];
 
