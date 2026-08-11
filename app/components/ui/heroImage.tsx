@@ -21,7 +21,7 @@ export default function HeroImage() {
   return (
     <div className="lg:col-span-6 w-full min-w-0 h-full relative flex justify-center items-center select-none my-6 lg:my-0">
       {/* Circle Sizing Container */}
-      <div className="relative w-[320px] sm:w-[420px] lg:w-[460px] lg:h-[460px] aspect-ratio-square flex-shrink-0">
+      <div className="relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] lg:w-[460px] lg:h-[460px] aspect-ratio-square flex-shrink-0">
         {/* Circle Image Wrapper with overflow-hidden ONLY for the Swiper images */}
         <div className="relative w-full h-full overflow-hidden rounded-full">
           <Swiper
