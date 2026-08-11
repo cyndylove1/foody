@@ -1,6 +1,5 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../button";
@@ -41,26 +40,26 @@ const retailProducts: Product[] = [
 
 const wholesaleProducts: Product[] = [
   {
-    id: 1,
+    id: 101,
     name: "Peak Milk (Carton)",
     image: "/assets/peakmilk.webp",
     price: "₦48,000",
   },
   {
-    id: 2,
+    id: 102,
     name: "Indomie Noodles (Carton)",
     image: "/assets/indomie.webp",
     price: "₦32,000",
   },
   {
-    id: 3,
+    id: 103,
     name: "Satchet Tomatoes (Carton)",
     image: "/assets/gino.webp",
     price: "₦58,000",
   },
   {
-    id: 4,
-    name: "Dudu-Osun black Soap (Carton)",
+    id: 104,
+    name: "Dudu-Osun Black Soap (Carton)",
     image: "/assets/dudu.webp",
     price: "₦250,000",
   },
@@ -70,7 +69,9 @@ export default function RetailWholesale() {
   const [type, setType] = useState<"retail" | "wholesale">("retail");
 
   const router = useRouter();
+
   const products = type === "retail" ? retailProducts : wholesaleProducts;
+
   const handleViewProduct = () => {
     if (type === "retail") {
       router.push("/retail");
@@ -78,46 +79,56 @@ export default function RetailWholesale() {
       router.push("/wholesale");
     }
   };
+
   return (
-    <section className="bg-gray-50 py-20">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
-        {/* Heading */}
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#016738] text-white text-xs font-bold tracking-wide uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Shop Your Way </span>
-          </div>
-          <h2 className="mt-6 md:text-4xl text-2xl font-bold text-gray-900">
-            Buy in Retail or Wholesale
+    <section className="w-full py-16">
+      <div className="mx-auto max-w-7xl px-4">
+        {/* =========================
+            HEADING
+        ========================== */}
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold text-gray-900 md:text-4xl">
+            Shop Your Way
           </h2>
 
-          <p className="mt-5 md:text-lg text-sm text-gray-600">
+          <p className="mt-3 text-xl font-semibold text-gray-900">
+            Buy in Retail or Wholesale
+          </p>
+
+          <p className="mt-5 text-sm leading-7 text-gray-600 md:text-lg">
             Whether you're shopping for your home or buying in bulk for your
-            business, MotherLand International Foods, we've got you covered. Switch between Retail and Wholesale
-            to explore products tailored to your needs.
+            business, MotherLand International Foods has got you covered. Switch
+            between Retail and Wholesale to explore products tailored to your
+            needs.
           </p>
         </div>
 
-        {/* Toggle */}
+        {/* =========================
+            RETAIL / WHOLESALE TOGGLE
+        ========================== */}
         <div className="mt-12 flex justify-center">
-          <div className="flex rounded-full bg-white p-1 border border-gray-300">
+          <div className="flex rounded-full border border-gray-300 bg-white p-1">
+            {/* Retail */}
             <button
+              type="button"
               onClick={() => setType("retail")}
-              className={`rounded-full md:px-8 py-2 px-4 md:py-3 text-sm font-semibold transition-all duration-300 ${
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 md:px-8 md:py-3 ${
                 type === "retail"
-                  ? "bg-(--main) text-white shadow-md"
-                  : "text-gray-700"
+                  ? "bg-[var(--main)] text-white shadow-md"
+                  : "text-gray-700 hover:bg-gray-100"
               }`}
             >
               Retail Shopping
             </button>
 
+            {/* Wholesale */}
             <button
+              type="button"
               onClick={() => setType("wholesale")}
-              className={`rounded-full px-8 py-3 text-sm font-semibold transition-all duration-300 ${
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 md:px-8 md:py-3 ${
                 type === "wholesale"
-                  ? "bg-(--main) text-white shadow-md"
-                  : "text-gray-700"
+                  ? "bg-[var(--main)] text-white shadow-md"
+                  : "text-gray-700 hover:bg-gray-100"
               }`}
             >
               Wholesale Shopping
@@ -125,87 +136,95 @@ export default function RetailWholesale() {
           </div>
         </div>
 
-        {/* Info Card */}
-        <div className="md:mt-10 mt-14 md:p-8 py-4">
-          <div className="grid gap-8 lg:grid-cols-2 items-center">
+        {/* =========================
+            MAIN CONTENT
+        ========================== */}
+        <div className="mt-14 md:mt-10">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            {/* =========================
+                LEFT INFORMATION
+            ========================== */}
             <div>
-              {/* <span className="inline-flex rounded-full bg-(--main) px-3 py-1 text-xs font-semibold text-white">
-                {type === "retail"
-                  ? "For Individuals & Families"
-                  : "For Businesses & Resellers"}
-              </span> */}
-
-              <h3 className="mt-4 md:text-3xl text-2xl font-bold text-gray-900">
+              <h3 className="text-2xl font-bold text-gray-900 md:text-3xl">
                 {type === "retail"
                   ? "Everything You Need for Daily Living"
                   : "Bulk Shopping Made Easy"}
               </h3>
 
-              <p className="mt-5 text-gray-600 leading-8">
+              <p className="mt-5 leading-8 text-gray-600">
                 {type === "retail"
                   ? "Browse a wide range of quality groceries, fresh produce, household essentials, beverages, spices, and everyday food items. Buy only what you need and enjoy competitive prices, quick delivery, and a hassle-free shopping experience."
                   : "Purchase products in larger quantities at discounted wholesale prices. Perfect for supermarkets, restaurants, food vendors, caterers, hotels, and retailers looking to maximize profit while reducing purchasing costs."}
               </p>
 
-              <div className="mt-8 grid md:grid-cols-2 gap-6">
+              {/* =========================
+                  INFORMATION CARDS
+              ========================== */}
+              <div className="mt-8 grid gap-6 md:grid-cols-2">
+                {/* Card 1 */}
                 <div className="rounded-xl border border-gray-200 bg-white p-5">
-                  <h4 className="text-3xl font-bold text-(--main)">
+                  <h4 className="text-3xl font-bold text-[var(--main)]">
                     {type === "retail" ? "1+" : "10+"}
                   </h4>
 
-                  <p className="mt-2 font-medium">
+                  <p className="mt-2 font-medium text-gray-900">
                     {type === "retail"
                       ? "Minimum Quantity"
                       : "Bulk Order Quantity"}
                   </p>
 
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm leading-6 text-gray-500">
                     {type === "retail"
                       ? "Purchase individual items without quantity restrictions."
                       : "Buy cartons, bags, and large packs at wholesale rates."}
                   </p>
                 </div>
 
+                {/* Card 2 */}
                 <div className="rounded-xl border border-gray-200 bg-white p-5">
-                  <h4 className="text-3xl font-bold text-(--main)">
+                  <h4 className="text-3xl font-bold text-[var(--main)]">
                     {type === "retail" ? "Fast" : "Save More"}
                   </h4>
 
-                  <p className="mt-2 font-medium">
+                  <p className="mt-2 font-medium text-gray-900">
                     {type === "retail" ? "Quick Delivery" : "Lower Unit Cost"}
                   </p>
 
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm leading-6 text-gray-500">
                     {type === "retail"
                       ? "Get your groceries delivered quickly to your doorstep."
                       : "The more you buy, the more you save on every product."}
                   </p>
                 </div>
 
+                {/* Card 3 */}
                 <div className="rounded-xl border border-gray-300 bg-white p-5">
-                  <h4 className="text-3xl font-bold text-(--main)">
+                  <h4 className="text-3xl font-bold text-[var(--main)]">
                     {type === "retail" ? "500+" : "1000+"}
                   </h4>
 
-                  <p className="mt-2 font-medium">Products Available</p>
+                  <p className="mt-2 font-medium text-gray-900">
+                    Products Available
+                  </p>
 
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm leading-6 text-gray-500">
                     {type === "retail"
                       ? "Fresh foods, pantry staples, beverages, snacks, and household essentials."
                       : "Wholesale groceries, beverages, cooking ingredients, and packaged foods."}
                   </p>
                 </div>
 
+                {/* Card 4 */}
                 <div className="rounded-xl border border-gray-200 bg-white p-5">
-                  <h4 className="text-3xl font-bold text-(--main)">
+                  <h4 className="text-3xl font-bold text-[var(--main)]">
                     {type === "retail" ? "100%" : "Best Deals"}
                   </h4>
 
-                  <p className="mt-2 font-medium">
+                  <p className="mt-2 font-medium text-gray-900">
                     {type === "retail" ? "Fresh Products" : "Wholesale Pricing"}
                   </p>
 
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-1 text-sm leading-6 text-gray-500">
                     {type === "retail"
                       ? "Quality products sourced from trusted suppliers."
                       : "Enjoy exclusive pricing designed for businesses and resellers."}
@@ -213,20 +232,23 @@ export default function RetailWholesale() {
                 </div>
               </div>
 
+              {/* =========================
+                  TAGS
+              ========================== */}
               <div className="mt-8 flex flex-wrap gap-3">
-                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium">
+                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
                   {type === "retail" ? "Daily Essentials" : "Bulk Discounts"}
                 </span>
 
-                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium">
+                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
                   {type === "retail" ? "Fresh Groceries" : "Business Orders"}
                 </span>
 
-                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium">
+                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
                   {type === "retail" ? "Doorstep Delivery" : "Reliable Supply"}
                 </span>
 
-                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium">
+                <span className="rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700">
                   {type === "retail"
                     ? "Affordable Prices"
                     : "Better Profit Margins"}
@@ -234,25 +256,35 @@ export default function RetailWholesale() {
               </div>
             </div>
 
-            {/* Products */}
-
-            <div className="grid md:grid-cols-2 gap-5">
+            {/* =========================
+                PRODUCTS
+            ========================== */}
+            <div key={type} className="grid gap-5 md:grid-cols-2">
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="rounded-2xl bg-gray-100 p-4 hover:-translate-y-1 transition"
+                  className="rounded-2xl bg-gray-100 p-4 transition duration-300 hover:-translate-y-1 hover:shadow-md"
                 >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-36 w-full rounded-xl object-cover"
-                  />
+                  {/* Product Image */}
+                  <div className="relative h-36 w-full overflow-hidden rounded-xl bg-white">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="h-full w-full object-contain p-3"
+                    />
+                  </div>
 
-                  <h4 className="mt-4 font-semibold">{product.name}</h4>
+                  {/* Product Name */}
+                  <h4 className="mt-4 font-semibold text-gray-900">
+                    {product.name}
+                  </h4>
 
-                  <p className="my-2 text-(--main) font-bold">
+                  {/* Product Price */}
+                  <p className="my-2 font-bold text-[var(--main)]">
                     {product.price}
                   </p>
+
+                  {/* View Product */}
                   <Button
                     variant="primary"
                     className="w-full"

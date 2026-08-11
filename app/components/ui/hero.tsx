@@ -8,7 +8,6 @@ export default function Hero() {
     <div className="relative min-h-screen overflow-hidden bg-white">
       {/* Navbar */}
       <Navbar />
-
       {/* Hero */}
       <main className="px-6 md:px-12 pt-10 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         {/* Text */}

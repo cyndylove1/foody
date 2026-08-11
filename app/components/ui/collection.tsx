@@ -9,7 +9,7 @@ export default function Collection() {
     <section className="w-full py-16 px-4 lg:px-12 md:px-6 bg-gray-50 select-none">
       <div className="max-w-7xl mx-auto space-y-10">
         {/* Title */}
-        <Title text="Our Market Collections" className="items-start" />
+        <Title text="Our Categories" className="items-start" />
         {/* IMAGE GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
           {categories.map((category) => (
