@@ -82,7 +82,7 @@ export default function RetailWholesale() {
 
   return (
     <section className="w-full py-16">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-7xl px-4 lg:px-12 md:px-6">
         {/* =========================
             HEADING
         ========================== */}
