@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Logo from "../../components/logo";
 import Button from "../../components/button";
@@ -17,11 +17,21 @@ export default function SignUp() {
     phone: "",
     password: "",
     password_confirmation: "",
+    customer_type: "", // Initialized empty
   });
+
   const [errors, setErrors] = useState({
     password: "",
     password_confirmation: "",
   });
+
+  // Read stored role from localStorage on component mount
+  useEffect(() => {
+    const savedRole = localStorage.getItem("selected_vibe");
+    if (savedRole) {
+      setFormData((prev) => ({ ...prev, customer_type: savedRole }));
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -33,21 +43,16 @@ export default function SignUp() {
   };
 
   const validatePassword = (password: string): string => {
-    if (password.length < 6) {
+    if (password.length < 6)
       return "Password must be at least 6 characters long.";
-    }
-    if (!/[A-Z]/.test(password)) {
+    if (!/[A-Z]/.test(password))
       return "Password must include at least one uppercase letter.";
-    }
-    if (!/[a-z]/.test(password)) {
+    if (!/[a-z]/.test(password))
       return "Password must include at least one lowercase letter.";
-    }
-    if (!/[0-9]/.test(password)) {
+    if (!/[0-9]/.test(password))
       return "Password must include at least one number.";
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
       return "Password must include at least one special character.";
-    }
     return "";
   };
 
@@ -73,7 +78,11 @@ export default function SignUp() {
     }
 
     try {
+      // Sends complete formData including customer_type to the backend
       await register(formData);
+
+      // Clean up localStorage key after successful registration
+      localStorage.removeItem("selected_vibe");
 
       setFormData({
         first_name: "",
@@ -82,6 +91,7 @@ export default function SignUp() {
         phone: "",
         password: "",
         password_confirmation: "",
+        customer_type: "",
       });
     } catch (error) {
       console.error("Registration failed:", error);
@@ -122,6 +132,7 @@ export default function SignUp() {
             />
           </div>
         </div>
+
         {/* Email Address */}
         <div>
           <CustomInput
@@ -134,6 +145,7 @@ export default function SignUp() {
             disabled={isLoading}
           />
         </div>
+
         {/* Phone Number */}
         <div>
           <CustomInput
@@ -202,7 +214,7 @@ export default function SignUp() {
           <p className="text-stone-600 font-medium">
             Already have an account?{" "}
             <Link
-              href="/login"
+              href="/sign-up"
               className="text-(--main) hover:underline transition-all ml-0.5"
             >
               Login

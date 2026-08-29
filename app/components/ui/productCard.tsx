@@ -46,7 +46,7 @@ export default function ProductCard({
         href={`/product/${id}`}
         className="relative w-full aspect-square rounded-2xl flex items-center justify-center cursor-pointer transition-shadow duration-300 hover:shadow-md overflow-hidden bg-white"
       >
-        {/* <div className="relative w-full h-full">
+        <div className="relative w-full h-full">
           {imageSrc ? (
             <Image
               src={imageSrc}
@@ -61,7 +61,7 @@ export default function ProductCard({
               No Image
             </div>
           )}
-        </div> */}
+        </div>
       </Link>
 
       <div className="pt-4 px-1 flex flex-col text-left">

@@ -18,7 +18,8 @@ export default function Retail() {
         <RetailSwitch />
         <RetailSection />
         {/* <Popular /> */}
-        <Deals />
+
+        <Deals type="retail" title="Todays Best Deals For You!" />
         <Cta />
         <Footer />
       </div>

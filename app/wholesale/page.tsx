@@ -15,7 +15,10 @@ export default function Wholesale() {
         <WholeSaleBanner />
         <WholesaleSwitch />
         <ExploreWholesale />
-        <Deals />
+        <Deals 
+        type="wholesale" 
+        title="Todays Best Deals For You!" 
+      />
         <Cta />
         <Footer />
       </div>

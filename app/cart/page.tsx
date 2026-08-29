@@ -6,19 +6,32 @@ import ShopNavbar from "../components/ui/shopNavbar";
 import Button from "../components/button";
 import Footer from "../components/ui/footer";
 import Quantity from "../components/quantitiy";
-import { Trash2 } from "lucide-react";
+import { Trash2, ArrowLeft } from "lucide-react";
 import SummaryTotals from "../components/summaryTotal";
 import { useCart } from "../context/cartContext";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Cart() {
-  const { cart, cartItems, isLoading, removeItem, updateQuantity } =
-    useCart();
+  const { cart, cartItems, isLoading, removeItem, updateQuantity } = useCart();
+  const router = useRouter();
 
   return (
     <>
       <ShopNavbar />
       <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white text-stone-800">
+        {/* Back Button with Left Arrow */}
+        <div className="mb-6">
+          <button
+            onClick={() => router.back()}
+            className="inline-flex items-center gap-2 text-stone-600 hover:text-(--main) font-medium text-sm transition-colors duration-150 cursor-pointer"
+            aria-label="Go back to previous page"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back to previous page</span>
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Product Table */}
           <div className="lg:col-span-8 overflow-x-auto">
@@ -58,20 +71,20 @@ export default function Cart() {
                         {/* Product Image */}
                         <td className="p-4 border-r border-stone-200 text-center">
                           <div className="relative w-24 h-24 mx-auto bg-stone-100 border border-stone-200 overflow-hidden rounded-md">
-                            {/* <Image
+                            <img
                               src={itemImage}
                               alt={item.product?.name ?? ""}
-                              fill
                               className="object-cover"
-                            /> */}
+                            />
                           </div>
                         </td>
 
                         {/* Product Name */}
-                        <td className="p-6 border-r border-stone-200 text-left">
+                        <td className="p-6 border-r border-stone-200 flex flex-col text-left">
                           <span className="text-stone-600 font-normal text-[15px]">
                             {item.product?.name}
                           </span>
+                          <span>Price: {item.product?.price}</span>
                         </td>
 
                         {/* Quantity & Trash Button */}

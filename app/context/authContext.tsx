@@ -235,6 +235,7 @@ interface RegisterData {
   phone: string;
   password: string;
   password_confirmation: string;
+  customer_type: string;
 }
 
 interface LoginData {
@@ -312,7 +313,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     mutationFn: async () => {
       return (
         await apiClient.post(
-          "/auth/logout",
+          "/auth/logout-all",
           {},
           { headers: { "x-show-toast": "true" } as any },
         )

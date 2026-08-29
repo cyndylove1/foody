@@ -2,75 +2,22 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+
 import Button from "../button";
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  price: string;
-};
-
-const retailProducts: Product[] = [
-  {
-    id: 1,
-    name: "Peak Milk",
-    image: "/assets/peak2.jpg",
-    price: "$2",
-  },
-  {
-    id: 2,
-    name: "Local Pot",
-    image: "/assets/localPot.jpg",
-    price: "$15",
-  },
-  {
-    id: 3,
-    name: "Tin Tomatoes",
-    image: "/assets/rica.jpg",
-    price: "$5",
-  },
-  {
-    id: 4,
-    name: "Checker Custard",
-    image: "/assets/checker.webp",
-    price: "$8",
-  },
-];
-
-const wholesaleProducts: Product[] = [
-  {
-    id: 101,
-    name: "Peak Milk (Carton)",
-    image: "/assets/peakmilk.webp",
-    price: "$200",
-  },
-  {
-    id: 102,
-    name: "Indomie Noodles (Carton)",
-    image: "/assets/indomie.webp",
-    price: "$150",
-  },
-  {
-    id: 103,
-    name: "Satchet Tomatoes (Carton)",
-    image: "/assets/gino.webp",
-    price: "$300",
-  },
-  {
-    id: 104,
-    name: "Dudu-Osun Black Soap (Carton)",
-    image: "/assets/dudu.webp",
-    price: "$100",
-  },
-];
+import { useWholesale, Product } from "@/app/hooks/useWholesale"; // Adjust path as needed
 
 export default function RetailWholesale() {
   const [type, setType] = useState<"retail" | "wholesale">("retail");
-
   const router = useRouter();
 
-  const products = type === "retail" ? retailProducts : wholesaleProducts;
+  // Fetch products from the active tab's API endpoint
+  const { data, isLoading, isError, error } = useWholesale({ type });
+
+  // Extract products from TanStack Query infinite pages and take only the first 4
+  const allProducts: Product[] =
+    data?.pages.flatMap((page) => page.products) || [];
+  const products = allProducts.slice(0, 4);
 
   const handleViewProduct = () => {
     if (type === "retail") {
@@ -257,43 +204,70 @@ export default function RetailWholesale() {
             </div>
 
             {/* =========================
-                PRODUCTS
+                DYNAMIC PRODUCTS API DISPLAY
             ========================== */}
-            <div key={type} className="grid gap-5 md:grid-cols-2">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="rounded-2xl bg-gray-100 p-4 transition duration-300 hover:-translate-y-1 hover:shadow-md"
-                >
-                  {/* Product Image */}
-                  <div className="relative h-36 w-full overflow-hidden rounded-xl bg-white">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="h-full w-full object-contain p-3"
-                    />
-                  </div>
-
-                  {/* Product Name */}
-                  <h4 className="mt-4 font-semibold text-gray-900">
-                    {product.name}
-                  </h4>
-
-                  {/* Product Price */}
-                  <p className="my-2 font-bold text-[var(--main)]">
-                    {product.price}
+            <div>
+              {isLoading ? (
+                <div className="flex h-64 items-center justify-center rounded-2xl bg-gray-50">
+                  <p className="text-gray-500 font-medium">
+                    Loading products...
                   </p>
-
-                  {/* View Product */}
-                  <Button
-                    variant="primary"
-                    className="w-full"
-                    onClick={handleViewProduct}
-                  >
-                    View Product
-                  </Button>
                 </div>
-              ))}
+              ) : isError ? (
+                <div className="flex h-64 items-center justify-center rounded-2xl bg-red-50 p-4">
+                  <p className="text-red-500 font-medium">
+                    {(error as Error)?.message || "Failed to load products"}
+                  </p>
+                </div>
+              ) : products.length === 0 ? (
+                <div className="flex h-64 items-center justify-center rounded-2xl bg-gray-50">
+                  <p className="text-gray-500 font-medium">
+                    No products available.
+                  </p>
+                </div>
+              ) : (
+                <div key={type} className="grid gap-5 md:grid-cols-2">
+                  {products.map((product) => (
+                    <div
+                      key={product.id}
+                      className="flex flex-col justify-between rounded-2xl bg-gray-100 p-4 transition duration-300 hover:-translate-y-1 hover:shadow-md"
+                    >
+                      {/* Product Image */}
+                      <div className="relative h-36 w-full overflow-hidden rounded-xl bg-white flex items-center justify-center">
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          className="object-contain p-3"
+                        />
+                      </div>
+
+                      {/* Details */}
+                      <div className="mt-4 flex flex-col flex-1 justify-between">
+                        <div>
+                          <h4 className="font-semibold text-gray-900 line-clamp-1">
+                            {product.title}
+                          </h4>
+
+                          <p className="my-2 font-bold text-[var(--main)]">
+                            {isNaN(Number(product.price))
+                              ? product.price
+                              : `$${Number(product.price).toFixed(2)}`}
+                          </p>
+                        </div>
+
+                        {/* View Product Action */}
+                        <Button
+                          variant="primary"
+                          className="w-full mt-2"
+                          onClick={handleViewProduct}
+                        >
+                          View Product
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

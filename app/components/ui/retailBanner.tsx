@@ -11,7 +11,7 @@ export default function RetailBanner() {
       subtitle: "Sourced directly from certified local farms daily.",
     },
     {
-      img: "/assets/provision.png",
+      img: "/assets/derice.webp",
       title: "Eat Fresh. Live Better",
       subtitle:
         "Stock up on premium groceries, healthy foods, and everyday essentials with ease",

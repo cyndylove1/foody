@@ -39,12 +39,11 @@ export default function FeaturedProduct() {
                   <div className="p-4">
                     <div className="relative w-full h-[260px]">
                       {/* Un-comment when you want the image back */}
-                      {/* <Image
+                      <img
                         src={product.image || "/bonnet.jpg"}
                         alt={product.name}
-                        fill
                         className="object-cover p-4"
-                      /> */}
+                      />
                     </div>
 
                     <h3 className="text-center text-gray-600 text-lg">

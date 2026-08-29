@@ -74,12 +74,11 @@ export default function Category() {
                     className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group"
                   >
                     <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
-                      {/* <Image
-                        src={item.thumbnail || item.images?.[0] || "/poundo.jpg"}
+                      <img
+                        src={item.image_url || item.images?.[0] || "/poundo.jpg"}
                         alt={item.name}
-                        fill
                         className="object-cover"
-                      /> */}
+                      />
                     </div>
 
                     {/* Category Badge - Clicking routes to category page */}
@@ -118,6 +117,7 @@ export default function Category() {
                     <div className="my-6">
                       <Button
                         variant="primary"
+                        onClick={() => addItem(item.id)}
                         className="flex w-full items-center justify-center gap-3"
                       >
                         <span>

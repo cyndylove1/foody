@@ -43,7 +43,7 @@ export default function WholesaleSwitch() {
         </div>
 
         {/* Right */}
-        <div className="max-w-sm rounded-2xl bg-gray-50 p-6 border border-gray-200">
+        <div className="md:max-w-xs w-full rounded-2xl bg-gray-50 p-6 border border-gray-200">
           <h3 className="text-xl font-bold text-black">
             Buying for a Business?
           </h3>
