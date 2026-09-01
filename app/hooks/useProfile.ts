@@ -7,6 +7,7 @@ export interface UserProfile {
   id: number;
   first_name: string;
   last_name: string;
+  customer_type: string;
   email: string;
   phone: string;
   avatar: string | null;

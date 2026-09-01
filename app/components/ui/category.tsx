@@ -1,9 +1,6 @@
 "use client";
-
-import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingCart } from "lucide-react";
-
 import Button from "../button";
 import Title from "../title";
 import { useProducts } from "@/app/hooks/useCollection";

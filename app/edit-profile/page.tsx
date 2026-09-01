@@ -3,7 +3,7 @@
 import Button from "@/app/components/button";
 import ShopNavbar from "@/app/components/ui/shopNavbar";
 import CustomInput from "../components/customInput";
-import AvatarUpload from "../components/ui/avatarUpload"; 
+import AvatarUpload from "../components/ui/avatarUpload";
 import { useState, useEffect } from "react";
 import { useProfile } from "../hooks/useProfile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -19,6 +19,7 @@ export default function EditProfile() {
     last_name: "",
     email: "",
     phone: "",
+    customer_type: "",
   });
 
   // Image Mutation Handling Trackers
@@ -32,6 +33,7 @@ export default function EditProfile() {
         last_name: userDetails.last_name || "",
         email: userDetails.email || "",
         phone: userDetails.phone || "",
+        customer_type: userDetails.customer_type || "",
       });
       // Reset staging states on profile reload
       setSelectedFile(null);
@@ -50,6 +52,7 @@ export default function EditProfile() {
       dataPayload.append("last_name", formData.last_name);
       dataPayload.append("email", formData.email);
       dataPayload.append("phone", formData.phone);
+      dataPayload.append("customer_type", formData.customer_type);
 
       // Append standard file payload structural transformations
       if (selectedFile) {
@@ -155,6 +158,17 @@ export default function EditProfile() {
                 placeholder="Enter your Phone number"
                 required={true}
                 value={formData.phone}
+                onChange={handleInputChange}
+                disabled={isFetching || updateProfileMutation.isPending}
+              />
+            </div>
+            <div>
+              <CustomInput
+                label="Customer Type"
+                name="customer_type"
+                placeholder="Enter your Customer type"
+                required={true}
+                value={formData.customer_type}
                 onChange={handleInputChange}
                 disabled={isFetching || updateProfileMutation.isPending}
               />

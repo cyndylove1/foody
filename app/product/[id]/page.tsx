@@ -5,8 +5,6 @@ import Image from "next/image";
 
 import ShopNavbar from "@/app/components/ui/shopNavbar";
 import ProductInformation from "@/app/components/ui/productInformation";
-import Footer from "@/app/components/ui/footer";
-import CustomerFeedback from "@/app/components/ui/customerFeedback";
 import BreadCrumbs from "@/app/components/breadCrumbs";
 import { useSingleProduct } from "@/app/hooks/useSingleProuduct";
 
@@ -18,14 +16,36 @@ export default function ProductDetails({ params }: PageProps) {
   const { id } = use(params);
 
   const { data, isLoading, isError, error } = useSingleProduct(id);
-
   const product = data?.data;
 
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string>("");
 
-  const images = [product?.thumbnail, ...(product?.images || [])].filter(
-    Boolean,
+  // Safely gather all image sources returned in your API response
+  const mainDefaultImage =
+    product?.image_url ||
+    product?.image ||
+    product?.thumbnail ||
+    product?.gallery?.[0] ||
+    "/placeholder.jpg";
+
+  // Combine gallery, image_url, and thumbnail into a unique array for thumbnails
+  const galleryImages: string[] = Array.from(
+    new Set(
+      [
+        product?.image_url,
+        product?.image,
+        product?.thumbnail,
+        ...(product?.gallery || []),
+      ].filter(Boolean),
+    ),
   );
+
+  // Fallback to placeholder if array is completely empty
+  const displayThumbnails =
+    galleryImages.length > 0 ? galleryImages : ["/placeholder.jpg"];
+
+  // Determine current active display image (user selected vs default)
+  const currentMainImage = selectedImage || mainDefaultImage;
 
   const productLinks = [
     { label: "Home", href: "/" },
@@ -45,55 +65,51 @@ export default function ProductDetails({ params }: PageProps) {
             {/* LEFT: Images */}
             <div>
               {isLoading ? (
-                <div className="flex items-center justify-center h-[500px] rounded-xl border border-gray-200 bg-white">
+                <div className="flex items-center justify-center h-[500px] rounded-xl border border-gray-200 bg-gray-50">
                   <p className="text-gray-500 text-lg">Loading image...</p>
                 </div>
               ) : isError ? (
                 <div className="flex items-center justify-center h-[500px] rounded-xl border border-gray-200 bg-white">
-                  <p className="text-red-500">{(error as Error).message}</p>
+                  <p className="text-red-500">{(error as Error)?.message}</p>
                 </div>
               ) : (
                 <>
                   {/* Main Image */}
-                  <div className="rounded-xl overflow-hidden border border-gray-200">
+                  <div className="relative rounded-xl overflow-hidden border border-gray-200 h-[500px] w-full bg-gray-50">
                     <Image
-                      src={
-                        "/placeholder.jpg"
-                      }
-                      alt={product?.name || "Product"}
-                      width={600}
-                      height={600}
-                      className="w-full h-full object-cover"
+                      src={currentMainImage}
+                      alt={product?.name || "Product image"}
+                      fill
+                      priority
+                      className="object-cover"
                     />
                   </div>
 
                   {/* Thumbnail Images */}
-                  {images.length > 0 && (
-                    <div className="flex flex-wrap gap-4 mt-4">
-                      {images.map((img: string, index: number) => (
-                        <div
-                          key={index}
-                          onClick={() => setSelectedImage(img)}
-                          className={`w-20 h-20 rounded-md overflow-hidden cursor-pointer border-2 transition-all ${
-                            (selectedImage || product?.thumbnail) === img
-                              ? "border-orange-500"
-                              : "border-gray-200 hover:border-gray-400"
-                          }`}
-                        >
-                          {/* <Image
-                            src={img}
-                            alt={`Thumbnail ${index + 1}`}
-                            width={80}
-                            height={80}
-                            className="w-full h-full object-cover"
-                          /> */}
-                        </div>
-                      ))}
-                    </div>
-                  )}
+                  <div className="flex flex-wrap gap-4 mt-4">
+                    {displayThumbnails.map((img: string, index: number) => (
+                      <button
+                        key={index}
+                        type="button"
+                        onClick={() => setSelectedImage(img)}
+                        className={`relative w-20 h-20 rounded-md overflow-hidden cursor-pointer border-2 transition-all ${
+                          currentMainImage === img
+                            ? "border-orange-500"
+                            : "border-gray-200 hover:border-gray-400"
+                        }`}
+                      >
+                        <img
+                          src={img}
+                          alt={`${product?.name || "Product"} thumbnail ${index + 1}`}             
+                          className="object-cover"
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </>
               )}
             </div>
+
             {/* Product Information */}
             <div>
               <ProductInformation product={product} isLoading={isLoading} />
@@ -101,8 +117,6 @@ export default function ProductDetails({ params }: PageProps) {
           </div>
         </div>
       </div>
-      {/* <CustomerFeedback /> */}
-      {/* <Footer /> */}
     </>
   );
 }

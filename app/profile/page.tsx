@@ -131,6 +131,14 @@ export default function Profile() {
                     {userDetails?.phone || "—"}
                   </h4>
                 </div>
+                <div className="flex w-1/2 flex-col gap-[6px] border-l border-stone-100 pl-6">
+                  <h5 className="text-xs font-semibold text-stone-400 uppercase tracking-wider">
+                    Customer Type
+                  </h5>
+                  <h4 className="text-sm font-bold text-stone-800 bg-stone-50/60 px-3 py-2 rounded-xl border border-stone-100">
+                    {userDetails?.customer_type || "—"}
+                  </h4>
+                </div>
               </div>
             </div>
           </div>

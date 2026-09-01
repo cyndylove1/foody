@@ -261,7 +261,7 @@ export default function RetailWholesale() {
                           className="w-full mt-2"
                           onClick={handleViewProduct}
                         >
-                          View Product
+                          View More Product
                         </Button>
                       </div>
                     </div>

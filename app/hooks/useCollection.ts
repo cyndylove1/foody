@@ -23,7 +23,7 @@ const fetchProducts = async ({
     params.append("category_id", String(categoryId));
   } else if (slug) {
     params.append("slug", slug);
-  }
+  };
 
   const endpoint = `${BASE_URL}/products?${params.toString()}`;
 
