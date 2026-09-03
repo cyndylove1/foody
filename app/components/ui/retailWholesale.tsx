@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+
 
 import Button from "../button";
 import { useWholesale, Product } from "@/app/hooks/useWholesale"; // Adjust path as needed
