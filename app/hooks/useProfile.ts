@@ -14,7 +14,10 @@ export interface UserProfile {
 }
 
 const fetchProfile = async (): Promise<UserProfile> => {
-  const response = await apiClient.get("/auth/me");
+  // Pass the headers object as the second argument to apiClient.get
+  const response = await apiClient.get("/auth/me", {
+    headers: { "x-show-toast": "true" } as any,
+  });
 
   return response.data.data || response.data;
 };
@@ -40,8 +43,8 @@ export const useProfile = () => {
     },
     enabled: !!token,
     initialData: cachedUser ? JSON.parse(cachedUser) : undefined,
-    staleTime: 1000 * 60 * 5, 
-    gcTime: 1000 * 60 * 10, 
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
     retry: 1,
     refetchOnMount: true,
     refetchOnReconnect: true,

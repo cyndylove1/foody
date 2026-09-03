@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Search, ShoppingCart, Menu, X } from "lucide-react";
+import { Search, ShoppingCart, Menu, X, Heart } from "lucide-react";
 import Logo from "../logo";
 import Link from "next/link";
 import Button from "../button";
@@ -10,6 +10,7 @@ import LoggedInButton from "../LoggedInButton";
 import { useAuth } from "@/app/hooks/useAuth";
 import { useCart } from "../../context/cartContext";
 import { useProfile } from "@/app/hooks/useProfile";
+import { useWishlist } from "@/app/hooks/useWishList";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ export default function Navbar() {
   const { logout } = useAuth();
   const { itemCount } = useCart();
   const { data: user } = useProfile();
+    const { wishlistCount } = useWishlist();
 
   useEffect(() => {
     setMounted(true);
@@ -86,7 +88,21 @@ export default function Navbar() {
 
         {/* Action Items */}
         <div className="flex items-center gap-2 md:gap-6">
-          <button
+          <Link href="/wishlist">
+            <button
+              type="button"
+              aria-label="View favorites"
+              className="w-12 h-12 rounded-full hidden bg-white border border-gray-200 md:flex items-center justify-center text-stone-800 hover:bg-stone-50 transition-all active:scale-95 relative"
+            >
+              <Heart className="w-5 h-5 stroke-[1.75]" />
+              {mounted && wishlistCount > 0 && (
+                <span className="absolute top-2 right-2 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </button>
+          </Link>
+          {/* <button
             aria-label="Search"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
             className={`p-2 transition-colors ${
@@ -96,7 +112,7 @@ export default function Navbar() {
             }`}
           >
             <Search size={20} strokeWidth={2.5} />
-          </button>
+          </button> */}
           <Link href="/cart">
             <button
               aria-label="Cart"
@@ -145,7 +161,7 @@ export default function Navbar() {
       </div>
 
       {/* Search Input Row */}
-      {isSearchOpen && (
+      {/* {isSearchOpen && (
         <div className="absolute top-full left-0 w-full border-b border-gray-100 px-6 py-3 shadow-md animate-in slide-in-from-top-2 duration-200">
           <div className="relative max-w-3xl">
             <input
@@ -160,7 +176,7 @@ export default function Navbar() {
             />
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Mobile Dropdown Menu Card */}
       {isMenuOpen && (
@@ -216,6 +232,17 @@ export default function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             Shop
+          </Link>
+          <Link
+            href="/wishlist"
+            className={`text-[15px] md:hidden font-medium hover:text-(--main) ${
+              isActive("/wishlist")
+                ? "text-(--main) font-semibold"
+                : "text-[#2C2C2C]"
+            }`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            WishList
           </Link>
           <Link
             href="/contact"

@@ -1,12 +1,13 @@
-// components/ProductCard.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Heart } from "lucide-react";
 import Quantity from "../quantitiy";
 import Button from "../button";
 import { useCart } from "../../context/cartContext";
+import { WishlistContext, Product } from "../../context/wishlistContext"; // Update path if needed
 
 interface ProductCardProps {
   id: string | number;
@@ -22,13 +23,21 @@ export default function ProductCard({
   currentPrice,
 }: ProductCardProps) {
   const { addItem, updateQuantity } = useCart();
+  const wishlistCtx = useContext(WishlistContext);
+
+  if (!wishlistCtx) {
+    throw new Error("ProductCard must be used within a WishlistProvider");
+  }
+
+  const { isInWishlist, addToWishlist, removeFromWishlist } = wishlistCtx;
+
   const [quantity, setQuantity] = useState(1);
+  const isFavorite = isInWishlist(id);
 
   // Handle local state update and context sync
   const handleQuantityChange = (newQuantity: number) => {
     setQuantity(newQuantity);
 
-    // Sync directly with the global cart context
     if (typeof updateQuantity === "function") {
       updateQuantity(Number(id), newQuantity);
     }
@@ -38,6 +47,23 @@ export default function ProductCard({
     e.preventDefault();
     e.stopPropagation();
     addItem(Number(id), quantity);
+  };
+
+  const handleToggleWishlist = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isFavorite) {
+      await removeFromWishlist(id);
+    } else {
+      const productPayload: Product = {
+        id,
+        name,
+        image_url: imageSrc,
+        effective_price: currentPrice,
+      };
+      await addToWishlist(productPayload);
+    }
   };
 
   return (
@@ -65,11 +91,25 @@ export default function ProductCard({
       </Link>
 
       <div className="pt-4 px-1 flex flex-col text-left">
-        <Link href={`/product/${id}`}>
-          <h3 className="text-base font-medium text-[#1c2e24] hover:text-[#335341] transition-colors line-clamp-1 cursor-pointer">
-            {name}
-          </h3>
-        </Link>
+        <div className="flex items-center justify-between gap-2">
+          <Link href={`/product/${id}`} className="flex-1">
+            <h3 className="text-base font-medium text-[#1c2e24] hover:text-[#335341] transition-colors line-clamp-1 cursor-pointer">
+              {name}
+            </h3>
+          </Link>
+          <button
+            onClick={handleToggleWishlist}
+            className={`p-2 rounded-full transition-colors ${
+              isFavorite
+                ? "text-red-500 hover:text-red-600 bg-red-50"
+                : "text-gray-400 hover:text-emerald-700 hover:bg-emerald-50 bg-gray-50"
+            }`}
+            aria-label="Wishlist toggle"
+          >
+            <Heart className={`w-5 h-5 ${isFavorite ? "fill-red-500" : ""}`} />
+          </button>
+        </div>
+
         <div className="flex items-center justify-between gap-4 mt-2">
           <span className="text-sm font-bold text-gray-900">
             ${currentPrice}
@@ -77,6 +117,7 @@ export default function ProductCard({
           <Quantity value={quantity} onChange={handleQuantityChange} />
         </div>
       </div>
+
       <Button variant="primary" className="my-4" onClick={handleAddToCart}>
         Add to Cart
       </Button>

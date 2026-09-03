@@ -2,11 +2,13 @@
 
 import { useState, use } from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import ShopNavbar from "@/app/components/ui/shopNavbar";
 import ProductInformation from "@/app/components/ui/productInformation";
 import BreadCrumbs from "@/app/components/breadCrumbs";
 import { useSingleProduct } from "@/app/hooks/useSingleProuduct";
+import { useSingleWholesaleOrRetail } from "@/app/hooks/useWholesale";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -14,13 +16,29 @@ interface PageProps {
 
 export default function ProductDetails({ params }: PageProps) {
   const { id } = use(params);
+  const searchParams = useSearchParams();
+  const productType = searchParams.get("type") as "retail" | "wholesale" | null;
 
-  const { data, isLoading, isError, error } = useSingleProduct(id);
-  const product = data?.data;
+  // Existing single product hook (runs when type query param is not retail or wholesale)
+  const defaultSingleQuery = useSingleProduct(id);
+
+  // New hook for retail / wholesale items
+  const typeSingleQuery = useSingleWholesaleOrRetail(
+    id,
+    productType ?? undefined
+  );
+
+  // Conditionally pick active query & payload
+  const isTypeBased = productType === "retail" || productType === "wholesale";
+  const activeQuery = isTypeBased ? typeSingleQuery : defaultSingleQuery;
+
+  const { isLoading, isError, error } = activeQuery;
+  const product = isTypeBased
+    ? typeSingleQuery.data
+    : defaultSingleQuery.data?.data;
 
   const [selectedImage, setSelectedImage] = useState<string>("");
 
-  // Safely gather all image sources returned in your API response
   const mainDefaultImage =
     product?.image_url ||
     product?.image ||
@@ -28,7 +46,6 @@ export default function ProductDetails({ params }: PageProps) {
     product?.gallery?.[0] ||
     "/placeholder.jpg";
 
-  // Combine gallery, image_url, and thumbnail into a unique array for thumbnails
   const galleryImages: string[] = Array.from(
     new Set(
       [
@@ -36,21 +53,19 @@ export default function ProductDetails({ params }: PageProps) {
         product?.image,
         product?.thumbnail,
         ...(product?.gallery || []),
-      ].filter(Boolean),
-    ),
+      ].filter(Boolean)
+    )
   );
 
-  // Fallback to placeholder if array is completely empty
   const displayThumbnails =
     galleryImages.length > 0 ? galleryImages : ["/placeholder.jpg"];
 
-  // Determine current active display image (user selected vs default)
   const currentMainImage = selectedImage || mainDefaultImage;
 
   const productLinks = [
     { label: "Home", href: "/" },
     { label: "Products", href: "/category/seasonings" },
-    { label: product?.name || "Loading..." },
+    { label: product?.name || product?.title || "Loading..." },
   ];
 
   return (
@@ -78,7 +93,7 @@ export default function ProductDetails({ params }: PageProps) {
                   <div className="relative rounded-xl overflow-hidden border border-gray-200 h-[500px] w-full bg-gray-50">
                     <Image
                       src={currentMainImage}
-                      alt={product?.name || "Product image"}
+                      alt={product?.name || product?.title || "Product image"}
                       fill
                       priority
                       className="object-cover"
@@ -100,8 +115,8 @@ export default function ProductDetails({ params }: PageProps) {
                       >
                         <img
                           src={img}
-                          alt={`${product?.name || "Product"} thumbnail ${index + 1}`}             
-                          className="object-cover"
+                          alt={`${product?.name || product?.title || "Product"} thumbnail ${index + 1}`}
+                          className="object-cover w-full h-full"
                         />
                       </button>
                     ))}
@@ -110,7 +125,7 @@ export default function ProductDetails({ params }: PageProps) {
               )}
             </div>
 
-            {/* Product Information */}
+            {/* Right: Product Information */}
             <div>
               <ProductInformation product={product} isLoading={isLoading} />
             </div>

@@ -6,6 +6,7 @@ import Title from "../title";
 import { useProducts } from "@/app/hooks/useCollection";
 import { useCart } from "../../context/cartContext";
 import StarRating from "../StarRating";
+import { useWishlist } from "@/app/hooks/useWishList";
 
 export default function Category() {
   const {
@@ -19,6 +20,7 @@ export default function Category() {
   } = useProducts();
 
   const { addItem } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const products =
     data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
@@ -59,7 +61,15 @@ export default function Category() {
               const categoryUrl = categorySlug
                 ? `/category/${categorySlug}`
                 : "#";
+              const isFavorite = isInWishlist(item.id);
 
+              const toggleWishlist = (product: any) => {
+                if (isFavorite) {
+                  removeFromWishlist(product.id);
+                } else {
+                  addToWishlist(product);
+                }
+              };
               return (
                 <div
                   key={item.id}
@@ -72,7 +82,9 @@ export default function Category() {
                   >
                     <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
                       <img
-                        src={item.image_url || item.images?.[0] || "/poundo.jpg"}
+                        src={
+                          item.image_url || item.images?.[0] || "/poundo.jpg"
+                        }
                         alt={item.name}
                         className="object-cover"
                       />
@@ -91,9 +103,18 @@ export default function Category() {
                       <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600">
                         {item.name}
                       </h3>
-
-                      <button className="p-2 rounded-full text-gray-400 hover:text-(--main) hover:bg-(--main)/10 bg-gray-50">
-                        <Heart className="w-5 h-5" />
+                      <button
+                        onClick={() => toggleWishlist(item)}
+                        className={`p-2 rounded-full transition-colors bg-gray-50 ${
+                          isFavorite
+                            ? "text-red-500 hover:text-red-600 bg-red-50"
+                            : "text-gray-400 hover:text-(--main) hover:bg-(--main)/10"
+                        }`}
+                        aria-label="Wishlist toggle"
+                      >
+                        <Heart
+                          className={`w-5 h-5 ${isFavorite ? "fill-red-500" : ""}`}
+                        />
                       </button>
                     </div>
 

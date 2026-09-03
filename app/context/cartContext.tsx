@@ -127,7 +127,8 @@ const addItemMutation = useMutation({
      quantity: number;
    }) => {
      const response = await apiClient.put(`/cart/${itemId}`, { quantity });
-     return response.data.data;
+     console.log(response);
+     return response.data;
    },
    onSuccess: (_data, _variables, context) => {
      if (context?.requestId !== requestIdRef.current) return;
