@@ -83,7 +83,7 @@ export default function Login() {
           <p className="text-stone-600 font-medium">
             Don't have an account?{" "}
             <Link
-              href="/sign-up"
+              href="/user-type"
               className="text-(--main) hover:underline transition-all ml-0.5"
             >
               Sign up
