@@ -48,15 +48,15 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/category/seasonings"
+            href="/category/seasoning-condiments"
             className={`relative py-2 transition-colors hover:text-(--main) ${
-              isActive("/category/seasonings")
+              isActive("/category/seasoning-condiments")
                 ? "text-(--main) font-semibold"
                 : ""
             }`}
           >
             Shop
-            {isActive("/category/seasonings") && (
+            {isActive("/category/seasoning-condiments") && (
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
             )}
           </Link>
@@ -223,9 +223,9 @@ export default function Navbar() {
             Profile
           </Link>
           <Link
-            href="/category/seasonings"
+            href="/category/seasoning-condiments"
             className={`text-[15px] font-medium hover:text-(--main) ${
-              isActive("/category/seasonings")
+              isActive("/category/seasoning-condiments")
                 ? "text-(--main) font-semibold"
                 : "text-[#2C2C2C]"
             }`}

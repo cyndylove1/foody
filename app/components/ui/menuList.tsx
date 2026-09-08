@@ -1,4 +1,3 @@
-// components/MenuList.tsx
 "use client";
 
 import { useState } from "react";
@@ -12,18 +11,17 @@ export default function MenuList() {
   const [openCategory, setOpenCategory] = useState<string[]>([]);
   const [selectedSize, setSelectedSize] = useState<string>("None");
 
-  // Do not render MenuList on retail or wholesale routes
+  // Only render on category pages
   if (!pathname.startsWith("/category/")) {
     return null;
   }
 
   const toggleCategory = (name: string) => {
-    setOpenCategory((prev) => {
-      if (prev.includes(name)) {
-        return prev.filter((category) => category !== name);
-      }
-      return [...prev, name];
-    });
+    setOpenCategory((prev) =>
+      prev.includes(name)
+        ? prev.filter((cat) => cat !== name)
+        : [...prev, name],
+    );
   };
 
   return (
@@ -58,18 +56,27 @@ export default function MenuList() {
                   )}
                 </button>
 
-                {/* Subcategories Dropdown */}
+                {/* Subcategories Dropdown using SLUG in URL */}
                 {hasSubs && isOpen && (
                   <div className="mt-3 ml-6 space-y-3 pl-2 border-l border-gray-100">
-                    {category.subCategories?.map((sub) => (
-                      <Link
-                        key={sub.slug}
-                        href={`/category/${sub.slug}`}
-                        className="block text-sm text-gray-500 hover:text-black font-medium transition-colors"
-                      >
-                        {sub.name}
-                      </Link>
-                    ))}
+                    {category.subCategories?.map((sub) => {
+                      const href = `/category/${sub.slug}`;
+                      const isActive = pathname === href;
+
+                      return (
+                        <Link
+                          key={`${sub.category_id}-${sub.slug}`}
+                          href={href}
+                          className={`block text-sm font-medium transition-colors ${
+                            isActive
+                              ? "text-orange-600 font-semibold"
+                              : "text-gray-500 hover:text-black"
+                          }`}
+                        >
+                          {sub.name}
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -78,7 +85,7 @@ export default function MenuList() {
         </div>
       </div>
 
-      {/* Filter Section */}
+      {/* Filters */}
       <div>
         <h2 className="text-2xl font-bold text-black mb-4">Filter</h2>
         <div className="space-y-3">
@@ -100,11 +107,6 @@ export default function MenuList() {
               <span className="text-sm text-gray-600 font-medium">{size}</span>
             </label>
           ))}
-        </div>
-        <div className="mt-6">
-          <span className="text-sm font-semibold text-gray-400 block mb-2">
-            Brands
-          </span>
         </div>
       </div>
     </aside>

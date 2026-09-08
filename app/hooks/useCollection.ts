@@ -6,42 +6,34 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 interface FetchProductsParams {
   pageParam?: number;
   categoryId?: number | string;
-  slug?: string;
 }
 
 const fetchProducts = async ({
   pageParam = 1,
   categoryId,
-  slug,
 }: FetchProductsParams) => {
-  // Construct query params dynamically
   const params = new URLSearchParams({
     page: String(pageParam),
   });
 
-  if (categoryId) {
+  // Append category_id only if provided
+  if (categoryId !== undefined && categoryId !== null) {
     params.append("category_id", String(categoryId));
-  } else if (slug) {
-    params.append("slug", slug);
-  };
+  }
 
   const endpoint = `${BASE_URL}/products?${params.toString()}`;
 
   const response = await axios.get(endpoint);
-  console.log("Products APIs:", response.data);
+  console.log("APIS", response.data)
   return response.data;
 };
 
-export const useProducts = (
-  filter?: { categoryId?: number | string; slug?: string } | number | string,
-) => {
-  // Standardize filter options whether a single ID/slug or an object is passed
-  const categoryId = typeof filter === "object" ? filter?.categoryId : filter;
-  const slug = typeof filter === "object" ? filter?.slug : undefined;
-
+export const useProducts = (categoryId?: number | string) => {
   return useInfiniteQuery({
-    queryKey: ["products", categoryId ?? slug ?? "all"],
-    queryFn: ({ pageParam }) => fetchProducts({ pageParam, categoryId, slug }),
+    queryKey: ["products", categoryId ?? "all"],
+    queryFn: ({ pageParam }) => fetchProducts({ pageParam, categoryId }),
+    // Enabled by default for "all", or when categoryId is truthy
+    enabled: categoryId !== null,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const currentPage = lastPage?.data?.meta?.current_page;

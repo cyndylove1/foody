@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 interface CategoryCardProps {
   title: string;
@@ -149,7 +150,8 @@ export default function ExploreWholesale() {
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {categories.map((category, idx) => (
-          <div
+          <Link
+            href={`/category/seasoning-condiments`}
             key={idx}
             className="group relative h-80 w-[250px] sm:w-[250px] flex-shrink-0 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-end p-6"
           >
@@ -183,7 +185,7 @@ export default function ExploreWholesale() {
                 <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

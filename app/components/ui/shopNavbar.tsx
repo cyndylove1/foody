@@ -291,7 +291,7 @@ export default function ShopNavbar() {
                   Profile
                 </Link>
                 <Link
-                  href="/category/seasonings"
+                  href="/category/seasoning-condiments"
                   className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >

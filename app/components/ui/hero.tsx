@@ -18,10 +18,10 @@ export default function Hero() {
             <span className="text-(--main)">Doorstep.</span>
           </h1>
 
-          <p className="text-gray-700 text-base md:text-lg max-w-md mx-auto lg:mx-0 leading-relaxed">
+          <p className="text-gray-700 text-base md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
             Shop authentic African ingredients from Motherland International
-            Store including local spices, palm oil, stockfish, smoked fish,
-            crayfish, beans, grains, and more—all in one convenient place.
+            store includes local spices,seasonings, groceries, legumes,
+            grains and more—all in one convenient place.
           </p>
 
           <div className="flex flex-row items-center justify-center lg:justify-start gap-5 pt-2">

@@ -1,4 +1,10 @@
-import { Category, FaqItem, GroceryItem, MarketCategory, Product } from "./types";
+import {
+  Category,
+  FaqItem,
+  GroceryItem,
+  MarketCategory,
+  Product,
+} from "./types";
 
 import {
   FaFacebookF,
@@ -88,8 +94,7 @@ export const categories: MarketCategory[] = [
     title: "Provisions",
     badge: "Provisions",
     imageSrc: "/assets/ovaltine.webp",
-    imageAlt:
-      "Peak milk, Ovaltine and Checker",
+    imageAlt: "Peak milk, Ovaltine and Checker",
     buttonText: "Shop Provision",
   },
   {
@@ -97,8 +102,7 @@ export const categories: MarketCategory[] = [
     title: "Utensils",
     badge: "Utensils",
     imageSrc: "/assets/spoon.webp",
-    imageAlt:
-      "Pot, wooden Spoon, Aluminum Spoon, and other premium utensils",
+    imageAlt: "Pot, wooden Spoon, Aluminum Spoon, and other premium utensils",
     buttonText: "Shop Seafoods",
   },
 ];
@@ -144,12 +148,12 @@ export const socialLinks = [
 
 // links for footer section
 export const categoryLinks = [
-  { name: "Seasoning", href: "/category/seasoning" },
-  { name: "Spices", href: "/category/spices" },
-  { name: "Food Items", href: "/shop/food-items" },
-  { name: "Grocery", href: "/shop/grocery" },
-  { name: "Beauty", href: "/shop/beauty" },
-  { name: "Frozen Foods", href: "/category/frozen-foods" },
+  { name: "Seasoning", href: "/category/seasoning-condiments" },
+  { name: "Spices", href: "/category/spices-flavours-salts" },
+  { name: "Proteins", href: "/category/proteins-seafood" },
+  { name: "Grocery", href: "/category/pantry-grocery" },
+  { name: "Cereals", href: "/category/grains-cereals" },
+  // { name: "Frozen Foods", href: "/category/frozen-foods" },
 ];
 
 export const legalLinks = [
@@ -201,53 +205,127 @@ export const comments = [
     date: "12-01-2025",
   },
 ];
-//  MenuList sidebar
+
+
+// MenuList
+// app/constant.ts or wherever categoriesData is stored
+
 export const categoriesData: Category[] = [
   {
-    name: "Soups",
+    name: "Condiments",
     subCategories: [
-      { id: 2, name: "Seasonings", slug: "seasonings" },
-      { id: 3, name: "Spices", slug: "spices" },
-      { id: 4, name: "Dry Food", slug: "dry-food" },
-      { id: 5, name: "Utensils", slug: "utensils" },
+      { category_id: 40, name: "Seasoning", slug: "seasoning-condiments" },
+      { category_id: 47, name: "Soup Ingredients", slug: "soup-ingredients" }, // Fixed space
+      {
+        category_id: 37,
+        name: "Spices, Flavours & Salts",
+        slug: "spices-flavours-salts",
+      },
+      
     ],
   },
   {
-    name: "Drinks & Snacks",
+    name: "Utensils",
     subCategories: [
-      { id: 8, name: "Drinks", slug: "drinks" },
-      { id: 7, name: "Snack", slug: "snack" },
-      { id: 25, name: "Candy", slug: "candy" },
+      { category_id: 38, name: "Utensils", slug: "kitchen-utensils" },
     ],
   },
   {
-    name: "Frozen Foods",
+    name: "Drinks",
+    subCategories: [{ category_id: 41, name: "Drinks", slug: "beverages" }],
+  },
+  {
+    name: "Proteins",
     subCategories: [
-      { id: 11, name: "Meat & Poultry", slug: "meat-poultry" },
-      { id: 12, name: "Fish", slug: "fish" },
-      { id: 13, name: "Vegetables", slug: "vegetables" },
+      // { category_id: 2, name: "Meat & Poultry", slug: "meat-poultry" },
+      { category_id: 48, name: "Proteins", slug: "proteins-seafood" },
+      // { category_id: 2, name: "Vegetables", slug: "vegetables" },
     ],
   },
   {
     name: "Grocery",
     subCategories: [
-      { id: 15, name: "Grain", slug: "grain" },
-      { id: 16, name: "Flours", slug: "flours" },
-      { id: 14, name: "Cooking Oils", slug: "cooking-oil" },
-      { id: 18, name: "Fresh Produce", slug: "fresh-produce" },
-      { id: 19, name: "Beverages & Cereals", slug: "beverages-cereals" },
-      { id: 17, name: "Baked Foods", slug: "baked-foods" },
+      { category_id: 49, name: "Grocery", slug: "pantry-grocery" },
+      { category_id: 35, name: "Oils & Fats", slug: "oils-fats" },
+      { category_id: 46, name: "Snacks", slug: "snacks-1" },
     ],
   },
   {
-    name: "Beauty & Health",
+    name: "Dry Foods",
     subCategories: [
-      { id: 123, name: "Personal Care", slug: "personal-care" },
-      { id: 23, name: "Hair", slug: "hair" },
-      { id: 20, name: "Apparel", slug: "apparel" },
+      { category_id: 44, name: "Legumes", slug: "legumes-beans" },
+      { category_id: 34, name: "Grains & Cereals", slug: "grains-cereals" },
+      { category_id: 45, name: "Flours", slug: "flour-swallow" },
+      {
+        category_id: 39,
+        name: "Dried vegetables",
+        slug: "dried-vegetables-herbs",
+      },
+      { category_id: 42, name: "Seeds", slug: "seeds-thickeners" },
     ],
-  }
-]
+  },
+  {
+    name: "Brooms",
+    subCategories: [
+      { category_id: 43, name: "Broom", slug: "cleaning-household-1" },
+    ],
+  },
+  {
+    name: "Others",
+    subCategories: [
+      { category_id: 50,name: "Others", slug: "household-personal-care" },
+      { category_id: 36,name: "Other", slug: "other" },
+    ],
+  },
+];
+
+
+//   {
+//     name: "Soups",
+//     subCategories: [
+//       { category_id: 2, name: "Seasonings", slug: "seasonings" },
+//       // { id: 3, name: "Spices", slug: "spices" },
+//       // { id: 4, name: "Dry Food", slug: "dry-food" },
+//       { category_id: 5, name: "Utensils", slug: "utensils" },
+//     ],
+//   },
+//   {
+//     name: "Drinks & Snacks",
+//     subCategories: [
+//       { id: 8, name: "Drinks", slug: "drinks" },
+//       { id: 7, name: "Snack", slug: "snack" },
+//       { id: 25, name: "Candy", slug: "candy" },
+//     ],
+//   },
+//   {
+//     name: "Frozen Foods",
+//     subCategories: [
+//       { id: 11, name: "Meat & Poultry", slug: "meat-poultry" },
+//       { id: 12, name: "Fish", slug: "fish" },
+//       { id: 13, name: "Vegetables", slug: "vegetables" },
+//     ],
+//   },
+//   {
+//     name: "Grocery",
+//     subCategories: [
+//       { id: 15, name: "Grain", slug: "grain" },
+//       { id: 16, name: "Flours", slug: "flours" },
+//       { id: 14, name: "Cooking Oils", slug: "cooking-oil" },
+//       { id: 18, name: "Fresh Produce", slug: "fresh-produce" },
+//       { id: 19, name: "Beverages & Cereals", slug: "beverages-cereals" },
+//       { id: 17, name: "Baked Foods", slug: "baked-foods" },
+//     ],
+//   },
+//   {
+//     name: "Beauty & Health",
+//     subCategories: [
+//       { id: 123, name: "Personal Care", slug: "personal-care" },
+//       { id: 23, name: "Hair", slug: "hair" },
+//       { id: 20, name: "Apparel", slug: "apparel" },
+//     ],
+//   },
+// ];
+
 
 // Category
 export const productsMock = [
@@ -288,6 +366,7 @@ export const productsMock = [
     colors: [{ hex: "#78350f", name: "Brown" }],
   },
 ];
+
 
 // FAQ
 export const faqData: FaqItem[] = [

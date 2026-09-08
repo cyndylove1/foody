@@ -109,7 +109,7 @@ export default function Deals({ type, id, title }: DealsProps) {
                     <img
                       src={product.image}
                       alt={product.title}
-                      className="max-h-full max-w-full object-cover mix-blend-multiply"
+                      className="max-h-full w-full object-cover mix-blend-multiply"
                     />
                   </Link>
 

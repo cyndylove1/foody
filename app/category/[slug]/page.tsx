@@ -4,22 +4,11 @@ import { use } from "react";
 import { useSearchParams } from "next/navigation";
 import MenuList from "@/app/components/ui/menuList";
 import ProductCard from "@/app/components/ui/productCard";
+import Button from "@/app/components/button"; // Adjust path if needed
 import { useProducts } from "@/app/hooks/useCollection";
 import { useSearch } from "@/app/hooks/useSearchProduts";
 import { categoriesData } from "@/app/constant";
 import ShopNavbar from "@/app/components/ui/shopNavbar";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  category_id: number;
-  category?: {
-    id: number;
-    slug: string;
-  };
-}
 
 export default function CategoryPage({
   params,
@@ -27,25 +16,29 @@ export default function CategoryPage({
   params: Promise<{ slug: string }>;
 }) {
   const resolvedParams = use(params);
-  const slug = resolvedParams.slug;
+  const slugParam = resolvedParams.slug;
+
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
 
-  // Match category details
+  // Lookup subCategory and its category_id based on URL slug
   const subCategory = categoriesData
     .flatMap((cat) => cat.subCategories || [])
-    .find((sub) => sub.slug === slug);
+    .find((sub) => sub.slug === slugParam);
 
-  const categoryId = subCategory?.id;
+  const categoryId = subCategory?.category_id;
 
-  // Regular collection fetch
+  // Destructure infinite pagination methods from useProducts
   const {
     data: categoryData,
     isLoading: categoryLoading,
     isError: categoryError,
-  } = useProducts(categoryId || slug);
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useProducts(categoryId);
 
-  // Search API fetch when keyword parameter exists
+  // Search API fetch when keyword is supplied
   const {
     data: searchData,
     isLoading: searchLoading,
@@ -56,7 +49,6 @@ export default function CategoryPage({
   const isLoading = isSearchMode ? searchLoading : categoryLoading;
   const isError = isSearchMode ? searchError : categoryError;
 
-  // Safe extraction with array checks
   const rawSearchList = Array.isArray(searchData?.data)
     ? searchData.data
     : Array.isArray((searchData as any)?.data?.data)
@@ -71,7 +63,7 @@ export default function CategoryPage({
       return [];
     }) || [];
 
-  const products: Product[] = isSearchMode ? rawSearchList : rawCategoryList;
+  const products = isSearchMode ? rawSearchList : rawCategoryList;
 
   return (
     <>
@@ -87,7 +79,7 @@ export default function CategoryPage({
               ? `Search Results for "${keyword}"`
               : subCategory
                 ? subCategory.name
-                : slug.replace(/-/g, " ")}
+                : slugParam.replace(/-/g, " ")}
           </h1>
 
           {isLoading ? (
@@ -101,7 +93,7 @@ export default function CategoryPage({
             </div>
           ) : isError ? (
             <p className="text-red-500">
-              Failed to load products. Please check connection.
+              Failed to load products. Please try again.
             </p>
           ) : !Array.isArray(products) || products.length === 0 ? (
             <p className="text-gray-500">
@@ -110,17 +102,46 @@ export default function CategoryPage({
                 : "No products found in this category."}
             </p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  imageSrc={product.image}
-                  currentPrice={product.price}
-                />
-              ))}
-            </div>
+            <>
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {products.map((product: any) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    imageSrc={
+                      product.image_url ||
+                      product.image ||
+                      product.images?.[0] ||
+                      "/poundo.jpg"
+                    }
+                    currentPrice={product.effective_price || product.price}
+                  />
+                ))}
+              </div>
+
+              {/* Load More Controls (only active when not in search mode) */}
+              {!isSearchMode && (
+                <div className="flex justify-center mt-14">
+                  {hasNextPage ? (
+                    <Button
+                      variant="secondary"
+                      onClick={() => fetchNextPage()}
+                      disabled={isFetchingNextPage}
+                    >
+                      {isFetchingNextPage
+                        ? "Loading..."
+                        : "See More Collections"}
+                    </Button>
+                  ) : (
+                    <Button variant="secondary" disabled>
+                      No More Products
+                    </Button>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </main>
       </div>

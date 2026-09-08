@@ -9,6 +9,7 @@ import StarRating from "../StarRating";
 import { useWishlist } from "@/app/hooks/useWishList";
 
 export default function Category() {
+  // Calling useProducts() without arguments fetches ALL products
   const {
     data,
     isLoading,
@@ -23,7 +24,12 @@ export default function Category() {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const products =
-    data?.pages.flatMap((page: any) => page?.data?.data || []) || [];
+    data?.pages.flatMap((page: any) => {
+      if (Array.isArray(page?.data?.data)) return page.data.data;
+      if (Array.isArray(page?.data)) return page.data;
+      if (Array.isArray(page)) return page;
+      return [];
+    }) || [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 bg-white lg:px-12 md:px-6">
@@ -56,11 +62,14 @@ export default function Category() {
           {/* Products */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((item: any) => {
-              // Construct category path safely with fallbacks
+              const productType = item.type ? `?type=${item.type}` : "";
+              const productUrl = `/product/${item.id}${productType}`;
+
               const categorySlug = item.category?.slug;
               const categoryUrl = categorySlug
                 ? `/category/${categorySlug}`
                 : "#";
+
               const isFavorite = isInWishlist(item.id);
 
               const toggleWishlist = (product: any) => {
@@ -70,39 +79,43 @@ export default function Category() {
                   addToWishlist(product);
                 }
               };
+
               return (
                 <div
                   key={item.id}
                   className="flex flex-col border border-gray-100 overflow-hidden p-4 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  {/* Card Image Wrapper links directly to Category Page */}
-                  <Link
-                    href={categoryUrl}
-                    className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group"
-                  >
-                    <div className="relative w-full h-full transition-transform duration-300 group-hover:scale-105">
+                  <div className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center group">
+                    <Link
+                      href={productUrl}
+                      className="relative w-full h-full block"
+                    >
                       <img
                         src={
                           item.image_url || item.images?.[0] || "/poundo.jpg"
                         }
                         alt={item.name}
-                        className="object-cover"
+                        className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                       />
-                    </div>
+                    </Link>
 
-                    {/* Category Badge - Clicking routes to category page */}
                     {item.category?.name && (
-                      <span className="absolute top-3 left-3 text-[11px] font-bold uppercase tracking-wider text-stone-700 bg-white/90 hover:bg-white px-2.5 py-1 rounded-md transition-colors">
+                      <Link
+                        href={categoryUrl}
+                        className="absolute top-3 left-3 z-10 text-[11px] font-bold uppercase tracking-wider text-stone-700 bg-white/90 hover:bg-white px-2.5 py-1 rounded-md transition-colors"
+                      >
                         {item.category.name}
-                      </span>
+                      </Link>
                     )}
-                  </Link>
+                  </div>
 
                   <div className="flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600">
-                        {item.name}
-                      </h3>
+                      <Link href={productUrl}>
+                        <h3 className="text-xl font-bold text-stone-900 mb-2 line-clamp-1 hover:text-orange-600 transition-colors">
+                          {item.name}
+                        </h3>
+                      </Link>
                       <button
                         onClick={() => toggleWishlist(item)}
                         className={`p-2 rounded-full transition-colors bg-gray-50 ${
@@ -118,20 +131,22 @@ export default function Category() {
                       </button>
                     </div>
 
-                    {/* Clicking product title navigates to Category page */}
-                    <Link href={categoryUrl}></Link>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-1 mb-2">
                         <StarRating />
                       </div>
                       <span className="text-2xl font-extrabold tracking-tight text-stone-900">
-                        ${Number(item.effective_price || 0).toFixed(2)}
+                        $
+                        {Number(
+                          item.effective_price || item.price || 0,
+                        ).toFixed(2)}
                       </span>
                     </div>
 
                     <p className="text-[13px] leading-relaxed text-stone-600 min-h-[56px] mb-6 line-clamp-3">
                       {item.short_description}
                     </p>
+
                     <div className="my-6">
                       <Button
                         variant="primary"
