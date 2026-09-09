@@ -14,7 +14,6 @@ import { useWishlist } from "@/app/hooks/useWishList";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const { logout } = useAuth();
@@ -48,15 +47,15 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/category/seasoning-condiments"
+            href="/category/utensils"
             className={`relative py-2 transition-colors hover:text-(--main) ${
-              isActive("/category/seasoning-condiments")
+              isActive("/category/utensils")
                 ? "text-(--main) font-semibold"
                 : ""
             }`}
           >
             Shop
-            {isActive("/category/seasoning-condiments") && (
+            {isActive("/category/utensils") && (
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
             )}
           </Link>
@@ -223,9 +222,9 @@ export default function Navbar() {
             Profile
           </Link>
           <Link
-            href="/category/seasoning-condiments"
+            href="/category/utensils"
             className={`text-[15px] font-medium hover:text-(--main) ${
-              isActive("/category/seasoning-condiments")
+              isActive("/category/utensils")
                 ? "text-(--main) font-semibold"
                 : "text-[#2C2C2C]"
             }`}

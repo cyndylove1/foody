@@ -1,13 +1,13 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import MenuList from "@/app/components/ui/menuList";
 import ProductCard from "@/app/components/ui/productCard";
-import Button from "@/app/components/button"; // Adjust path if needed
+import Button from "@/app/components/button";
 import { useProducts } from "@/app/hooks/useCollection";
 import { useSearch } from "@/app/hooks/useSearchProduts";
-import { categoriesData } from "@/app/constant";
+import { useMenuList, Category, SubCategory } from "@/app/hooks/useMenuList";
 import ShopNavbar from "@/app/components/ui/shopNavbar";
 
 export default function CategoryPage({
@@ -21,14 +21,22 @@ export default function CategoryPage({
   const searchParams = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
 
-  // Lookup subCategory and its category_id based on URL slug
-  const subCategory = categoriesData
+  // 1. Fetch live categories from backend API
+  const { data: menuCategories } = useMenuList();
+
+  // Safely cast categories to array
+  const categoriesList: Category[] = Array.isArray(menuCategories)
+    ? menuCategories
+    : [];
+
+  // 2. Find subCategory dynamically from live backend response
+  const subCategory: SubCategory | undefined = categoriesList
     .flatMap((cat) => cat.subCategories || [])
     .find((sub) => sub.slug === slugParam);
 
   const categoryId = subCategory?.category_id;
 
-  // Destructure infinite pagination methods from useProducts
+  // 3. Fetch products using the active category_id
   const {
     data: categoryData,
     isLoading: categoryLoading,
@@ -121,7 +129,7 @@ export default function CategoryPage({
                 ))}
               </div>
 
-              {/* Load More Controls (only active when not in search mode) */}
+              {/* Load More Controls */}
               {!isSearchMode && (
                 <div className="flex justify-center mt-14">
                   {hasNextPage ? (

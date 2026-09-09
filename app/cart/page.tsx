@@ -165,7 +165,7 @@ export default function Cart() {
 
             {/* Continue Shopping */}
             <div className="py-10">
-              <Link href="/category/seasoning-condiments">
+              <Link href="/category/utensils">
                 <Button variant="primary">Continue Shopping</Button>
               </Link>
             </div>

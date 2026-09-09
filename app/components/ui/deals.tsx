@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { Heart, ShoppingCart, Loader2, PackageX } from "lucide-react";
 import Button from "../button";

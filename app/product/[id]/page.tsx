@@ -64,7 +64,7 @@ export default function ProductDetails({ params }: PageProps) {
 
   const productLinks = [
     { label: "Home", href: "/" },
-    { label: "Products", href: "/category/seasoning-condiments" },
+    { label: "Products", href: "/category/utensils" },
     { label: product?.name || product?.title || "Loading..." },
   ];
 

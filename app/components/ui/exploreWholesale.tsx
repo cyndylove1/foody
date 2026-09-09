@@ -151,7 +151,7 @@ export default function ExploreWholesale() {
       >
         {categories.map((category, idx) => (
           <Link
-            href={`/category/seasoning-condiments`}
+            href={`/category/utensils`}
             key={idx}
             className="group relative h-80 w-[250px] sm:w-[250px] flex-shrink-0 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-end p-6"
           >
