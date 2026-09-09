@@ -21,7 +21,7 @@ export default function Hero() {
           <p className="text-gray-700 text-base md:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
             Shop authentic African ingredients from Motherland International
             store includes local spices,seasonings, groceries, legumes, grains
-            and more—all in one convenient place.
+            and more all in one convenient place.
           </p>
 
           <div className="flex flex-row items-center justify-center lg:justify-start gap-5 pt-2">

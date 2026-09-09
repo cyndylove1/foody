@@ -287,29 +287,101 @@
 
 // export default configuredClient;
 
+// import axios from "axios";
+
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+// const apiClient = axios.create({
+//   baseURL: BASE_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//     Accept: "application/json",
+//   },
+// });
+
+// apiClient.interceptors.request.use(
+//   (config) => {
+//     if (typeof window !== "undefined") {
+//       const token = localStorage.getItem("auth_token");
+//       if (token) {
+//         config.headers.Authorization = `Bearer ${token.trim()}`;
+//       }
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error),
+// );
+
+// export default apiClient;
+
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
   },
 });
 
-apiClient.interceptors.request.use(
-  (config) => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("auth_token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token.trim()}`;
-      }
-    }
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
+const setupInterceptors = () => {
+  apiClient.interceptors.request.use(
+    (config) => {
+      config.headers = config.headers || {};
 
-export default apiClient;
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("auth_token");
+
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        const cartSession = localStorage.getItem("cart_session");
+
+        if (cartSession) {
+          config.headers["X-Cart-Session"] = cartSession;
+        }
+      }
+
+      return config;
+    },
+    (error) => Promise.reject(error),
+  );
+
+  apiClient.interceptors.response.use(
+    (response) => {
+      const showToast = response.config.headers?.["x-show-toast"] === "true";
+
+      if (showToast && response.data?.message) {
+        toast.dismiss();
+        toast.success(response.data.message);
+      }
+      return response;
+    },
+    (error) => {
+      const showToast = error.config?.headers?.["x-show-toast"] === "true";
+
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Network error occurred";
+
+      if (showToast) {
+        toast.dismiss();
+        toast.error(errorMessage);
+      }
+
+      return Promise.reject(error);
+    },
+  );
+
+  return apiClient;
+};
+
+const configuredClient = setupInterceptors();
+
+export default configuredClient;

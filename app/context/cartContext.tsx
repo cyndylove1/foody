@@ -78,7 +78,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     },
   });
 
-  
+  // Guards against two races that make cart items flicker in and out:
+  // 1. A GET /cart in flight when a mutation resolves can land afterward and
+  //    overwrite the cache with a stale pre-mutation snapshot.
+  // 2. Two overlapping mutations (e.g. rapid quantity clicks) can resolve out
+  //    of order, so the response for the *older* call can be applied last.
+  // requestIdRef tracks the most recently *initiated* cart write; a
+  // mutation's result is only written to the cache if no newer write has
+  // started since.
   const requestIdRef = useRef(0);
 
   const beginRequest = async () => {
@@ -95,49 +102,41 @@ export function CartProvider({ children }: { children: ReactNode }) {
     persistCartSession(data);
     queryClient.setQueryData(CART_QUERY_KEY, data);
   };
-const addItemMutation = useMutation({
-  onMutate: beginRequest,
-  mutationFn: async ({
-    productId,
-    quantity,
-  }: {
-    productId: number;
-    quantity: number;
-  }) => {
-    const response = await apiClient.post(
-      "/cart",
-      { product_id: productId, quantity },
-      { headers: { "x-show-toast": "true" } as any },
-    );
-    return response.data.data;
-  },
-  onSuccess: (_data, _variables, context) => {
-    if (context?.requestId !== requestIdRef.current) return;
-    // Always refetch the source of truth GET /cart
-    queryClient.invalidateQueries({ queryKey: CART_QUERY_KEY });
-  },
-});
- const updateQuantityMutation = useMutation({
-   onMutate: beginRequest,
-   mutationFn: async ({
-     itemId,
-     quantity,
-   }: {
-     itemId: number;
-     quantity: number;
-   }) => {
-     const response = await apiClient.put(`/cart/${itemId}`, { quantity });
-     console.log(response);
-     return response.data;
-   },
-   onSuccess: (_data, _variables, context) => {
-     if (context?.requestId !== requestIdRef.current) return;
-     queryClient.invalidateQueries({ queryKey: CART_QUERY_KEY });
-   },
- });
- 
 
- 
+  const addItemMutation = useMutation({
+    onMutate: beginRequest,
+    mutationFn: async ({
+      productId,
+      quantity,
+    }: {
+      productId: number;
+      quantity: number;
+    }) => {
+      const response = await apiClient.post(
+        "/cart",
+        { product_id: productId, quantity },
+        { headers: { "x-show-toast": "true" } as any },
+      );
+      return response.data.data;
+    },
+    onSuccess: setCartData,
+  });
+
+  const updateQuantityMutation = useMutation({
+    onMutate: beginRequest,
+    mutationFn: async ({
+      itemId,
+      quantity,
+    }: {
+      itemId: number;
+      quantity: number;
+    }) => {
+      const response = await apiClient.put(`/cart/${itemId}`, { quantity });
+      return response.data.data;
+    },
+    onSuccess: setCartData,
+  });
+
   const removeItemMutation = useMutation({
     onMutate: beginRequest,
     mutationFn: async (itemId: number) => {
@@ -146,10 +145,7 @@ const addItemMutation = useMutation({
       });
       return response.data.data;
     },
-    onSuccess: (_data, _variables, context) => {
-      if (context?.requestId !== requestIdRef.current) return;
-      queryClient.invalidateQueries({ queryKey: CART_QUERY_KEY });
-    },
+    onSuccess: setCartData,
   });
 
   const clearCartMutation = useMutation({

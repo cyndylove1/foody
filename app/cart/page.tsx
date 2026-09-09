@@ -13,18 +13,27 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Cart() {
-  const { cart, cartItems, isLoading, removeItem, updateQuantity } = useCart();
+  const {
+    cart,
+    cartItems,
+    isLoading,
+    isUpdating,
+    isRemoving,
+    removeItem,
+    updateQuantity,
+  } = useCart();
   const router = useRouter();
 
   return (
     <>
       <ShopNavbar />
       <div className="w-full max-w-7xl mx-auto px-4 py-8 bg-white text-stone-800">
-        {/* Back Button with Left Arrow */}
+        {/* Back Button */}
         <div className="mb-6">
           <button
+            type="button"
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-(--main) font-medium text-sm transition-colors duration-150 cursor-pointer"
+            className="inline-flex items-center gap-2 text-stone-600 hover:text-[var(--main)] font-medium text-sm transition-colors duration-150 cursor-pointer"
             aria-label="Go back to previous page"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -61,7 +70,21 @@ export default function Cart() {
                   </tr>
                 ) : cartItems && cartItems.length > 0 ? (
                   cartItems.map((item) => {
-                    const itemImage = item.product?.thumbnail || "/poundo.jpg";
+                    const itemImage =
+                      item.product?.thumbnail ||
+                      (item.product as any)?.image_url ||
+                      "/poundo.jpg";
+
+                    const unitPrice = Number(
+                      item.price ??
+                        item.product?.effective_price ??
+                        item.product?.price ??
+                        0,
+                    );
+
+                    const subtotal = Number(
+                      item.subtotal ?? unitPrice * item.quantity,
+                    );
 
                     return (
                       <tr
@@ -73,50 +96,59 @@ export default function Cart() {
                           <div className="relative w-24 h-24 mx-auto bg-stone-100 border border-stone-200 overflow-hidden rounded-md">
                             <img
                               src={itemImage}
-                              alt={item.product?.name ?? ""}
-                              className="object-cover"
+                              alt={item.product?.name ?? "Product image"}
+                              className="object-cover w-full h-full"
                             />
                           </div>
                         </td>
 
-                        {/* Product Name */}
-                        <td className="p-6 border-r border-stone-200 flex flex-col text-left">
-                          <span className="text-stone-600 font-normal text-[15px]">
+                        {/* Product Name & Unit Price */}
+                        <td className="p-6 border-r border-stone-200 text-left">
+                          <span className="text-stone-800 font-semibold text-[15px] block mb-1">
                             {item.product?.name}
                           </span>
-                          <span>Price: {item.product?.price}</span>
+                          <span className="text-xs text-stone-500">
+                            Price: {unitPrice.toFixed(2)} $
+                          </span>
                         </td>
 
                         {/* Quantity & Trash Button */}
                         <td className="p-4 border-r border-stone-200 text-center">
-                          <div className="flex items-center justify-center gap-4">
+                          <div className="flex items-center justify-center gap-3">
+                            
                             <Quantity
                               className="w-full"
                               value={item.quantity}
-                              onChange={(quantity) =>
-                                updateQuantity(item.id, quantity)
+                              disabled={isUpdating || isRemoving}
+                              onChange={(newQty) =>
+                                updateQuantity(item.id, newQty)
                               }
                             />
                             <button
                               type="button"
-                              onClick={() => removeItem(item.id)}
-                              className="bg-(--main) hover:bg-[#d63f26] text-white p-2 rounded transition-colors duration-150 cursor-pointer"
+                              disabled={isRemoving || isUpdating}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                removeItem(item.id);
+                              }}
+                              className="bg-[var(--main)] hover:bg-[#d63f26] text-white p-2.5 rounded transition-colors duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
                               aria-label="Remove item"
                             >
-                              <Trash2 className="w-5 h-5 stroke-[2.2]" />
+                              <Trash2 className="w-4 h-4 stroke-[2.2]" />
                             </button>
                           </div>
                         </td>
 
                         {/* Total Price */}
-                        <td className="p-6 text-right font-normal text-[15px] text-(--main)">
-                          CAD {item.subtotal.toFixed(2)}
+                        <td className="p-6 text-right font-bold text-[15px] text-[var(--main)]">
+                          {subtotal.toFixed(2)} $
                         </td>
                       </tr>
                     );
                   })
                 ) : (
-                  /* Empty State Layout */
+                  /* Empty State */
                   <tr>
                     <td colSpan={4} className="py-16 text-center">
                       <div className="flex flex-col items-center justify-center space-y-4">
@@ -131,9 +163,9 @@ export default function Cart() {
               </tbody>
             </table>
 
-            {/* Continue Shopping Button */}
+            {/* Continue Shopping */}
             <div className="py-10">
-              <Link href="/category/seasonings">
+              <Link href="/category/seasoning-condiments">
                 <Button variant="primary">Continue Shopping</Button>
               </Link>
             </div>
