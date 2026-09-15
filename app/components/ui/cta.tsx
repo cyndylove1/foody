@@ -27,7 +27,7 @@ export default function Cta() {
             <Button variant="primary">Shop Wholesale</Button>
           </Link>
           <Link href="/retail">
-            <Button variant="secondary">Shop Retail</Button>
+            <Button variant="tertiary">Shop Retail</Button>
           </Link>
         </div>
       </div>
