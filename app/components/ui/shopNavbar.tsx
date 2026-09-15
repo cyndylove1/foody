@@ -115,14 +115,12 @@ export default function ShopNavbar() {
 
           <nav className="hidden lg:flex items-center gap-6 font-medium text-[#4A4A4A] text-sm ml-8">
             <Link
-              href="/retail"
+              href="/"
               className={`transition-colors hover:text-(--main) ${
-                pathname.startsWith("/retail")
-                  ? "text-(--main) font-semibold"
-                  : ""
+                pathname === "/" ? "text-(--main) font-semibold" : ""
               }`}
             >
-              Shop Retail
+              Home
             </Link>
             <Link
               href="/wholesale"
@@ -135,12 +133,30 @@ export default function ShopNavbar() {
               Shop Wholesale
             </Link>
             <Link
+              href="/retail"
+              className={`transition-colors hover:text-(--main) ${
+                pathname.startsWith("/retail")
+                  ? "text-(--main) font-semibold"
+                  : ""
+              }`}
+            >
+              Shop Retail
+            </Link>
+            <Link
               href="/contact"
               className={`transition-colors hover:text-(--main) ${
                 pathname === "/contact" ? "text-(--main) font-semibold" : ""
               }`}
             >
               Contact Us
+            </Link>
+            <Link
+              href="/help"
+              className={`transition-colors hover:text-(--main) ${
+                pathname === "/help" ? "text-(--main) font-semibold" : ""
+              }`}
+            >
+              Help
             </Link>
           </nav>
         </div>
