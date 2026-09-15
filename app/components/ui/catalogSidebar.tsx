@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, Minus, Plus } from "lucide-react";
-import { useMenuList, Category } from "@/app/hooks/useMenuList";
+import { useNonEmptyMenuList, Category } from "@/app/hooks/useMenuList";
 
 export interface CatalogFilterState {
   categoryId?: number | string;
@@ -65,10 +65,11 @@ function CategoryGroup({ category, selectedCategoryId, onSelect }: CategoryGroup
 interface CatalogSidebarProps {
   filters: CatalogFilterState;
   onChange: (filters: CatalogFilterState) => void;
+  productType?: "retail" | "wholesale";
 }
 
-export default function CatalogSidebar({ filters, onChange }: CatalogSidebarProps) {
-  const { data, isLoading, isError } = useMenuList();
+export default function CatalogSidebar({ filters, onChange, productType }: CatalogSidebarProps) {
+  const { data, isLoading, isError } = useNonEmptyMenuList(productType);
   const categories: Category[] = Array.isArray(data) ? data : [];
 
   const update = (patch: Partial<CatalogFilterState>) =>

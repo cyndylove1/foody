@@ -65,7 +65,7 @@ export default function ProductCatalog({
       </h2>
 
       <div className="flex flex-col md:flex-row gap-8">
-        <CatalogSidebar filters={filters} onChange={setFilters} />
+        <CatalogSidebar filters={filters} onChange={setFilters} productType={productType} />
 
         <div className="flex-1 min-w-0">
           {/* Search + Sort Toolbar */}

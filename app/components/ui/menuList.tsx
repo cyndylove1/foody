@@ -4,11 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Plus, Minus, Loader2 } from "lucide-react";
-import { useMenuList, Category } from "@/app/hooks/useMenuList";
+import { useNonEmptyMenuList, Category } from "@/app/hooks/useMenuList";
 
 export default function MenuList() {
   const pathname = usePathname();
-  const { data, isLoading, isError } = useMenuList();
+  const { data, isLoading, isError } = useNonEmptyMenuList();
 
   // Defensive check: fallback to an empty array if data isn't an array
   const categories: Category[] = Array.isArray(data) ? data : [];
