@@ -1,4 +1,3 @@
-import Navbar from "./navbar";
 import HeroImage from "./heroImage";
 import Button from "../button";
 import Link from "next/link";
@@ -6,8 +5,6 @@ import Link from "next/link";
 export default function Hero() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-white">
-      {/* Navbar */}
-      <Navbar />
       {/* Hero */}
       <main className="px-6 md:px-12 pt-10 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         {/* Text */}

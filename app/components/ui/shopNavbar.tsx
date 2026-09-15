@@ -112,6 +112,37 @@ export default function ShopNavbar() {
           <div className="flex items-center">
             <Logo />
           </div>
+
+          <nav className="hidden lg:flex items-center gap-6 font-medium text-[#4A4A4A] text-sm ml-8">
+            <Link
+              href="/retail"
+              className={`transition-colors hover:text-(--main) ${
+                pathname.startsWith("/retail")
+                  ? "text-(--main) font-semibold"
+                  : ""
+              }`}
+            >
+              Shop Retail
+            </Link>
+            <Link
+              href="/wholesale"
+              className={`transition-colors hover:text-(--main) ${
+                pathname.startsWith("/wholesale")
+                  ? "text-(--main) font-semibold"
+                  : ""
+              }`}
+            >
+              Shop Wholesale
+            </Link>
+            <Link
+              href="/contact"
+              className={`transition-colors hover:text-(--main) ${
+                pathname === "/contact" ? "text-(--main) font-semibold" : ""
+              }`}
+            >
+              Contact Us
+            </Link>
+          </nav>
         </div>
 
         {/* Input Search Bar - Desktop */}

@@ -1,88 +1,28 @@
+"use client";
+
 import React, { useRef } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Loader2, Sparkles } from "lucide-react";
 import Link from "next/link";
-
-interface CategoryCardProps {
-  title: string;
-  itemCount: string;
-  image: string;
-  tag?: string;
-}
-
-const categories: CategoryCardProps[] = [
-  {
-    title: "African Fry Pan",
-    itemCount: "120+ Items",
-    image: "/assets/frypan.jpg",
-    tag: "Utensils",
-  },
-  {
-    title: "Aluminum Pot",
-    itemCount: "350+ Items",
-    image: "/assets/pot.jpg",
-  },
-  {
-    title: "Palm Kernel oil",
-    itemCount: "85+ Items",
-    image: "/assets/kerneloil.webp",
-  },
-  {
-    title: "Kuli Kuli",
-    itemCount: "Up to 50% Off",
-    image: "/assets/kuli.webp",
-    // tag: "Seasoning",
-  },
-  {
-    title: "Thai Hom Jasmine Rice",
-    itemCount: "Up to 50% Off",
-    image: "/assets/jasmine.webp",
-    tag: "Grains",
-  },
-  {
-    title: "Checker Custard",
-    itemCount: "Up to 50% Off",
-    image: "/assets/checkers.webp",
-    // tag: "Seasoning",
-  },
-  {
-    title: "Ground Crayfish",
-    itemCount: "Up to 50% Off",
-    image: "/assets/crayfish.webp",
-    // tag: "Seasoning",
-  },
-  {
-    title: "De Rica Tomato",
-    itemCount: "Up to 50% Off",
-    image: "/assets/derice.webp",
-    // tag: "Seasoning",
-  },
-  {
-    title: "Ukwa",
-    itemCount: "Up to 50% Off",
-    image: "/assets/ukwa.webp",
-    // tag: "Seasoning",
-  },
-  {
-    title: "Dried Asa Fish",
-    itemCount: "Up to 50% Off",
-    image: "/assets/dried.webp",
-    // tag: "Seasoning",
-  },
-
-];
+import { useWholesale } from "@/app/hooks/useWholesale";
 
 export const RetailSection: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  
-    const handleScroll = (direction: "left" | "right") => {
-      if (scrollContainerRef.current) {
-        const scrollAmount = 320;
-        scrollContainerRef.current.scrollBy({
-          left: direction === "left" ? -scrollAmount : scrollAmount,
-          behavior: "smooth",
-        });
-      }
-    };
+
+  const { data, isLoading, isError } = useWholesale({ type: "retail" });
+  const products = (data?.pages.flatMap((page) => page.products) || []).slice(
+    0,
+    10,
+  );
+
+  const handleScroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 320;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
   return (
     <section className="w-full max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8">
       {/* Header with Title and Arrow Navigation */}
@@ -120,51 +60,61 @@ export const RetailSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Category Cards Scroll Container */}
-      <div
-        ref={scrollContainerRef}
-        className="flex gap-6 pt-10 overflow-x-auto scrollbar-none scroll-smooth pb-4"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {categories.map((category, idx) => (
-          <Link
-            href={`/category/utensils`}
-            key={idx}
-            className="group relative h-80 w-[250px] sm:w-[250px] flex-shrink-0 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-end p-6"
-          >
-            {/* Background Image with Zoom Effect */}
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-              style={{ backgroundImage: `url(${category.image})` }}
-            />
+      {/* Product Cards Scroll Container */}
+      {isLoading ? (
+        <div className="flex items-center justify-center gap-2 py-16 text-slate-500">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          <span>Loading retail products...</span>
+        </div>
+      ) : isError ? (
+        <p className="py-16 text-center text-red-500">
+          Failed to load retail products.
+        </p>
+      ) : products.length === 0 ? (
+        <p className="py-16 text-center text-slate-500">
+          No retail products available yet.
+        </p>
+      ) : (
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-6 pt-10 overflow-x-auto scrollbar-none scroll-smooth pb-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {products.map((product) => (
+            <Link
+              href={`/product/${product.id}?type=retail`}
+              key={product.id}
+              className="group relative h-80 w-[250px] sm:w-[250px] flex-shrink-0 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-end p-6"
+            >
+              {/* Background Image with Zoom Effect */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                style={{ backgroundImage: `url(${product.image})` }}
+              />
 
-            {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent transition-opacity group-hover:opacity-90" />
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent transition-opacity group-hover:opacity-90" />
 
-            {/* Optional Tag */}
-            {category.tag && (
-              <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-md text-slate-900 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
-                {category.tag}
-              </span>
-            )}
+              {/* Card Content */}
+              <div className="relative z-10 text-white transform transition-transform duration-300 group-hover:-translate-y-1">
+                <span className="text-xs font-medium text-indigo-200 tracking-wider uppercase">
+                  {isNaN(Number(product.price))
+                    ? product.price
+                    : `$${Number(product.price).toFixed(2)}`}
+                </span>
+                <h3 className="text-xl font-bold mt-1 text-white line-clamp-1">
+                  {product.title}
+                </h3>
 
-            {/* Card Content */}
-            <div className="relative z-10 text-white transform transition-transform duration-300 group-hover:-translate-y-1">
-              <span className="text-xs font-medium text-indigo-200 tracking-wider uppercase">
-                {category.itemCount}
-              </span>
-              <h3 className="text-xl font-bold mt-1 text-white">
-                {category.title}
-              </h3>
-
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-white/80 mt-3 group-hover:text-white">
-                <span>Shop now</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-white/80 mt-3 group-hover:text-white">
+                  <span>Shop now</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 };
