@@ -47,6 +47,26 @@ const persistCartSession = (data?: CartObject) => {
   localStorage.setItem("cart_session", data.session_id);
 };
 
+// TanStack Query throws "Query data cannot be undefined" if a query/mutation
+// resolves without a value (e.g. the backend responds with no body). Fall
+// back to an empty cart shape so the cache always holds a valid CartObject.
+const EMPTY_CART: CartObject = {
+  id: 0,
+  session_id: null,
+  items: [],
+  items_count: 0,
+  coupon: null,
+  subtotal: 0,
+  tax: 0,
+  shipping: 0,
+  discount: 0,
+  total: 0,
+};
+
+const extractCart = (responseData: unknown): CartObject =>
+  ((responseData as { data?: CartObject })?.data as CartObject | undefined) ??
+  EMPTY_CART;
+
 interface CartContextValue {
   cart: CartObject | undefined;
   cartItems: CartItem[];
@@ -72,7 +92,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     queryKey: CART_QUERY_KEY,
     queryFn: async () => {
       const response = await apiClient.get("/cart");
-      const data = response.data.data as CartObject;
+      const data = extractCart(response.data);
       persistCartSession(data);
       return data;
     },
@@ -117,7 +137,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         { product_id: productId, quantity },
         { headers: { "x-show-toast": "true" } as any },
       );
-      return response.data.data;
+      return extractCart(response.data);
     },
     onSuccess: setCartData,
   });
@@ -132,7 +152,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       quantity: number;
     }) => {
       const response = await apiClient.put(`/cart/${itemId}`, { quantity });
-      return response.data.data;
+      return extractCart(response.data);
     },
     onSuccess: setCartData,
   });
@@ -143,7 +163,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const response = await apiClient.delete(`/cart/${itemId}`, {
         headers: { "x-show-toast": "true" } as any,
       });
-      return response.data.data;
+      return extractCart(response.data);
     },
     onSuccess: setCartData,
   });
