@@ -47,15 +47,25 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/category/utensils"
+            href="/wholesale"
             className={`relative py-2 transition-colors hover:text-(--main) ${
-              isActive("/category/utensils")
-                ? "text-(--main) font-semibold"
-                : ""
+              pathname.startsWith("/wholesale") ? "text-(--main) font-semibold" : ""
             }`}
           >
-            Shop
-            {isActive("/category/utensils") && (
+            Shop Wholesale
+            {pathname.startsWith("/wholesale") && (
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
+            )}
+          </Link>
+
+          <Link
+            href="/retail"
+            className={`relative py-2 transition-colors hover:text-(--main) ${
+              pathname.startsWith("/retail") ? "text-(--main) font-semibold" : ""
+            }`}
+          >
+            Shop Retail
+            {pathname.startsWith("/retail") && (
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-(--main) rounded-full animate-in fade-in duration-200" />
             )}
           </Link>
@@ -222,15 +232,26 @@ export default function Navbar() {
             Profile
           </Link>
           <Link
-            href="/category/utensils"
+            href="/wholesale"
             className={`text-[15px] font-medium hover:text-(--main) ${
-              isActive("/category/utensils")
+              pathname.startsWith("/wholesale")
                 ? "text-(--main) font-semibold"
                 : "text-[#2C2C2C]"
             }`}
             onClick={() => setIsMenuOpen(false)}
           >
-            Shop
+            Shop Wholesale
+          </Link>
+          <Link
+            href="/retail"
+            className={`text-[15px] font-medium hover:text-(--main) ${
+              pathname.startsWith("/retail")
+                ? "text-(--main) font-semibold"
+                : "text-[#2C2C2C]"
+            }`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Shop Retail
           </Link>
           <Link
             href="/wishlist"

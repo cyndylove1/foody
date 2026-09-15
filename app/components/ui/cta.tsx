@@ -21,12 +21,15 @@ export default function Cta() {
           Elevate Your Daily Rituals With Fresh Flavors & Pure Beauty
           Essentials.
         </h2>
-        {/* CTA Button */}
-        <Link href="/category/utensils">
-          <Button variant="primary" className="mt-6">
-            Shop Essentials
-          </Button>
-        </Link>
+        {/* CTA Buttons */}
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+          <Link href="/wholesale">
+            <Button variant="primary">Shop Wholesale</Button>
+          </Link>
+          <Link href="/retail">
+            <Button variant="secondary">Shop Retail</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
