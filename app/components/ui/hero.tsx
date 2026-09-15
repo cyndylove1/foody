@@ -22,11 +22,11 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-row items-center justify-center lg:justify-start gap-5 pt-2">
-            <Link href="/category/utensils">
+            <Link href="/retail">
               <Button variant="primary">Shop Retail</Button>
             </Link>
 
-            <Link href="/contact">
+            <Link href="/wholesale">
               <Button variant="secondary">Shop Wholesale</Button>
             </Link>
           </div>
