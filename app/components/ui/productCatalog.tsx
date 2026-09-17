@@ -14,7 +14,6 @@ interface ProductCatalogProps {
 
 const DEFAULT_FILTERS: CatalogFilterState = {
   categoryId: undefined,
-  brand: "",
   minPrice: "",
   maxPrice: "",
   inStock: false,
@@ -42,7 +41,6 @@ export default function ProductCatalog({
     useProductCatalog({
       productType,
       categoryId: filters.categoryId,
-      brand: filters.brand || undefined,
       minPrice: filters.minPrice ? Number(filters.minPrice) : undefined,
       maxPrice: filters.maxPrice ? Number(filters.maxPrice) : undefined,
       inStock: filters.inStock || undefined,
