@@ -44,7 +44,7 @@ export default function ProductDetails({ params }: PageProps) {
     product?.image ||
     product?.thumbnail ||
     product?.gallery?.[0] ||
-    "/placeholder.jpg";
+    "/assets/poundo.jpg";
 
   const galleryImages: string[] = Array.from(
     new Set(
@@ -58,7 +58,7 @@ export default function ProductDetails({ params }: PageProps) {
   );
 
   const displayThumbnails =
-    galleryImages.length > 0 ? galleryImages : ["/placeholder.jpg"];
+    galleryImages.length > 0 ? galleryImages : ["/assets/poundo.jpg"];
 
   const currentMainImage = selectedImage || mainDefaultImage;
 
