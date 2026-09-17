@@ -73,7 +73,7 @@ export default function Cart() {
                     const itemImage =
                       item.product?.thumbnail ||
                       (item.product as any)?.image_url ||
-                      "/poundo.jpg";
+                      "/assets/poundo.jpg";
 
                     const unitPrice = Number(
                       item.price ??

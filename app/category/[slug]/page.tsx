@@ -122,7 +122,7 @@ export default function CategoryPage({
                       product.image_url ||
                       product.image ||
                       product.images?.[0] ||
-                      "/poundo.jpg"
+                      "/assets/poundo.jpg"
                     }
                     currentPrice={product.effective_price || product.price}
                   />

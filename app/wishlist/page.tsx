@@ -55,7 +55,7 @@ export default function WishlistPage() {
 
                   <div className="relative w-full aspect-[4/3] rounded-2xl bg-[#f9f8f6] overflow-hidden mb-5 flex items-center justify-center">
                     <img
-                      src={item.image_url || item.images?.[0] || "/poundo.jpg"}
+                      src={item.image_url || item.images?.[0] || "/assets/poundo.jpg"}
                       alt={item.name}
                       className="object-cover w-full h-full"
                     />
