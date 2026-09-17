@@ -33,6 +33,19 @@ export interface SearchResponse {
   total: number;
 }
 
+interface SearchApiEnvelope {
+  success: boolean;
+  message: string;
+  data: {
+    data: Product[];
+    meta: {
+      current_page: number;
+      last_page: number;
+      total: number;
+    };
+  };
+}
+
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 
 async function fetchSearchResults(
@@ -45,11 +58,18 @@ async function fetchSearchResults(
     ),
   );
 
-  const response = await axios.get<SearchResponse>(`${BASE_URL}/search`, {
+  const response = await axios.get<SearchApiEnvelope>(`${BASE_URL}/search`, {
     params: cleanParams,
   });
 
-  return response.data;
+  const { data: paginated } = response.data;
+
+  return {
+    data: paginated.data,
+    current_page: paginated.meta.current_page,
+    last_page: paginated.meta.last_page,
+    total: paginated.meta.total,
+  };
 }
 
 export function useSearch(params: SearchParams, enabled = true) {

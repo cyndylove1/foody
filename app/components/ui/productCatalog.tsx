@@ -129,7 +129,7 @@ export default function ProductCatalog({
                       product.image_url ||
                       product.image ||
                       product.thumbnail ||
-                      "/poundo.jpg"
+                      "/assets/poundo.jpg"
                     }
                     currentPrice={
                       product.unit_price ?? product.effective_price ?? product.price

@@ -92,7 +92,7 @@ export default function Category() {
                     >
                       <img
                         src={
-                          item.image_url || item.images?.[0] || "/poundo.jpg"
+                          item.image_url || item.images?.[0] || "/assets/poundo.jpg"
                         }
                         alt={item.name}
                         className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"

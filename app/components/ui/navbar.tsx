@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { Search, ShoppingCart, Menu, X, Heart } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { Search, ShoppingCart, Menu, X, Heart, Loader2 } from "lucide-react";
+import Image from "next/image";
 import Logo from "../logo";
 import Link from "next/link";
 import Button from "../button";
@@ -11,19 +12,59 @@ import { useAuth } from "@/app/hooks/useAuth";
 import { useCart } from "../../context/cartContext";
 import { useProfile } from "@/app/hooks/useProfile";
 import { useWishlist } from "@/app/hooks/useWishList";
+import { useSearch } from "@/app/hooks/useSearchProduts";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { logout } = useAuth();
   const { itemCount } = useCart();
   const { data: user } = useProfile();
     const { wishlistCount } = useWishlist();
 
+  // Search State & Debouncing
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  const { data: searchResults, isLoading: isSearching } = useSearch(
+    { keyword: debouncedQuery, per_page: 5 },
+    debouncedQuery.trim().length > 0,
+  );
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(searchTerm);
+    }, 300);
+    return () => clearTimeout(handler);
+  }, [searchTerm]);
+
   useEffect(() => {
     setMounted(true);
+
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchTerm.trim()) return;
+    setShowDropdown(false);
+    setIsSearchOpen(false);
+    router.push(`/category/all?keyword=${encodeURIComponent(searchTerm.trim())}`);
+  };
 
   const isActive = (path: string) => pathname === path;
 
@@ -111,7 +152,7 @@ export default function Navbar() {
               )}
             </button>
           </Link>
-          {/* <button
+          <button
             aria-label="Search"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
             className={`p-2 transition-colors ${
@@ -121,7 +162,7 @@ export default function Navbar() {
             }`}
           >
             <Search size={20} strokeWidth={2.5} />
-          </button> */}
+          </button>
           <Link href="/cart">
             <button
               aria-label="Cart"
@@ -170,11 +211,23 @@ export default function Navbar() {
       </div>
 
       {/* Search Input Row */}
-      {/* {isSearchOpen && (
-        <div className="absolute top-full left-0 w-full border-b border-gray-100 px-6 py-3 shadow-md animate-in slide-in-from-top-2 duration-200">
-          <div className="relative max-w-3xl">
+      {isSearchOpen && (
+        <div
+          className="absolute top-full left-0 w-full border-b border-gray-100 px-6 py-3 shadow-md animate-in slide-in-from-top-2 duration-200 z-50"
+          ref={searchRef}
+        >
+          <form
+            onSubmit={handleSearchSubmit}
+            className="relative max-w-3xl"
+          >
             <input
               type="text"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setShowDropdown(true);
+              }}
+              onFocus={() => setShowDropdown(true)}
               placeholder="Search items, categories, brands..."
               className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-gray-300"
               autoFocus
@@ -183,9 +236,66 @@ export default function Navbar() {
               className="absolute left-3 top-2.5 text-gray-400"
               size={18}
             />
-          </div>
+            {isSearching && (
+              <Loader2 className="absolute right-3 top-2.5 text-gray-400 w-4 h-4 animate-spin" />
+            )}
+          </form>
+
+          {showDropdown && debouncedQuery.trim() !== "" && (
+            <div className="max-w-3xl mt-2 bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden max-h-96 overflow-y-auto">
+              {isSearching ? (
+                <div className="p-4 text-center text-stone-500 text-sm flex items-center justify-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" /> Loading
+                  products...
+                </div>
+              ) : searchResults?.data && searchResults.data.length > 0 ? (
+                <div className="p-2 space-y-1">
+                  {searchResults.data.map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/product/${product.id}`}
+                      onClick={() => {
+                        setShowDropdown(false);
+                        setIsSearchOpen(false);
+                      }}
+                      className="flex items-center gap-3 p-2 hover:bg-stone-50 rounded-xl transition-colors"
+                    >
+                      <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-stone-100 shrink-0">
+                        {product.image && (
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-stone-800 truncate">
+                          {product.name}
+                        </p>
+                        <p className="text-xs font-bold text-stone-900">
+                          ${product.price}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                  <button
+                    onClick={handleSearchSubmit}
+                    className="w-full text-center py-2.5 text-xs font-semibold text-(--main) hover:bg-stone-50 rounded-xl transition-colors border-t border-stone-100"
+                  >
+                    View all results for &quot;{debouncedQuery}&quot;
+                  </button>
+                </div>
+              ) : (
+                <div className="p-4 text-center text-stone-500 text-sm">
+                  No products found for &quot;{debouncedQuery}&quot;
+                </div>
+              )}
+            </div>
+          )}
         </div>
-      )} */}
+      )}
 
       {/* Mobile Dropdown Menu Card */}
       {isMenuOpen && (
