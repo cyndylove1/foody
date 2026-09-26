@@ -27,7 +27,6 @@ export interface ProductFilters {
   productType: "retail" | "wholesale";
   categoryId?: number | string;
   search?: string;
-  brand?: string;
   minPrice?: number;
   maxPrice?: number;
   tags?: string;
@@ -58,7 +57,6 @@ const buildParams = (filters: ProductFilters, page: number) => {
     params.category_id = String(filters.categoryId);
   }
   if (filters.search) params.search = filters.search;
-  if (filters.brand) params.brand = filters.brand;
   if (filters.minPrice !== undefined) params.min_price = String(filters.minPrice);
   if (filters.maxPrice !== undefined) params.max_price = String(filters.maxPrice);
   if (filters.tags) params.tags = filters.tags;

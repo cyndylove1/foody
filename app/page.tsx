@@ -13,7 +13,7 @@ import RetailWholesale from "./components/ui/retailWholesale";
 export default function Home() {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero />
       <Collection />
       <Category />

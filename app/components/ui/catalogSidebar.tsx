@@ -6,7 +6,6 @@ import { useNonEmptyMenuList, Category } from "@/app/hooks/useMenuList";
 
 export interface CatalogFilterState {
   categoryId?: number | string;
-  brand: string;
   minPrice: string;
   maxPrice: string;
   inStock: boolean;
@@ -112,19 +111,6 @@ export default function CatalogSidebar({ filters, onChange, productType }: Catal
         <div className="space-y-4">
           <div>
             <label className="text-sm font-semibold text-gray-500 block mb-1.5">
-              Brand
-            </label>
-            <input
-              type="text"
-              value={filters.brand}
-              onChange={(e) => update({ brand: e.target.value })}
-              placeholder="e.g. Nike"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:border-gray-500"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-semibold text-gray-500 block mb-1.5">
               Price Range
             </label>
             <div className="flex items-center gap-2">
@@ -173,7 +159,6 @@ export default function CatalogSidebar({ filters, onChange, productType }: Catal
             onClick={() =>
               onChange({
                 categoryId: undefined,
-                brand: "",
                 minPrice: "",
                 maxPrice: "",
                 inStock: false,
