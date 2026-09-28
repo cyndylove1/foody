@@ -143,18 +143,30 @@ export default function SignUp() {
       <div className="pointer-events-none absolute bottom-[12%] right-[8%] hidden h-20 w-20 rounded-full bg-[#F47C20]/10 lg:block" />
 
       {/* Large green ring */}
-      <div className="pointer-events-none absolute right-[-60px] bottom-[35%] hidden h-40 w-40 rounded-full border-[18px] border-[#00864A]/5 lg:block" />
+      <div className="pointer-events-none absolute bottom-[35%] right-[-60px] hidden h-40 w-40 rounded-full border-[18px] border-[#00864A]/5 lg:block" />
 
       {/* =========================================================
-          SIGN UP CARD
+          SIGN UP AREA
       ========================================================= */}
 
       <div className="relative z-10 mx-auto w-full max-w-2xl">
 
-        {/* Soft green glow behind card */}
-        <div className="pointer-events-none absolute -inset-5 rounded-[44px] bg-[#00864A]/5 blur-2xl" />
+        {/* =====================================================
+            LOGO ABOVE CARD
+        ===================================================== */}
 
-        <div className="relative overflow-hidden rounded-[36px] border border-[#00864A]/10 bg-white shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
+        <div className="mb-8 flex justify-center">
+          <Logo />
+        </div>
+
+        {/* Soft green glow behind card */}
+        <div className="pointer-events-none absolute inset-x-[-20px] top-16 bottom-[-20px] rounded-[44px] bg-[#00864A]/5 blur-2xl" />
+
+        {/* =====================================================
+            SIGN UP CARD
+        ===================================================== */}
+
+        <div className="relative mt-0 overflow-hidden rounded-[36px] border border-[#00864A]/10 bg-white shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
 
           {/* Yellow top accent */}
           <div className="absolute left-0 right-0 top-0 h-2 bg-[#F9C51C]" />
@@ -165,11 +177,7 @@ export default function SignUp() {
 
           <div className="flex flex-col items-center px-6 pb-5 pt-10 sm:px-10 sm:pt-12">
 
-            <div className="flex select-none items-center justify-center">
-              <Logo />
-            </div>
-
-            <div className="mt-5 text-center">
+            <div className="text-center">
 
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#00864A]">
                 Join Our Community
@@ -331,10 +339,8 @@ export default function SignUp() {
 
             {/* Login */}
             <div className="rounded-2xl border border-[#00864A]/10 bg-[#EAF5EC] px-4 py-4 text-center">
-
               <p className="text-sm font-medium text-[#52606D]">
                 Already have an account?{" "}
-
                 <Link
                   href="/login"
                   className="font-bold text-[#00864A] transition-colors hover:text-[#006F3D] hover:underline"
@@ -342,7 +348,6 @@ export default function SignUp() {
                   Login
                 </Link>
               </p>
-
             </div>
 
           </form>

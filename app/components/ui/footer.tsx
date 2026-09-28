@@ -247,7 +247,7 @@ export default function Footer() {
 
           <div className="lg:col-span-2">
             <h3 className="mb-5 text-lg font-extrabold text-[#17352A]">
-              Categories
+              Quick Links
             </h3>
 
             <ul className="space-y-3">

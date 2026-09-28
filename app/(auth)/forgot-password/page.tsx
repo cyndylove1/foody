@@ -72,7 +72,7 @@ export default function ForgotPassword() {
           MAIN CONTENT
       ====================================================== */}
 
-      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4 pb-12 pt-24 sm:px-6 md:pb-16 pt-24 lg:px-8">
         <div className="w-full max-w-lg">
 
           {/* Logo */}

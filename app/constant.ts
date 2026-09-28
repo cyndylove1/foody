@@ -148,11 +148,11 @@ export const socialLinks = [
 
 // links for footer section
 export const categoryLinks = [
-  { name: "Seasoning", href: "/category/utensils" },
-  { name: "Spices", href: "/category/utensils" },
-  { name: "Proteins", href: "/category/utensils" },
-  { name: "Grocery", href: "/category/utensils" },
-  { name: "Cereals", href: "/category/utensils" },
+  { name: "Home", href: "/" },
+  { name: "Shp Wholesale", href: "/wholesale" },
+  { name: "Shop Retail", href: "/retail" },
+  { name: "Contact Us", href: "/contact" },
+  { name: "Help", href: "/help" },
   // { name: "Frozen Foods", href: "/category/frozen-foods" },
 ];
 

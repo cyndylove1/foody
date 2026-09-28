@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import RadioButton from "../../components/radioButton";
@@ -98,7 +98,7 @@ export default function UserType() {
           MAIN CONTENT
       ========================================================= */}
 
-      <div className="relative z-10 flex flex-col items-center px-4 pb-16 pt-14 sm:px-6 sm:pt-16 lg:px-8 lg:pb-24">
+      <div className="relative z-10 flex flex-col items-center px-4 pb-16 pt-20 sm:px-6 sm:pt-16 lg:px-8 lg:pb-24">
 
         {/* Header */}
         <div className="mb-10 max-w-2xl text-center sm:mb-12">

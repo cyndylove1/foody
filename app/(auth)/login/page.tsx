@@ -40,8 +40,7 @@ export default function Login() {
   };
 
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#FFFDF7] px-4 py-12 sm:px-6">
-
+    <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#FFFDF7] px-4 pb-12 pt-24 sm:px-6">
       {/* =========================================================
           BACKGROUND DECORATIONS
       ========================================================= */}
@@ -65,13 +64,25 @@ export default function Login() {
       <div className="pointer-events-none absolute bottom-[10%] right-[12%] hidden h-20 w-20 rounded-full bg-[#F47C20]/10 lg:block" />
 
       {/* =========================================================
-          LOGIN CARD
+          LOGIN AREA
       ========================================================= */}
 
       <div className="relative z-10 w-full max-w-md">
 
+        {/* =====================================================
+            LOGO ABOVE CARD
+        ===================================================== */}
+
+        <div className="mb-8 flex justify-center">
+          <Logo />
+        </div>
+
         {/* Soft green glow behind card */}
-        <div className="pointer-events-none absolute -inset-5 rounded-[42px] bg-[#00864A]/5 blur-2xl" />
+        <div className="pointer-events-none absolute -inset-5 top-16 rounded-[42px] bg-[#00864A]/5 blur-2xl" />
+
+        {/* =====================================================
+            LOGIN CARD
+        ===================================================== */}
 
         <div className="relative overflow-hidden rounded-[36px] border border-[#00864A]/10 bg-white px-6 py-8 shadow-[0_25px_80px_rgba(0,0,0,0.08)] sm:px-10 sm:py-10">
 
@@ -79,16 +90,12 @@ export default function Login() {
           <div className="absolute left-0 right-0 top-0 h-2 bg-[#F9C51C]" />
 
           {/* =====================================================
-              LOGO + HEADING
+              HEADING
           ===================================================== */}
 
           <div className="mb-8 flex select-none flex-col items-center">
 
-            <div className="flex items-center justify-center">
-              <Logo />
-            </div>
-
-            <div className="mt-5 text-center">
+            <div className="mt-2 text-center">
               <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#00864A]">
                 Welcome Back
               </p>
@@ -156,7 +163,7 @@ export default function Login() {
             <div className="pt-1">
               <Button
                 variant="primary"
-                className="w-full !rounded-2xl  !font-bold"
+                className="w-full !rounded-2xl !font-bold"
                 type="submit"
                 disabled={isLoading}
               >
@@ -167,9 +174,11 @@ export default function Login() {
             {/* Divider */}
             <div className="flex items-center gap-3 py-1">
               <div className="h-px flex-1 bg-gray-200" />
+
               <span className="text-xs font-medium text-gray-400">
                 OR
               </span>
+
               <div className="h-px flex-1 bg-gray-200" />
             </div>
 
@@ -196,10 +205,3 @@ export default function Login() {
     </main>
   );
 }
-
-
-
-
-
-
-

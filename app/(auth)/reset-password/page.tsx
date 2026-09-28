@@ -111,7 +111,7 @@ function ResetPasswordForm() {
 // 2. Main Entry Page
 export default function ResetPassword() {
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-[#FFFDF7]">
+    <main className="relative min-h-screen pt-10 w-full overflow-hidden bg-[#FFFDF7]">
       {/* ================= BACKGROUND DECORATIONS ================= */}
 
       {/* Yellow glow */}
