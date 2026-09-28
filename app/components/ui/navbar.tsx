@@ -15,6 +15,7 @@ import { useWishlist } from "@/app/hooks/useWishList";
 import { useSearch } from "@/app/hooks/useSearchProduts";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -23,13 +24,27 @@ export default function Navbar() {
   const { logout } = useAuth();
   const { itemCount } = useCart();
   const { data: user } = useProfile();
-    const { wishlistCount } = useWishlist();
+    // const { wishlistCount } = useWishlist();
 
   // Search State & Debouncing
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+
+ useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const { data: searchResults, isLoading: isSearching } = useSearch(
     { keyword: debouncedQuery, per_page: 5 },
@@ -69,9 +84,36 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="relative bg-transparent z-50">
-      <div className="px-4 md:px-12 py-5 flex items-center justify-between">
-        <Logo textColor="text-[#2C2C2C]" />
+    <header
+      className={`
+        fixed top-0 left-0 right-0 z-[100]
+        transition-all duration-500 ease-in-out
+
+        ${
+          isScrolled
+            ? `
+              bg-[#FFFDF7]/95
+              backdrop-blur-xl
+              border-b
+              border-[#016738]/10
+              shadow-[0_8px_30px_rgba(1,103,56,0.08)]
+            `
+            : `
+              bg-transparent
+              border-b
+              border-transparent
+            `
+        }
+      `}
+    >
+      <div className="px-4 md:px-10 lg:px-12 py-5 max-w-7xl mx-auto flex items-center justify-between">
+         <Logo
+            textColor={
+              isScrolled
+                ? "text-[#1a1a1a]"
+                : "text-[#1a1a1a]"
+            }
+          />
 
         {/* Desktop Navigation Links */}
         <nav className="hidden lg:flex items-center gap-6 font-medium text-[#4A4A4A] text-sm absolute left-1/2 -translate-x-1/2 h-full">
@@ -138,7 +180,7 @@ export default function Navbar() {
 
         {/* Action Items */}
         <div className="flex items-center gap-2 md:gap-6">
-          <Link href="/wishlist">
+          {/* <Link href="/wishlist">
             <button
               type="button"
               aria-label="View favorites"
@@ -151,7 +193,7 @@ export default function Navbar() {
                 </span>
               )}
             </button>
-          </Link>
+          </Link> */}
           <button
             aria-label="Search"
             onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -344,7 +386,7 @@ export default function Navbar() {
           <Link
             href="/wholesale"
             className={`text-[15px] font-medium hover:text-(--main) ${
-              pathname.startsWith("/wholesale")
+              isActive("/wholesale")
                 ? "text-(--main) font-semibold"
                 : "text-[#2C2C2C]"
             }`}
@@ -355,7 +397,7 @@ export default function Navbar() {
           <Link
             href="/retail"
             className={`text-[15px] font-medium hover:text-(--main) ${
-              pathname.startsWith("/retail")
+               isActive("/wholesale")
                 ? "text-(--main) font-semibold"
                 : "text-[#2C2C2C]"
             }`}

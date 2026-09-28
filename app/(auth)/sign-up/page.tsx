@@ -17,7 +17,7 @@ export default function SignUp() {
     phone: "",
     password: "",
     password_confirmation: "",
-    customer_type: "", // Initialized empty
+    customer_type: "",
   });
 
   const [errors, setErrors] = useState({
@@ -25,43 +25,64 @@ export default function SignUp() {
     password_confirmation: "",
   });
 
-  // Read stored role from localStorage on component mount
   useEffect(() => {
     const savedRole = localStorage.getItem("selected_vibe");
+
     if (savedRole) {
-      setFormData((prev) => ({ ...prev, customer_type: savedRole }));
+      setFormData((prev) => ({
+        ...prev,
+        customer_type: savedRole,
+      }));
     }
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
 
     if (errors[name as keyof typeof errors]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
     }
   };
 
   const validatePassword = (password: string): string => {
     if (password.length < 6)
       return "Password must be at least 6 characters long.";
+
     if (!/[A-Z]/.test(password))
       return "Password must include at least one uppercase letter.";
+
     if (!/[a-z]/.test(password))
       return "Password must include at least one lowercase letter.";
+
     if (!/[0-9]/.test(password))
       return "Password must include at least one number.";
+
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
       return "Password must include at least one special character.";
+
     return "";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let localErrors = { password: "", password_confirmation: "" };
+
+    let localErrors = {
+      password: "",
+      password_confirmation: "",
+    };
+
     let hasError = false;
 
     const passwordError = validatePassword(formData.password);
+
     if (passwordError) {
       localErrors.password = passwordError;
       hasError = true;
@@ -78,10 +99,8 @@ export default function SignUp() {
     }
 
     try {
-      // Sends complete formData including customer_type to the backend
       await register(formData);
 
-      // Clean up localStorage key after successful registration
       localStorage.removeItem("selected_vibe");
 
       setFormData({
@@ -99,129 +118,240 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center px-4 py-12">
-      <div className="flex flex-col items-center mb-8 select-none">
-        <Logo />
-        <h1 className="text-[26px] md:text-[28px] font-semibold text-stone-900 tracking-tight mt-4">
-          Create a free account
-        </h1>
-      </div>
-      <form onSubmit={handleSubmit} className="w-full max-w-md space-y-5">
-        {/* First & Last Name */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <CustomInput
-              label="First name"
-              name="first_name"
-              onChange={handleChange}
-              value={formData.first_name}
-              placeholder="Enter your First Name"
-              required={true}
-              disabled={isLoading}
-            />
+    <main className="relative min-h-screen w-full overflow-hidden bg-[#FFFDF7] px-4 py-12 sm:px-6">
+
+      {/* =========================================================
+          BACKGROUND DECORATIONS
+      ========================================================= */}
+
+      {/* Yellow glow - top left */}
+      <div className="pointer-events-none absolute -left-40 -top-32 h-[420px] w-[420px] rounded-full bg-[#F9C51C]/20 blur-3xl" />
+
+      {/* Green glow - top right */}
+      <div className="pointer-events-none absolute -right-40 top-[18%] h-[500px] w-[500px] rounded-full bg-[#00864A]/12 blur-3xl" />
+
+      {/* Orange glow - bottom left */}
+      <div className="pointer-events-none absolute bottom-[-140px] left-[10%] h-[450px] w-[450px] rounded-full bg-[#F47C20]/15 blur-3xl" />
+
+      {/* Yellow decorative shape */}
+      <div className="pointer-events-none absolute right-[15%] top-[12%] hidden h-16 w-16 rotate-12 rounded-[30%] bg-[#F9C51C]/30 lg:block" />
+
+      {/* Green ring */}
+      <div className="pointer-events-none absolute bottom-[20%] left-[5%] hidden h-28 w-28 rounded-full border-[16px] border-[#00864A]/10 lg:block" />
+
+      {/* Orange circle */}
+      <div className="pointer-events-none absolute bottom-[12%] right-[8%] hidden h-20 w-20 rounded-full bg-[#F47C20]/10 lg:block" />
+
+      {/* Large green ring */}
+      <div className="pointer-events-none absolute right-[-60px] bottom-[35%] hidden h-40 w-40 rounded-full border-[18px] border-[#00864A]/5 lg:block" />
+
+      {/* =========================================================
+          SIGN UP CARD
+      ========================================================= */}
+
+      <div className="relative z-10 mx-auto w-full max-w-2xl">
+
+        {/* Soft green glow behind card */}
+        <div className="pointer-events-none absolute -inset-5 rounded-[44px] bg-[#00864A]/5 blur-2xl" />
+
+        <div className="relative overflow-hidden rounded-[36px] border border-[#00864A]/10 bg-white shadow-[0_25px_80px_rgba(0,0,0,0.08)]">
+
+          {/* Yellow top accent */}
+          <div className="absolute left-0 right-0 top-0 h-2 bg-[#F9C51C]" />
+
+          {/* =====================================================
+              HEADER
+          ===================================================== */}
+
+          <div className="flex flex-col items-center px-6 pb-5 pt-10 sm:px-10 sm:pt-12">
+
+            <div className="flex select-none items-center justify-center">
+              <Logo />
+            </div>
+
+            <div className="mt-5 text-center">
+
+              <p className="mb-2 text-xs font-black uppercase tracking-[0.18em] text-[#00864A]">
+                Join Our Community
+              </p>
+
+              <h1 className="text-[28px] font-black tracking-[-0.03em] text-[#151515] sm:text-[30px]">
+                Create a Free Account
+              </h1>
+
+              {/* Yellow underline */}
+              <div className="relative mx-auto mt-3 h-4 w-32">
+                <div className="absolute left-0 top-0 h-2 w-24 rounded-full bg-[#F9C51C]" />
+
+                <div className="absolute left-10 top-3 h-1 w-16 rounded-full bg-[#F9C51C]/50" />
+              </div>
+
+              <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-[#52606D]">
+                Create your account and enjoy a simple way to shop your
+                favorite African groceries.
+              </p>
+
+            </div>
           </div>
-          <div>
-            <CustomInput
-              label="Last name"
-              name="last_name"
-              onChange={handleChange}
-              value={formData.last_name}
-              placeholder="Enter your Last Name"
-              required={true}
-              disabled={isLoading}
-            />
-          </div>
-        </div>
 
-        {/* Email Address */}
-        <div>
-          <CustomInput
-            label="Email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your Email"
-            required={true}
-            disabled={isLoading}
-          />
-        </div>
+          {/* =====================================================
+              FORM
+          ===================================================== */}
 
-        {/* Phone Number */}
-        <div>
-          <CustomInput
-            label="Phone number"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="Enter your Phone number"
-            required={true}
-            disabled={isLoading}
-          />
-        </div>
-
-        {/* Password */}
-        <div>
-          <CustomInput
-            label="Password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your Password"
-            required={true}
-            disabled={isLoading}
-          />
-          {errors.password && (
-            <p className="text-red-500 text-xs font-medium mt-1 ml-1">
-              {errors.password}
-            </p>
-          )}
-        </div>
-
-        {/* Confirm Password */}
-        <div>
-          <CustomInput
-            label="Confirm Password"
-            name="password_confirmation"
-            value={formData.password_confirmation}
-            onChange={handleChange}
-            type="password"
-            placeholder="Enter your Password again"
-            required={true}
-            disabled={isLoading}
-          />
-          {errors.password_confirmation && (
-            <p className="text-red-500 text-xs font-medium mt-1 ml-1">
-              {errors.password_confirmation}
-            </p>
-          )}
-        </div>
-
-        {/* Button */}
-        <div className="pt-2">
-          <Button
-            variant="primary"
-            className="w-full"
-            type="submit"
-            disabled={isLoading}
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 px-6 pb-10 sm:px-10"
           >
-            {isLoading ? "Creating Account..." : "Sign Up"}
-          </Button>
-        </div>
 
-        {/* Bottom Route */}
-        <div className="text-center text-sm pt-1">
-          <p className="text-stone-600 font-medium">
-            Already have an account?{" "}
-            <Link
-              href="/sign-up"
-              className="text-(--main) hover:underline transition-all ml-0.5"
-            >
-              Login
-            </Link>
-          </p>
+            {/* First & Last Name */}
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+
+              <div>
+                <CustomInput
+                  label="First name"
+                  name="first_name"
+                  onChange={handleChange}
+                  value={formData.first_name}
+                  placeholder="Enter your First Name"
+                  required={true}
+                  disabled={isLoading}
+                />
+              </div>
+
+              <div>
+                <CustomInput
+                  label="Last name"
+                  name="last_name"
+                  onChange={handleChange}
+                  value={formData.last_name}
+                  placeholder="Enter your Last Name"
+                  required={true}
+                  disabled={isLoading}
+                />
+              </div>
+
+            </div>
+
+            {/* Email */}
+            <div>
+              <CustomInput
+                label="Email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your Email"
+                required={true}
+                disabled={isLoading}
+              />
+            </div>
+
+            {/* Phone */}
+            <div>
+              <CustomInput
+                label="Phone number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter your Phone number"
+                required={true}
+                disabled={isLoading}
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <CustomInput
+                label="Password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your Password"
+                required={true}
+                disabled={isLoading}
+              />
+
+              {errors.password && (
+                <p className="ml-1 mt-1.5 text-xs font-medium text-red-500">
+                  {errors.password}
+                </p>
+              )}
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <CustomInput
+                label="Confirm Password"
+                name="password_confirmation"
+                value={formData.password_confirmation}
+                onChange={handleChange}
+                type="password"
+                placeholder="Enter your Password again"
+                required={true}
+                disabled={isLoading}
+              />
+
+              {errors.password_confirmation && (
+                <p className="ml-1 mt-1.5 text-xs font-medium text-red-500">
+                  {errors.password_confirmation}
+                </p>
+              )}
+            </div>
+
+            {/* Account information note */}
+            <div className="rounded-2xl border border-[#00864A]/10 bg-[#EAF5EC] px-4 py-3.5">
+              <p className="text-xs leading-5 text-[#52606D]">
+                Your information is used to create and manage your account
+                and provide you with a better shopping experience.
+              </p>
+            </div>
+
+            {/* Button */}
+            <div className="pt-1">
+              <Button
+                variant="primary"
+                className="w-full !rounded-2xl !font-bold"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? "Creating Account..." : "Create Account"}
+              </Button>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 py-1">
+              <div className="h-px flex-1 bg-gray-200" />
+
+              <span className="text-xs font-medium text-gray-400">
+                OR
+              </span>
+
+              <div className="h-px flex-1 bg-gray-200" />
+            </div>
+
+            {/* Login */}
+            <div className="rounded-2xl border border-[#00864A]/10 bg-[#EAF5EC] px-4 py-4 text-center">
+
+              <p className="text-sm font-medium text-[#52606D]">
+                Already have an account?{" "}
+
+                <Link
+                  href="/login"
+                  className="font-bold text-[#00864A] transition-colors hover:text-[#006F3D] hover:underline"
+                >
+                  Login
+                </Link>
+              </p>
+
+            </div>
+
+          </form>
+
+          {/* Green bottom accent */}
+          <div className="absolute bottom-0 left-0 right-0 h-2 bg-[#00864A]" />
+
         </div>
-      </form>
-    </div>
+      </div>
+    </main>
   );
 }

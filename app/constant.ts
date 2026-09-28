@@ -103,7 +103,7 @@ export const categories: MarketCategory[] = [
     badge: "Utensils",
     imageSrc: "/assets/spoon.webp",
     imageAlt: "Pot, wooden Spoon, Aluminum Spoon, and other premium utensils",
-    buttonText: "Shop Seafoods",
+    buttonText: "Shop Utensils",
   },
 ];
 // Trending Products

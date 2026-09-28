@@ -16,7 +16,7 @@ export default function Logo({ textColor }: LogoProps) {
           className="w-14 h-auto md:w-20"
         />
         <div
-          className={`flex flex-col items-start font-bold tracking-tight leading-tight ${textColor}`}
+          className={`flex  flex-col items-start font-bold tracking-tight leading-tight ${textColor}`}
         >
           <span className="text-sm md:text-base">
             MotherLand <span className="block md:inline">International</span>

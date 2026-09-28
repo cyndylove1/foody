@@ -9,6 +9,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-fade";
+import { ShoppingBag, Truck } from "lucide-react";
 
 // Define your image list
 const heroImages = [
@@ -51,33 +52,50 @@ export default function HeroImage() {
         </div>
 
         {/* 20% Off Floating Badge (Scaled down on small screens) */}
-        <div className="absolute top-[2%] right-[-10px] min-[380px]:right-[-12px] sm:top-[5%] sm:right-[-4%] z-20 bg-[var(--main,#000)] text-white font-extrabold p-2.5 min-[380px]:p-3 sm:p-4 rounded-full shadow-lg flex flex-col items-center justify-center aspect-square transform rotate-12 scale-75 min-[380px]:scale-90 sm:scale-100 border-2 sm:border-4 border-white">
-          <span className="text-base min-[380px]:text-lg sm:text-xl leading-none">
+        <div
+          className="
+            absolute
+            -right-6
+            md:-right-2
+            lg:right-0
+            -top-4
+            md:top-0
+            z-20
+            w-20
+            h-20
+            sm:w-24
+            sm:h-24
+            lg:w-28
+            lg:h-28
+            rounded-full
+            bg-[#00864A]
+            border-4
+            sm:border-6
+            lg:border-8
+            border-white
+            shadow-xl
+            flex
+            flex-col
+            items-center
+            justify-center
+            text-white
+            rotate-6
+          "
+        >
+          <span className="text-lg sm:text-xl lg:text-2xl font-extrabold">
             20%
           </span>
-          <span className="text-[9px] min-[380px]:text-[10px] sm:text-[11px] font-bold uppercase tracking-wider leading-none mt-0.5">
-            Off
+
+          <span className="text-[10px] sm:text-xs lg:text-sm font-bold">
+            OFF
           </span>
         </div>
-
         {/* Overlaid Info Feature Box Card (Responsive position & sizing) */}
         <div className="absolute -bottom-8 min-[380px]:-bottom-6 left-[-15px] min-[380px]:left-[-10px] sm:left-[10px] z-20 bg-white/85 backdrop-blur-md rounded-2xl p-3 min-[380px]:p-4 sm:p-5 shadow-xl border border-white/60 w-[190px] min-[380px]:w-[210px] sm:w-[240px] space-y-2.5 min-[380px]:space-y-3 sm:space-y-4">
           {/* Fast Delivery */}
           <div className="flex items-start gap-2 min-[380px]:gap-2.5 sm:gap-3">
             <div className="mt-0.5 text-[#2C2C2C] shrink-0">
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
-              </svg>
+               <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-[#D69E00]" />
             </div>
             <div>
               <h3 className="text-[11px] min-[380px]:text-xs font-bold text-[#2C2C2C]">
@@ -95,19 +113,7 @@ export default function HeroImage() {
           {/* Pick Up */}
           <div className="flex items-start gap-2 min-[380px]:gap-2.5 sm:gap-3">
             <div className="mt-0.5 text-[#2C2C2C] shrink-0">
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
-              </svg>
+              <ShoppingBag className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
             <div>
               <h3 className="text-[11px] min-[380px]:text-xs font-bold text-[#2C2C2C]">

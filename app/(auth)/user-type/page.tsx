@@ -18,6 +18,7 @@ interface OptionCard {
 
 export default function UserType() {
   const router = useRouter();
+
   const [selectedVibe, setSelectedVibe] = useState<
     "retail" | "wholesale" | null
   >(null);
@@ -26,7 +27,7 @@ export default function UserType() {
     {
       id: "retail",
       title: "Retail",
-      bulletIconBg: "bg-[#e07b30]",
+      bulletIconBg: "bg-[#F47C20]",
       bulletIconColor: "text-white",
       imageSrc: "/assets/retailer.png",
       features: [
@@ -38,7 +39,7 @@ export default function UserType() {
     {
       id: "wholesale",
       title: "Wholesale",
-      bulletIconBg: "bg-[#e07b30]",
+      bulletIconBg: "bg-[#F47C20]",
       bulletIconColor: "text-white",
       imageSrc: "/assets/wholesaler.png",
       features: [
@@ -52,33 +53,90 @@ export default function UserType() {
   const handleContinue = () => {
     if (!selectedVibe) return;
 
-    // 1. Save the selected vibe to local storage
     localStorage.setItem("selected_vibe", selectedVibe);
 
-    // 2. Redirect to the sign-up flow
     router.push("/sign-up");
   };
 
   return (
-    <section className="w-full bg-white">
-      <div className="p-10">
+    <main className="relative min-h-screen w-full overflow-hidden bg-[#FFFDF7]">
+
+      {/* =========================================================
+          BACKGROUND DECORATIONS
+      ========================================================= */}
+
+      {/* Yellow glow - top left */}
+      <div className="pointer-events-none absolute -left-40 -top-32 h-[420px] w-[420px] rounded-full bg-[#F9C51C]/20 blur-3xl" />
+
+      {/* Green glow - top right */}
+      <div className="pointer-events-none absolute -right-40 top-[18%] h-[520px] w-[520px] rounded-full bg-[#00864A]/12 blur-3xl" />
+
+      {/* Orange glow - bottom */}
+      <div className="pointer-events-none absolute bottom-[-140px] left-[28%] h-[450px] w-[450px] rounded-full bg-[#F47C20]/15 blur-3xl" />
+
+      {/* Small yellow decorative shape */}
+      <div className="pointer-events-none absolute right-[16%] top-[12%] hidden h-16 w-16 rotate-12 rounded-[30%] bg-[#F9C51C]/30 lg:block" />
+
+      {/* Green ring - left */}
+      <div className="pointer-events-none absolute bottom-[20%] left-[5%] hidden h-28 w-28 rounded-full border-[16px] border-[#00864A]/10 lg:block" />
+
+      {/* Orange circle - right */}
+      <div className="pointer-events-none absolute bottom-[12%] right-[8%] hidden h-20 w-20 rounded-full bg-[#F47C20]/10 lg:block" />
+
+      {/* Large green ring - right */}
+      <div className="pointer-events-none absolute right-[-60px] top-[40%] hidden h-40 w-40 rounded-full border-[18px] border-[#00864A]/5 lg:block" />
+
+      {/* =========================================================
+          LOGO
+      ========================================================= */}
+
+      <div className="relative z-20 px-6 pt-8 sm:px-10 sm:pt-10 lg:px-14">
         <Logo />
       </div>
 
-      <div className="py-12 px-4 flex flex-col items-center">
-        {/* SECTION HEADER */}
-        <div className="text-center mb-8 max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#333333] tracking-tight">
-            Retail or Wholesale?
-          </h2>
-          <p className="mt-3 text-base sm:text-lg text-[#555555] font-normal leading-relaxed">
-            We’ll optimize Foody to show you everyday grocery deals or exclusive
-            trade discounts. Feel free to switch between them anytime!
+      {/* =========================================================
+          MAIN CONTENT
+      ========================================================= */}
+
+      <div className="relative z-10 flex flex-col items-center px-4 pb-16 pt-14 sm:px-6 sm:pt-16 lg:px-8 lg:pb-24">
+
+        {/* Header */}
+        <div className="mb-10 max-w-2xl text-center sm:mb-12">
+
+          {/* Badge */}
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#00864A]/10 bg-[#EAF5EC] px-4 py-2 text-sm font-bold text-[#00864A]">
+
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#F9C51C]">
+              <span className="h-2 w-2 rounded-full bg-[#00864A]" />
+            </span>
+
+            <span>Choose Your Shopping Experience</span>
+          </div>
+
+          <h1 className="text-4xl font-black tracking-[-0.04em] text-[#151515] sm:text-5xl">
+            Retail or{" "}
+            <span className="text-[#00864A]">Wholesale?</span>
+          </h1>
+
+          {/* Yellow underline */}
+          <div className="relative mx-auto mt-5 h-4 w-40">
+            <div className="absolute left-0 top-0 h-2 w-32 rounded-full bg-[#F9C51C]" />
+
+            <div className="absolute left-12 top-3 h-1 w-20 rounded-full bg-[#F9C51C]/50" />
+          </div>
+
+          <p className="mt-5 text-base leading-7 text-[#52606D] sm:text-lg">
+            We’ll optimize Foody to show you everyday grocery deals or
+            exclusive trade discounts. You can switch between them anytime.
           </p>
         </div>
 
-        {/* CARDS CONTAINER */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl mb-8">
+        {/* =========================================================
+            OPTION CARDS
+        ========================================================= */}
+
+        <div className="grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
+
           {cards.map((card) => {
             const isSelected = selectedVibe === card.id;
 
@@ -86,72 +144,138 @@ export default function UserType() {
               <div
                 key={card.id}
                 onClick={() => setSelectedVibe(card.id)}
-                className={`bg-[#f9f9f9] border border-gray-200 rounded-[28px] p-8 flex flex-col items-center justify-between cursor-pointer transition-all duration-300 relative select-none shadow-sm ${
+                className={`group relative flex cursor-pointer flex-col overflow-hidden rounded-[32px] border bg-white p-6 transition-all duration-300 sm:p-8 ${
                   isSelected
-                    ? "ring-2 ring-offset-2 ring-(--main) scale-[1.02] shadow-xl border-transparent"
-                    : "hover:border-gray-300 hover:shadow-md hover:scale-[1.01]"
+                    ? "border-[#00864A] shadow-[0_25px_60px_rgba(0,134,74,0.14)] ring-2 ring-[#00864A]/20"
+                    : "border-[#00864A]/10 shadow-[0_15px_45px_rgba(0,0,0,0.05)] hover:-translate-y-1 hover:border-[#00864A]/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
                 }`}
               >
-                {/* TOP ILLUSTRATION ICON CONTAINER */}
-                <div className="mb-6 mt-2 flex justify-center">
-                  <div className="w-[150px] h-[150px] rounded-full bg-gray-50 flex items-center justify-center border border-gray-100 shadow-inner p-3">
-                    <img
-                      src={card.imageSrc}
-                      alt={card.title}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                </div>
 
-                {/* CARD TITLE */}
-                <h3 className="text-3xl font-extrabold mb-6 text-center tracking-wide text-gray-900">
-                  {card.title}
-                </h3>
+                {/* Selected indicator */}
+                {isSelected && (
+                  <div className="absolute left-0 right-0 top-0 h-2 bg-[#F9C51C]" />
+                )}
 
-                {/* BULLET LIST */}
-                <ul className="w-full space-y-4 mb-2">
-                  {card.features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-3">
-                      <div
-                        className={`w-7 h-7 rounded-full ${card.bulletIconBg} flex items-center justify-center shrink-0 shadow-sm`}
-                      >
-                        <Sparkles
-                          className={`w-4 h-4 ${card.bulletIconColor}`}
-                        />
-                      </div>
-                      <span className="text-sm sm:text-base font-semibold text-gray-700">
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* RADIO BUTTON CONTAINER */}
-                <div className="absolute top-4 right-4">
+                {/* Radio */}
+                <div className="absolute right-5 top-5 z-10">
                   <RadioButton
                     checked={isSelected}
                     onChange={() => setSelectedVibe(card.id)}
                   />
                 </div>
+
+                {/* Illustration */}
+                <div className="flex justify-center pt-3">
+
+                  <div
+                    className={`flex h-[170px] w-[170px] items-center justify-center rounded-full border p-4 transition-all duration-300 ${
+                      isSelected
+                        ? "border-[#F9C51C]/50 bg-[#FFF4D0]"
+                        : "border-[#00864A]/10 bg-[#EAF5EC]"
+                    }`}
+                  >
+                    <img
+                      src={card.imageSrc}
+                      alt={card.title}
+                      className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+
+                </div>
+
+                {/* Title */}
+                <div className="mt-6 text-center">
+
+                  <h2
+                    className={`text-3xl font-black tracking-tight ${
+                      isSelected
+                        ? "text-[#00864A]"
+                        : "text-[#151515]"
+                    }`}
+                  >
+                    {card.title}
+                  </h2>
+
+                  <div className="mx-auto mt-3 h-1.5 w-14 rounded-full bg-[#F9C51C]" />
+
+                </div>
+
+                {/* Features */}
+                <ul className="mt-7 space-y-4">
+
+                  {card.features.map((feature, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center gap-3"
+                    >
+
+                      <div
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${card.bulletIconBg} shadow-sm`}
+                      >
+                        <Sparkles
+                          className={`h-4 w-4 ${card.bulletIconColor}`}
+                        />
+                      </div>
+
+                      <span className="text-sm font-semibold leading-6 text-[#52606D] sm:text-[15px]">
+                        {feature}
+                      </span>
+
+                    </li>
+                  ))}
+
+                </ul>
+
+                {/* Card bottom label */}
+                <div
+                  className={`mt-7 rounded-2xl px-4 py-3 text-center text-xs font-bold uppercase tracking-[0.12em] ${
+                    isSelected
+                      ? "bg-[#EAF5EC] text-[#00864A]"
+                      : "bg-[#FFFDF7] text-[#52606D]"
+                  }`}
+                >
+                  {isSelected
+                    ? `Selected • ${card.title}`
+                    : `Choose ${card.title}`}
+                </div>
+
               </div>
             );
           })}
+
         </div>
 
-        {/* BOTTOM SUBMIT BUTTON CONTAINER */}
-        <div className="w-full max-w-xl mt-6">
+        {/* =========================================================
+            CONTINUE BUTTON
+        ========================================================= */}
+
+        <div className="mt-8 w-full max-w-xl">
+
           <Button
             variant="primary"
-            className="w-full"
+            className="w-full !rounded-2xl !font-bold"
             onClick={handleContinue}
             disabled={!selectedVibe}
           >
             {selectedVibe
-              ? `Continue to ${selectedVibe === "retail" ? "Retail" : "Wholesale"}`
-              : "Select your vibe"}
+              ? `Continue to ${
+                  selectedVibe === "retail" ? "Retail" : "Wholesale"
+                }`
+              : "Select your shopping experience"}
           </Button>
+
         </div>
+
+        {/* Small bottom text */}
+        <p className="mt-4 text-center text-xs text-[#52606D]">
+          You can change your shopping preference later.
+        </p>
+
       </div>
-    </section>
+
+      {/* Bottom yellow accent */}
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-[#F9C51C]" />
+
+    </main>
   );
 }

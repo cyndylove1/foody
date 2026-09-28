@@ -21,7 +21,7 @@ const Button = ({
     "font-bold text-sm px-6 h-[42px] rounded-full transition-all hover:-translate-y-0.5 select-none";
 
   const variantStyles = {
-    primary: "bg-[var(--main)] cursor-pointer text-white hover:bg-[#016738]",
+    primary: "cursor-pointer text-white bg-[#00864A] ",
     secondary:
       "bg-transparent hover:text-white text-black cursor-pointer border border-gray-300 hover:bg-black",
     tertiary:

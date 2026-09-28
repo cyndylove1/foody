@@ -3,11 +3,11 @@
 import ShopNavbar from "../components/ui/shopNavbar";
 import Cta from "../components/ui/cta";
 import Footer from "../components/ui/footer";
-import RetailSection from "../components/ui/retailSection";
 import RetailBanner from "../components/ui/retailBanner";
 import ProductCatalog from "../components/ui/productCatalog";
 
 import RetailSwitch from "../components/ui/retailSwitch";
+import  ExploreRetail  from "../components/ui/exploreRetail";
 
 export default function Retail() {
   return (
@@ -16,7 +16,7 @@ export default function Retail() {
       <div className=" bg-white">
         <RetailBanner />
         <RetailSwitch />
-        <RetailSection />
+        <ExploreRetail />
         {/* <Popular /> */}
 
         <ProductCatalog productType="retail" />

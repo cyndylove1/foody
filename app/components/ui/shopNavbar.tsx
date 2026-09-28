@@ -23,6 +23,7 @@ import { useWishlist } from "@/app/hooks/useWishList";
 import { useSearch } from "@/app/hooks/useSearchProduts";
 
 export default function ShopNavbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -42,6 +43,20 @@ export default function ShopNavbar() {
   const { logout } = useAuth();
   const { data: user } = useProfile();
   const { wishlistCount } = useWishlist();
+
+  useEffect(() => {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 30);
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+  
+      handleScroll();
+  
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
 
   // Trigger search with React Query
   const { data: searchResults, isLoading: isSearching } = useSearch(
@@ -93,9 +108,26 @@ export default function ShopNavbar() {
   return (
     <>
       <header
-        className={`w-full bg-white border-b border-gray-200 px-4 lg:px-8 flex items-center justify-between relative z-40 transition-all duration-200 ${
-          isSearchOpen ? "pt-20" : "py-4"
-        }`}
+       className={`
+        fixed top-0 left-0 max-w-7xl mx-auto  right-0 z-[100] flex items-center justify-between py-4 px-4 md:px-10
+        transition-all duration-500 ease-in-out
+
+        ${
+          isScrolled
+            ? `
+              bg-[#FFFDF7]/95
+              backdrop-blur-xl
+              border-b
+              border-[#016738]/10
+              shadow-[0_8px_30px_rgba(1,103,56,0.08)]
+            `
+            : `
+              bg-transparent
+              border-b
+              border-transparent
+            `
+        }
+      `} 
       >
         <div className="flex items-center gap-3 select-none shrink-0">
           {showMenuList && (
@@ -338,11 +370,18 @@ export default function ShopNavbar() {
                   Profile
                 </Link>
                 <Link
-                  href="/category/seasoning-condiments"
+                  href="/wholesale"
                   className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
-                  Shop
+                  Shop Wholesale
+                </Link>
+                <Link
+                  href="/retail"
+                  className="text-[15px] text-[#2C2C2C] font-medium py-2.5 hover:text-(--main) transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Shop Retail
                 </Link>
                 <Link
                   href="/wishlist"
