@@ -212,7 +212,7 @@ export default function Footer() {
 
           <div className="lg:col-span-5">
             <div className="mb-6">
-              <Logo textColor="text-[#008C4A]" />
+              <Logo textColor="text-[#1a1a1a]" />
             </div>
 
             <p className="max-w-md text-sm leading-7 text-[#66756D] md:text-[15px]">

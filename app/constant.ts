@@ -149,7 +149,7 @@ export const socialLinks = [
 // links for footer section
 export const categoryLinks = [
   { name: "Home", href: "/" },
-  { name: "Shp Wholesale", href: "/wholesale" },
+  { name: "Shop Wholesale", href: "/wholesale" },
   { name: "Shop Retail", href: "/retail" },
   { name: "Contact Us", href: "/contact" },
   { name: "Help", href: "/help" },
@@ -163,9 +163,9 @@ export const legalLinks = [
 ];
 
 export const helpLinks = [
-  { name: "How To Order", href: "/help/how-to-order" },
-  { name: "Track Order", href: "/help/track-order" },
-  { name: "Return & Exchanges", href: "/help/returns" },
+  { name: "How To Order", href: "#" },
+  { name: "Track Order", href: "#" },
+  { name: "Return & Exchanges", href: "#" },
   { name: "Help", href: "/help" },
   { name: "Contact Us", href: "/contact" },
 ];
