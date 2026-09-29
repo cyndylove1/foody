@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import banner from "@/public/assets/ChatGPT Image Sep 27, 2026, 09_01_29 AM.png"
+import banner from "@/public/assets/retail.png";
 import Button from "../button";
 import Image from "next/image";
 import {
@@ -234,113 +234,97 @@ export default function RetailBanner() {
           </div>
 
           {/* ===================================================== */}
-          {/* RIGHT IMAGE AREA */}
-          {/* ===================================================== */}
+      {/* RIGHT IMAGE AREA */}
+      {/* ===================================================== */}
 
-          <div className="lg:col-span-6 xl:col-span-7 relative min-h-[480px] sm:min-h-[560px] lg:min-h-[600px]">
-          {/* GROCERY IMAGE */}
-          {/* ================================================= */}
+      <div className="lg:col-span-6 xl:col-span-7 relative min-h-[500px] sm:min-h-[580px] lg:min-h-[650px]">
 
-          <div className="absolute z-10 inset-0 flex items-center justify-end">
+        {/* GROCERY IMAGE */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center">
 
-            <div
-              className="
-                relative
-                w-[78%]
-                sm:w-[72%]
-                lg:w-[68%]
-                h-[420px]
-                sm:h-[500px]
-                lg:h-[560px]
-                mr-[2%]
-                sm:mr-[3%]
-                lg:mr-[4%]
-                overflow-hidden
-                rounded-full
-              "
-            >
+          <div className="relative h-full w-full">
 
-              <Image
-                src={banner}
-                alt="Fresh African groceries including rice, garri, vegetables, spices and pantry essentials"
-                fill
-                priority
-                sizes="(max-width: 1024px) 75vw, 45vw"
-                className="object-cover object-center"
-              />
-
-            </div>
+            <Image
+              src={banner}
+              alt="Fresh African groceries including rice, garri, vegetables, spices and pantry essentials"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="object-contain object-center scale-110 lg:scale-[1.15]"
+            />
 
           </div>
 
-            {/* ================================================= */}
-            {/* FRESH AFRICAN GROCERIES BADGE */}
-            {/* ================================================= */}
+        </div>
 
-            <div className="absolute z-30 top-[7%] right-[3%] sm:right-[7%] lg:right-[4%]">
+        {/* ================================================= */}
+        {/* FRESH AFRICAN GROCERIES BADGE */}
+        {/* ================================================= */}
 
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#00864A] border-[6px] border-white shadow-[0_15px_35px_rgba(0,0,0,0.14)] flex items-center justify-center rotate-6">
+        <div className="absolute z-30 top-[7%] right-[3%] sm:right-[7%] lg:right-[4%]">
 
-                <div className="text-center text-white">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#00864A] border-[6px] border-white shadow-[0_15px_35px_rgba(0,0,0,0.14)] flex items-center justify-center rotate-6">
 
-                  <p className="text-[9px] sm:text-[10px] font-black uppercase leading-3 tracking-wide">
-                    Fresh
-                  </p>
+            <div className="text-center text-white">
 
-                  <p className="text-[13px] sm:text-sm font-black uppercase leading-4">
-                    African
-                  </p>
+              <p className="text-[9px] sm:text-[10px] font-black uppercase leading-3 tracking-wide">
+                Fresh
+              </p>
 
-                  <p className="text-[10px] sm:text-[11px] font-bold uppercase leading-3">
-                    Groceries
-                  </p>
+              <p className="text-[13px] sm:text-sm font-black uppercase leading-4">
+                African
+              </p>
 
-                </div>
-
-              </div>
-
-            </div>
-
-            {/* ================================================= */}
-            {/* ORANGE DECORATION */}
-            {/* ================================================= */}
-
-            <div className="absolute z-20 left-[8%] top-[20%] hidden sm:block">
-
-              <div className="w-14 h-14 rounded-[22px] bg-[#F47C20] rotate-12 shadow-lg" />
-
-            </div>
-
-            {/* ================================================= */}
-            {/* GREEN LEAF DECORATIONS */}
-            {/* ================================================= */}
-
-            <div className="absolute z-20 left-[10%] bottom-[18%] hidden lg:block">
-
-              <div className="w-16 h-9 rounded-[100%] bg-[#00864A] rotate-[25deg]" />
-
-              <div className="absolute top-8 left-10 w-12 h-7 rounded-[100%] bg-[#00864A]/80 rotate-[65deg]" />
-
-            </div>
-
-            {/* ================================================= */}
-            {/* SMALL YELLOW DOTS */}
-            {/* ================================================= */}
-
-            <div className="absolute z-20 right-[1%] bottom-[15%] hidden lg:grid grid-cols-4 gap-2 opacity-60">
-
-              {Array.from({ length: 16 }).map((_, index) => (
-                <span
-                  key={index}
-                  className="w-2 h-2 rounded-full bg-[#00864A]/30"
-                />
-              ))}
+              <p className="text-[10px] sm:text-[11px] font-bold uppercase leading-3">
+                Groceries
+              </p>
 
             </div>
 
           </div>
 
         </div>
+
+        {/* ================================================= */}
+        {/* ORANGE DECORATION */}
+        {/* ================================================= */}
+
+        <div className="absolute z-20 left-[8%] top-[20%] hidden sm:block">
+
+          <div className="w-14 h-14 rounded-[22px] bg-[#F47C20] rotate-12 shadow-lg" />
+
+        </div>
+
+        {/* ================================================= */}
+        {/* GREEN LEAF DECORATIONS */}
+        {/* ================================================= */}
+
+        <div className="absolute z-20 left-[10%] bottom-[18%] hidden lg:block">
+
+          <div className="w-16 h-9 rounded-[100%] bg-[#00864A] rotate-[25deg]" />
+
+          <div className="absolute top-8 left-10 w-12 h-7 rounded-[100%] bg-[#00864A]/80 rotate-[65deg]" />
+
+        </div>
+
+        {/* ================================================= */}
+        {/* SMALL GREEN DOTS */}
+        {/* ================================================= */}
+
+        <div className="absolute z-20 right-[1%] bottom-[15%] hidden lg:grid grid-cols-4 gap-2 opacity-60">
+
+          {Array.from({ length: 16 }).map((_, index) => (
+            <span
+              key={index}
+              className="w-2 h-2 rounded-full bg-[#00864A]/30"
+            />
+          ))}
+
+        </div>
+
+      </div>
+
+     </div>
 
       </div>
 

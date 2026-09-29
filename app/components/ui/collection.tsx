@@ -128,9 +128,8 @@ export default function Collection() {
 
             return (
 
-              <Link
+              <div
                 key={category.id}
-                href={`/category/utensils`}
                 className="
                   group
                   relative
@@ -205,107 +204,9 @@ export default function Collection() {
                 </div>
 
 
-                {/* ================= BOTTOM INFORMATION CARD ================= */}
+                
 
-                <div
-                  className="
-                    absolute
-                    left-4
-                    right-4
-                    bottom-4
-                    z-20
-                    rounded-[20px]
-                    bg-white/95
-                    backdrop-blur-md
-                    p-5
-                    shadow-xl
-                    border
-                    border-white/80
-                    transition-all
-                    duration-500
-                    group-hover:bottom-5
-                  "
-                >
-
-                  {/* Yellow accent line */}
-
-                  <div className="w-8 h-1 rounded-full bg-[#F9C51C] mb-3" />
-
-
-                  {/* Category title */}
-
-                  <h3
-                    className="
-                      text-[#00864A]
-                      text-lg
-                      md:text-xl
-                      font-extrabold
-                      tracking-tight
-                      leading-tight
-                    "
-                  >
-                    {category.title}
-                  </h3>
-
-
-                  {/* Description */}
-
-                  <p
-                    className="
-                      text-[#667085]
-                      text-xs
-                      font-medium
-                      leading-5
-                      mt-2
-                      line-clamp-2
-                    "
-                  >
-                    {category.imageAlt}
-                  </p>
-
-
-                  {/* ================= SHOP BUTTON ================= */}
-
-                  <div className="mt-4">
-
-                    <span
-                      className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        px-4
-                        py-2
-                        rounded-full
-                        bg-[#00864A]
-                        text-white
-                        text-xs
-                        font-bold
-                        transition-all
-                        duration-300
-                        group-hover:bg-[#F47C20]
-                      "
-                    >
-
-                      {category.buttonText}
-
-                      <span
-                        className="
-                          text-sm
-                          transition-transform
-                          duration-300
-                          group-hover:translate-x-1
-                        "
-                      >
-                        →
-                      </span>
-
-                    </span>
-
-                  </div>
-
-                </div>
-
-              </Link>
+              </div>
 
             );
 
