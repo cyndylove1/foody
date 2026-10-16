@@ -19,22 +19,7 @@ export default function SummaryTotals({ cart }: SummaryTotalsProps) {
   return (
     <div className="lg:col-span-4 space-y-6 bg-[#f9f9f9] border border-gray-200 p-4 rounded-xl">
       {/* Coupon Entry Card */}
-      <div className="py-4 px-2 bg-white">
-        <label htmlFor="coupon" className="block text-stone-600 text-sm mb-2.5">
-          Enter your coupon here
-        </label>
-        <div className="flex gap-2">
-          <input
-            id="coupon"
-            type="text"
-            placeholder="Coupon Number"
-            value={coupon}
-            onChange={(e) => setCoupon(e.target.value)}
-            className="flex-1 border border-stone-300 px-3 py-2 text-sm text-stone-800 focus:outline-none placeholder-stone-300"
-          />
-          <Button variant="secondary">Apply Coupon</Button>
-        </div>
-      </div>
+     
 
       {/* Checkout Totals Summary Box */}
       <div className="bg-[#fbfbfb] p-5 space-y-4">
@@ -66,3 +51,4 @@ export default function SummaryTotals({ cart }: SummaryTotalsProps) {
     </div>
   );
 }
+ 

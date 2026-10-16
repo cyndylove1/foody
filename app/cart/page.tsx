@@ -331,7 +331,7 @@ export default function Cart() {
                     </p>
                   </div>
 
-                  <Link href="/category/utensils">
+                  <Link href="/">
                     <Button
                       variant="primary"
                       className="w-full !rounded-xl !px-6 sm:w-auto"

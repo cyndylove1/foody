@@ -106,22 +106,39 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // requestIdRef tracks the most recently *initiated* cart write; a
   // mutation's result is only written to the cache if no newer write has
   // started since.
-  const requestIdRef = useRef(0);
+  
+const requestIdRef = useRef(0);
 
-  const beginRequest = async () => {
-    await queryClient.cancelQueries({ queryKey: CART_QUERY_KEY });
-    return { requestId: ++requestIdRef.current };
-  };
+const beginRequest = async () => {
+  await queryClient.cancelQueries({
+    queryKey: CART_QUERY_KEY,
+    exact: true,
+  });
 
-  const setCartData = (
-    data: CartObject,
-    _variables: unknown,
-    context?: { requestId: number },
-  ) => {
-    if (context && context.requestId !== requestIdRef.current) return;
-    persistCartSession(data);
-    queryClient.setQueryData(CART_QUERY_KEY, data);
+  return {
+    requestId: ++requestIdRef.current,
   };
+};
+
+const setCartData = (
+  data: CartObject,
+  _variables: unknown,
+  context?: { requestId: number },
+) => {
+  if (
+    context &&
+    context.requestId !== requestIdRef.current
+  ) {
+    return;
+  }
+
+  persistCartSession(data);
+
+  queryClient.setQueryData<CartObject>(
+    CART_QUERY_KEY,
+    data,
+  );
+};
 
   const addItemMutation = useMutation({
     onMutate: beginRequest,

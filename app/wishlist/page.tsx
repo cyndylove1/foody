@@ -490,7 +490,7 @@ export default function WishlistPage() {
               </p>
 
               <Link
-                href="/category/seasonings"
+                href="/"
                 className="mt-7"
               >
                 <Button

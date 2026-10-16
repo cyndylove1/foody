@@ -203,7 +203,7 @@ export default function Contact() {
 
                     <Button
                       variant="primary"
-                      className="!mt-2 w-full !rounded-2xl !py-4 !font-bold"
+                      className="w-full !rounded-2xl !font-bold"
                     >
                       Submit Message
                     </Button>
